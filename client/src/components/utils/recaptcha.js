@@ -19,7 +19,7 @@ export class RecaptchaComponent extends Component {
       <div>
         <Recaptcha
             ref={e => recaptchaInstance = e}
-            sitekey="6LcDa9sUAAAAAHiOoVeytebnrJnfWW7ffI50aClN"
+            sitekey="6LfHB-MUAAAAALToDg6S4pNIc4mQGhbdozuVjjOz"
             render="explicit"
             verifyCallback={this.props.verify}
             onloadCallback={() => console.log('Recaptcha loaded')}
