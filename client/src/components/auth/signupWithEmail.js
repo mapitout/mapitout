@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 
 import { RecaptchaComponent, CenterCard121 } from '../utils';
 import { signupWithEmail, signupWithEmailReset } from '../../actions';
+
 let INITIAL_STATE = {
     recaptchaGood: window.location.href.includes('localhost'),
     errorMsg: null
@@ -14,10 +15,7 @@ let INITIAL_STATE = {
 class SignupWithEmail extends React.Component {
     constructor(){
         super();
-        this.state = {
-            recaptchaGood: window.location.href.includes('localhost'),
-            errorMsg: null
-        };
+        this.state = INITIAL_STATE;
     }
     componentDidMount(){
         this.resetStateAndProps();
@@ -103,7 +101,7 @@ class SignupWithEmail extends React.Component {
                 {this.renderAlert()}
                 <div>
                     <div style={{'margin': '20px auto'}}>
-                        {!this.state.recaptchaGood ? <RecaptchaComponent verify={this.recaptchaVerifyCallback.bind(this)}/>:<div></div>}
+                        {<RecaptchaComponent verify={this.recaptchaVerifyCallback.bind(this)}/>}
                     </div>
                     <button type='submit' disabled={submitting} className='btn btn-lg btn-success btn-block'>Sign Me Up</button>
                 </div>
