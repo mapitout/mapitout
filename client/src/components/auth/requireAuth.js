@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 
 export default function(ComposedComponent) {
   class Authentication extends Component {
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
       if (!localStorage.getItem('auth_jwt_token')) {
         this.context.router.history.push('/signin');
       }
     }
 
-    componentWillUpdate(nextProps) {
+    UNSAFE_componentWillUpdate(nextProps) {
       if (!localStorage.getItem('auth_jwt_token')) {
         this.context.router.history.push('/signin');
       }

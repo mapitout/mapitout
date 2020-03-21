@@ -6,7 +6,7 @@
     "start": "serve ../docs",
     "dev": "webpack-dev-server --open --config webpack.dev.js",
     "build": "rm -rf ../docs && webpack -p --config webpack.prod.js --optimize-minimize && npm run copy-files",
-    "copy-files": "npm run create-cname && npm run copy-manifest && npm run copy-readme",
+    "copy-files": "npm run copy-manifest && npm run copy-readme",
     "create-cname": "touch ../docs/CNAME && echo \"www.mapitout.com\" >> ../docs/CNAME ",
     "copy-manifest": "cp src/manifest.json ../docs",
     "copy-readme": "cp ./readme.md ../docs"

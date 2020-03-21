@@ -23,7 +23,7 @@ class SignupVerification extends Component {
     componentWillUnmount(){
         this.props.signupEmailReset();
     }
-    componentWillMount(){
+    UNSAFE_componentWillMount(){
         const params = qs.parse(this.context.router.history.location.search.split('?')[1])
         const {token, address} = params;
         this.setState({
@@ -32,7 +32,7 @@ class SignupVerification extends Component {
         this.props.signupEmailReset();
         this.props.verifyEmailToken(token, address);
     }
-    componentWillReceiveProps(n, o){
+    UNSAFE_componentWillReceiveProps(n, o){
         this.setState({
             loading: false
         })

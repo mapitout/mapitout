@@ -7,7 +7,7 @@ import {signUserIn,signinReset} from '../../actions';
 import { CenterCard121 } from '../utils';
 
 class Signin extends Component {
-    componentWillMount(){
+    UNSAFE_componentWillMount(){
         this.props.signinReset();
     }
     componentWillUnmount(){

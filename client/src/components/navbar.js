@@ -13,7 +13,7 @@ class Navbar extends Component {
             toggle: false
         }
     }
-    componentWillMount(){
+    UNSAFE_componentWillMount(){
         this.props.getUserProfile();
     }
     componentDidMount(){

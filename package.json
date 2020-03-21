@@ -6,6 +6,7 @@
   "engines": {
     "node": "8.9.4"
   },
+  "license": "MIT",
   "scripts": {
     "start": "NPM_CONFIG_PRODUCTION=false npm i --prefix server && npm run build:server && NODE_ENV=production node ./server/build/server.js",
     "test": "eslint .",

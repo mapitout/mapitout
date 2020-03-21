@@ -24,7 +24,7 @@ class Footer extends React.Component {
     return list.map(l=>(
       <div key={l.title} className='module-link'>
         {l.outer_link&&
-          <div><a href={l.outer_link} target='_blank'>{l.title}</a></div>}
+          <div><a href={l.outer_link} target='_blank' rel="noopener noreferrer">{l.title}</a></div>}
         {l.link&&
           <div><Link to={`${l.link}`}>{l.title}</Link></div>}
       </div>
@@ -54,15 +54,6 @@ const data = [{
   },{
     title: 'Tersm of Servie',
     link: '/company/legal'
-  }]
-},{
-  module: 'Products',
-  list:[{
-    title: 'Pocket',
-    link: '/pocket'
-  },{
-    title: 'Secretary',
-    link: '/secretary'
   }]
 },{
   module: 'Social',
