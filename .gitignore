@@ -1,0 +1,16 @@
+node_modules/
+bundle.js
+npm-debug.log
+
+/.idea
+/public
+build/
+.env
+.passport.js
+.DS_Store
+
+note.txt
+.deprecated/
+
+docs/
+server/myaccount.js

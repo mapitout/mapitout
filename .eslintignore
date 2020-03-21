@@ -1,0 +1,12 @@
+!.*
+node_modules/*
+client/node_modules/*
+
+server/node_modules/*
+server/docs/*
+server/build/*
+docs/*
+assets/*
+readme.md
+
+microservices/amz-helper/node_modules/*

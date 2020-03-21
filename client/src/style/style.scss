@@ -1,0 +1,56 @@
+@import './variables';
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
+@import url('https://use.fontawesome.com/releases/v5.0.6/css/all.css');
+
+@import 'landing';
+@import 'navbar';
+@import 'override';
+@import 'loader';
+@import 'card';
+@import 'moment';
+@import 'user';
+@import 'auth';
+
+* { 
+    font-family: 'Open Sans', sans-serif;
+    text-rendering: optimizeLegibility;
+    @media (max-width: 543px) {}
+}
+html.touch * {
+    text-rendering: optimizeSpeed; 
+}
+body {
+    background: #f8f9fa;
+    position: relative;
+    .statusbar-overlay {
+        background: #333;
+    }
+    .rc-anchor-normal{
+        margin: auto;
+    }
+
+    .container-mapitout{
+        margin: auto;
+        padding: 5px 40px;
+        @media (max-width: 543px) {
+            padding: 0px 0px;
+        }
+        &.xs-padding{
+            @media (max-width: 543px) {
+                padding: 5px 15px;
+            }
+        }
+    }
+}
+
+
+@media (max-width: 543px) {
+    body {
+    }
+}
+
+@media (min-width: 767px) { 
+    
+ }

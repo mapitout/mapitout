@@ -1,0 +1,56 @@
+{
+  "name": "mapitout",
+  "version": "0.0.1",
+  "description": "www.mapitout.com and server.mapitout.com",
+  "main": "server/build/server.js",
+  "engines": {
+    "node": "8.9.4"
+  },
+  "scripts": {
+    "start": "NPM_CONFIG_PRODUCTION=false npm i --prefix server && npm run build:server && NODE_ENV=production node ./server/build/server.js",
+    "test": "eslint .",
+    "precommit": "npm run test",
+    "prepush": "npm run test",
+    "postinstall": "NPM_CONFIG_PRODUCTION=false npm i --prefix server && npm run build:server",
+    "rl": "npm run release",
+    "release": "git pull && npm run test && npm run build && git add . && git commit -m 'deploy' && npm run clean && git push origin master && npm version patch",
+    "upgrade": "npm version patch",
+    "build": "npm run test && npm run build:server && npm run build:client",
+    "build:client": "cd ./client && npm run build && cd ..",
+    "build:server": "cd ./server && npm run build && cd ..",
+    "dev:server": "npm run dev --prefix server",
+    "dev:client": "cd ./server && npm run dev",
+    "clean": "rm -rf ./server/build && rm -rf ./docs",
+    "deploy:server": "git subtree push --prefix server heroku master",
+    "logs:server": "heroku logs --tail"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mapitout/mapitout.git"
+  },
+  "keywords": [
+    "fintech"
+  ],
+  "author": "mapitout <team@mapitout.com> (mapitout Pocket Team)",
+  "bugs": {
+    "url": "https://github.com/mapitout/mapitout/issues"
+  },
+  "homepage": "https://github.com/mapitout/mapitout#readme",
+  "devDependencies": {},
+  "dependencies": {
+    "eslint": "^4.14.0",
+    "eslint-config-logux": "^17.0.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-es5": "^1.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jest": "^21.5.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-react": "^7.5.1",
+    "eslint-plugin-security": "^1.4.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "husky": "^0.14.3",
+    "webpack": "^3.11.0",
+    "webpack-bundle-analyzer": "^2.10.0"
+  }
+}
