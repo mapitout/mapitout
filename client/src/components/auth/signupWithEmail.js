@@ -69,13 +69,16 @@ class SignupWithEmail extends React.Component {
         this.props.signupWithEmailReset();
     }
     renderForm(){
-        const { handleSubmit,emailStateError,emailSentTo, submitting } = this.props;
-        const isBetaOnly = true;
-        if(isBetaOnly && emailSentTo && emailSentTo.length > 1) {
-            return (<div className='alert alert-success'>
-                <h4 className='alert-heading'>Activiation Email sent!</h4>
-                    Activiation email will be sent to <b>{emailSentTo}</b>!
-                </div>)
+        const { handleSubmit,emailStateError,emailSentTo, submitting, deepLink } = this.props;
+        if(deepLink && deepLink.length > 1) {
+            return(<div className=''>
+                {/* <h4 className='alert-heading'>Looks good!</h4> */}
+                <a href={`${deepLink}`}>
+                    <button className='btn btn-success btn-block btn-lg try-it-out'>
+                        Activate Now
+                    </button>
+                </a>
+            </div>)
         }else if(emailSentTo && emailSentTo.length > 1) {
             return(<div className='alert alert-success'>
                 <h4 className='alert-heading'>Almost there!</h4>
@@ -102,7 +105,7 @@ class SignupWithEmail extends React.Component {
                     <div style={{'margin': '20px auto'}}>
                         {!this.state.recaptchaGood ? <RecaptchaComponent verify={this.recaptchaVerifyCallback.bind(this)}/>:<div></div>}
                     </div>
-                    <button type='submit' disabled={submitting} className='btn btn-lg btn-success btn-block'>Send Me Activation</button>
+                    <button type='submit' disabled={submitting} className='btn btn-lg btn-success btn-block'>Sign Me Up</button>
                 </div>
                 <div style={{'paddingTop': '20px'}}>
                     <Link to='/signin' className='btn btn-link btn-block'>Have an account? Sign in here</Link>
@@ -118,10 +121,11 @@ class SignupWithEmail extends React.Component {
 }
 
 function mapStateToProps({signupWithEmail}) {
-    const {emailStateError, emailSentTo} = signupWithEmail;
+    const {emailStateError, emailSentTo, deepLink} = signupWithEmail;
     return {
         emailStateError,
-        emailSentTo
+        emailSentTo,
+        deepLink
     }
 }
 

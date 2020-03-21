@@ -7,8 +7,8 @@
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="growing-program">
             <circle id="Oval" fill="#FFFFFF" cx="158" cy="158" r="158"></circle>
-            <circle id="Oval-Copy" stroke="#0877d2" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1,2,1,12" cx="159" cy="159" r="144"></circle>
-            <g id="Group-Copy-3" transform="translate(46.000000, 38.000000)" fill="#0877d2" fill-rule="nonzero">
+            <circle id="Oval-Copy" stroke="#3bd59a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1,2,1,12" cx="159" cy="159" r="144"></circle>
+            <g id="Group-Copy-3" transform="translate(46.000000, 38.000000)" fill="#3bd59a" fill-rule="nonzero">
                 <path d="M46.5,67 C47.25,67 48,66.424 48,65.464 L48,44.536 C48,43.768 47.4375,43 46.5,43 C45.5625,43 45,43.576 45,44.536 L45,65.656 C45.1875,66.424 45.75,67 46.5,67 Z" id="Shape"></path>
                 <path d="M46.5,80 C47.25,80 48,79.4230769 48,78.4615385 L48,71.5384615 C48,70.7692308 47.4375,70 46.5,70 C45.5625,70 45,70.5769231 45,71.5384615 L45,78.4615385 C45.1875,79.4230769 45.75,80 46.5,80 Z" id="Shape"></path>
                 <path d="M218,94.5238095 L218,115.47619 C218,116.238095 218.5625,117 219.5,117 C220.25,117 221,116.428571 221,115.47619 L221,94.5238095 C221,93.7619048 220.4375,93 219.5,93 C218.75,93 218,93.5714286 218,94.5238095 Z" id="Shape"></path>

@@ -4,6 +4,8 @@ if(process.env.NODE_ENV != 'production'){
   dotenv.config({ path: path.resolve(__dirname, '.env') });
 }
 
+// S3: https://console.aws.amazon.com/iam/home?region=us-east-1#/users$new?step=details
+
 export default {
   jwt_secret: process.env.JWT_SECRET || 'jwt_secret_FJLK:',
   jwt_secret_email: process.env.JWT_SECRET_EMAIL || 'jwt_secret_email',
@@ -15,6 +17,7 @@ export default {
   admin: {
     list: ['amazingandyyy@gmail.com']
   },
+  ses_to_verify: process.env.SES_TO_VERIFY || false,
   aws: {
     ses: {
       accessKeyId: process.env.SESAWSAccessKeyId || '',
@@ -27,13 +30,5 @@ export default {
     }
   },
   version: process.env.APP_STAGE || 'closed',
-  environment: process.env.NODE_ENV || 'development',
-  plaid: {
-    client_id: process.env.PLAID_CLIENT_ID || '',
-    public_id: process.env.PLAID_PUBLIC_KEY || '',
-    secret: {
-      development: process.env.PLAID_DEVELOPMENT_SECRET || '',
-      sandbox: process.env.PLAID_SANDBOX_SECRET || ''
-    }
-  }
+  environment: process.env.NODE_ENV || 'development'
 }

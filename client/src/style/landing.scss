@@ -60,26 +60,7 @@
       @media (max-width: 543px) {
         max-width: 100%;
       }
-      .btn.btn-success.btn-lg{
-        background: $brand-color;
-        border-radius: 3px;
-        transition: 0s;
-
-        &.try-it-out {
-          padding: 0.6rem auto;
-        }
-
-        &:hover{
-          background-color: #15bc70;
-          border-color: #15bc70;
-        }
-
-        &:active {
-          color: #fff;
-          background-color: #0a5d38;
-          border-color: #063822;
-        }
-
+      .btn{
         @media (max-width: 543px) {
           text-align: right;
           padding-right: 1.5rem;

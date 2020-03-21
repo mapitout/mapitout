@@ -23,12 +23,16 @@ export default {
         subject: '[mapitout]Welcome and Account Activation.',
         message: (config.version=='public' || config.version=='internal')?activationEmailTemplate(deepLink):accessRequestEmailTemplate(deepLink)
       };
-      Email.send(mailObj).then(email=>{
-        res.send({email});
-      }).catch((err)=>{
-        console.log(err);
-        next('500:Email is bad.')
-      });
+      if(config.ses_to_verify){
+        Email.send(mailObj).then(email=>{
+          res.send({email});
+        }).catch((err)=>{
+          console.log(err);
+          next('500:Email is bad.')
+        });
+      }else{
+        res.send({ deepLink })
+      }
     }).catch(next);
   },
   verifyEmailToken: (req, res, next) => {

@@ -37,7 +37,6 @@ class Navbar extends Component {
                         </a>
                         <div className={this.state.toggle?"dropdown-menu show":"dropdown-menu"} onClick={this.toggleDropDown.bind(this)} aria-labelledby="navbarDropdown">
                             <NavLink className='dropdown-item' to="/user">Profile</NavLink>
-                            <NavLink className='dropdown-item' to="/user/settings">Settings</NavLink>
                             <div className="dropdown-divider"></div>
                             <NavLink className="dropdown-item" to="/signout">Log Out</NavLink>
                         </div>
@@ -61,14 +60,17 @@ class Navbar extends Component {
         return (
             <nav className="navbar navbar-expand sticky-top navbar-light">
                 <LoadingBar className='mapitout-loading-bar' />
-                <NavLink className="navbar-brand" to="/">
-                    <img src="../assets/svgs/logo-r.svg" height="30" className='d-sm-none'/>
-                    <img src="../assets/svgs/logo-long.svg" height="30" className='d-none d-sm-block'/>
-                </NavLink>
+                <a className="navbar-brand" href="/">
+                    <div className="logo-big">
+                        MapItOut
+                    </div>
+                    {/* <img src="../assets/svgs/logo-r.svg" height="30" className='d-sm-none'/> */}
+                    {/* <img src="../assets/svgs/logo-long.svg" height="30" className='d-none d-sm-block'/> */}
+                </a>
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item">
-                            <NavLink className={this.renderClass('nav-link', 'pocket')} to="/pocket">Pocket</NavLink>
+                            {/* <NavLink className={this.renderClass('nav-link', 'pocket')} to="/pocket">Pocket</NavLink> */}
                         </li>
                     </ul>
                     <ul className="navbar-nav">

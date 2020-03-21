@@ -1,8 +1,7 @@
 {
   "name": "mapitout-client",
-  "version": "1.0.1",
-  "description": "Simple starter package for Redux with React and Babel support",
-  "main": "index.js",
+  "version": "0.0.1",
+  "description": "Mapitout client",
   "scripts": {
     "start": "serve ../docs",
     "dev": "webpack-dev-server --open --config webpack.dev.js",

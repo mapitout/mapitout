@@ -8,10 +8,10 @@ class Welcome extends React.Component {
       <div className='welcome'>
         <div className='content-container'>
           <div className='title'>
-            Improve your monthly spend!
+            MapOut Useful Information
           </div>
           <div className='subtitle'>
-            Find peers to split spotify/mobile/insurance bills.
+            Share useful localtion based information with the world.
           </div>
           <div  className='button-container'>
             {this.renderButton()}
@@ -22,10 +22,18 @@ class Welcome extends React.Component {
   renderButton(){
     return (!this.props.isLoggedin)?(
       <div>
-        <Link className='btn btn-primary btn-block btn-lg try-it-out' to='signup'>Try It Now</Link>
+        <Link to='signup'>
+          <button className='btn btn-success btn-block btn-lg try-it-out'>
+            Try It Now
+          </button>
+        </Link>
       </div>)
     :(<div>
-        <Link className='btn btn-primary btn-block btn-lg' to='pocket'>My Pocket</Link>
+        <Link to='signup'>
+          <button className='btn btn-success btn-block btn-lg try-it-out'>
+            Explore now
+          </button>
+        </Link>
       </div>)
   }
 }

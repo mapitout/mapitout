@@ -9,7 +9,6 @@ import reduxMiddlewares from './redux/middlewares';
 import Layout from './components/layout';
 import Landing from './components/landing';
 import User from './components/user';
-import Pocket from './components/pocket';
 import Signin from './components/auth/signin';
 import SignupWithEmail from './components/auth/signupWithEmail';
 import SignupVerification from './components/auth/signupVerification';
@@ -43,7 +42,6 @@ ReactDOM.render(
           <Route path='/signupVerification' component= {SignupVerification} />
           <Route path='/signin' component= {Signin} />
           <Route path='/signout' component= {Signout} />
-          <Route path='/pocket' component= {Pocket} />
         </Layout>
       </Switch>
     </HashRouter>

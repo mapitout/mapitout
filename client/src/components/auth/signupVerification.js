@@ -90,7 +90,7 @@ class SignupVerification extends Component {
         }else{
             return <div>
                 {emailTokenGood?(<div>
-                <h3 className='card-title text-center text-success'>Email Verified</h3>
+                <h3 className='card-title text-center text-success'>One Last step</h3>
                 <div className='signup-title'>Account Information</div>
                 <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))} onChange={signupEmailReset}>
                     <div className='form-group'>
@@ -145,10 +145,10 @@ class SignupVerification extends Component {
                         <div className='signup-title'>Choose Your Avatar</div>
                         <div className='form-group-row row'>
                             <div className='col'>
-                                <img className={(this.state.avatarChosen==0)} onClick={this.chooseAvatar.bind(this,0)} src='../../assets/icons/mascot-m.jpg'/>
+                                <img className={`${(this.state.avatarChosen==0)}-img`} onClick={this.chooseAvatar.bind(this,0)} src='../../assets/icons/mascot-m.jpg'/>
                             </div>
                             <div className='col'>
-                                <img  className={(this.state.avatarChosen==1)} onClick={this.chooseAvatar.bind(this,1)} src='../../assets/icons/mascot-w.jpg'/>
+                                <img className={`${(this.state.avatarChosen==1)}-img`} onClick={this.chooseAvatar.bind(this,1)} src='../../assets/icons/mascot-w.jpg'/>
                             </div>
                         </div>
                     </div>

@@ -1,17 +1,29 @@
-.btn.btn-success.btn-lg.btn-block{
+a, a:hover {
+  text-decoration: none;
+}
+
+
+.btn.btn-success{
   background: $brand-color;
   border-radius: 3px;
   transition: 0s;
-
-  &:hover{
-    background-color: #15bc70;
-    border-color: #15bc70;
-  }
-
   &:active {
     color: #fff;
-    background-color: #0a5d38;
-    border-color: #063822;
+    background-color: darken($brand-color, 1%);
+    border-color: darken($brand-color, 1%);
+  }
+
+  &:hover{
+    background-color: darken($brand-color, 1%);
+  }
+}
+
+.btn-success:not([disabled]):not(.disabled).active, .btn-success:not([disabled]):not(.disabled):active, .show>.btn-success.dropdown-toggle {
+  &:active {
+    color: #fff;
+    background-color: darken($brand-color, 1%);
+    border-color: darken($brand-color, 10%);
+    box-shadow: 0 0 0 0.2rem rgba($brand-color,.5);
   }
 }
 

@@ -12,7 +12,11 @@ export function signupWithEmail(email) {
       request
           .post(`/signupWithEmail`, {email})
           .then(res => {
-              dispatch({ type: SIGNUP_EMAIL_SENT, payload: res.data.email })
+            if(res.data.deepLink) {
+              dispatch({ type: SIGNUP_EMAIL_SENT, payload: {deepLink: res.data.deepLink} })
+            }else{
+              dispatch({ type: SIGNUP_EMAIL_SENT, payload: {email: res.data.email} })
+            }
           })
           .catch((err) => {
             if(err.response){
@@ -35,13 +39,14 @@ export function signupWithEmail(email) {
 
 let INITIAL_STATE = {
   emailStateError: null,
-  emailSentTo: null
+  emailSentTo: null,
+  deepLink: null
 }
 
 export function signupWithEmailReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case SIGNUP_EMAIL_SENT:
-      return { ...state, emailSentTo: action.payload }
+      return { ...state, emailSentTo: action.payload.email, deepLink: action.payload.deepLink }
     case SIGNUP_EMAIL_IS_IN_USE:
       return { ...state, emailStateError: action.payload }
     case SIGNUP_WITH_EMAIL_RESET:
