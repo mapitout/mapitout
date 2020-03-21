@@ -51,6 +51,6 @@
     "eslint-plugin-standard": "^3.0.1",
     "husky": "^0.14.3",
     "webpack": "^3.11.0",
-    "webpack-bundle-analyzer": "^2.10.0"
+    "webpack-bundle-analyzer": "^3.6.1"
   }
 }
