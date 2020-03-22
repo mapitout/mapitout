@@ -44,11 +44,11 @@ $ npm run test
   $ npm run deploy:server
   ```
 
-## Links
+## Useful Links
 
 - Github: https://github.com/mapitout
-- Frontend: https://mapitout.github.io/
-- Backend: https://mapitout-server.herokuapp.com/
+- Application: https://mapitout.github.io/
+- Server: https://mapitout-server.herokuapp.com/
 - Google Analysis: https://analytics.google.com/analytics/web/?authuser=0#/report-home/a161563089w226557909p214189300
 
 ## License
