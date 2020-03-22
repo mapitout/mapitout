@@ -16,7 +16,7 @@ const Index = () => {
     zoom: 14
   });
 
-  var resizeId;
+  let resizeId;
   window.addEventListener('resize', function (d) {
     clearTimeout(resizeId);
     resizeId = setTimeout(doneResizing, 500);
