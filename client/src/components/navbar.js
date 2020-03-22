@@ -77,7 +77,7 @@ class Navbar extends Component {
                         </li>
                     </ul>
                     <ul className="navbar-nav">
-                        {this.renderSignButton()}
+                        {/* {this.renderSignButton()} */}
                     </ul>
                 </div>
             </nav>
