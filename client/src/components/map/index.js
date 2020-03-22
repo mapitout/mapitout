@@ -1,16 +1,9 @@
 import React from 'react'
 import MapGL, { 
   GeolocateControl,
-  ScaleControl
+  NavigationControl
 } from 'react-map-gl';
 import MAP_STYLE from './map-styles'
-
-const geolocateStyle = {
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  margin: 10
-};
 
 const Index = () => {
   const [viewport, setViewport] = React.useState({
@@ -44,12 +37,26 @@ const Index = () => {
         mapStyle={MAP_STYLE.MAPITOUT_LIGHT}
       >
         <GeolocateControl
-          style={geolocateStyle}
+          style={{
+            position: 'absolute',
+            top: 64,
+            right: 0,
+            margin: 10
+          }}
           positionOptions={{enableHighAccuracy: true}}
-          trackUserLocation={true}
+          trackUserLocation={false}
         />
-        {/* <NavigationControl /> */}
-        <ScaleControl />
+        <div style={{
+            position: 'absolute',
+            top: 64+50,
+            padding: 10,
+            right: 0,
+        }}>
+          <NavigationControl
+            positionOptions={{enableHighAccuracy: true}}
+            trackUserLocation={true}
+          />
+        </div>
       </MapGL>
     </div>
   );
