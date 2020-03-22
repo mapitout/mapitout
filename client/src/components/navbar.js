@@ -61,10 +61,10 @@ class Navbar extends Component {
             <nav className="navbar navbar-expand navbar-light">
                 <LoadingBar className='mapitout-loading-bar' />
                 <a className="navbar-brand" href="/">
-                    {/* <div className="logo-big">
+                    <div className="logo-big">
                         MapItOut
-                    </div> */}
-                    <img src="../assets/svgs/mapitout-logo.svg" height="30" className='main-navbar-logo'/>
+                    </div>
+                    {/* <img src="../assets/svgs/mapitout-logo.svg" height="30" className='main-navbar-logo'/> */}
                     {/* <img src="../assets/svgs/logo-long.svg" height="30" className='d-none d-sm-block'/> */}
                 </a>
                 <div className="collapse navbar-collapse" id="navbarNav">
