@@ -44,7 +44,10 @@ const Index = () => {
             margin: 10
           }}
           positionOptions={{enableHighAccuracy: true}}
-          trackUserLocation={false}
+          trackUserLocation={true}
+          showAccuracyCircle={true}
+          showUserLocation={true}
+          timeout={60000}
         />
         <div style={{
             position: 'absolute',
