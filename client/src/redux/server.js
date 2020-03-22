@@ -14,7 +14,7 @@ export function serverConnect() {
             .then(res => {
                 dispatch({
                     type: AUTH_USER,
-                    payload: localStorage.getItem('auth_jwt_token')
+                    payload: localStorage.getItem('mapitout_auth_jwt_token')
                 })
                 dispatch({
                     type: AUTH_ADMIN,

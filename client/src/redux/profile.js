@@ -49,7 +49,7 @@ export function updateProfileAvatar(avatar) {
         const baseURL = process.env.SERVERURI || 'http://localhost:8000'
         superagent
         .post(`${baseURL}/api/user/profile/avatar`)
-        .set('Authorization', localStorage.getItem('auth_jwt_token') || 'Unauthorized')
+        .set('Authorization', localStorage.getItem('mapitout_auth_jwt_token') || 'Unauthorized')
         .attach('avatar', avatar)
         .end((err, res) => {
             if (err) return console.log(err);

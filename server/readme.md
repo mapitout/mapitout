@@ -17,7 +17,7 @@ notes: The first three route are publicly available.
 to use `/api` route, complete the following stpes:
 
 - Login [mapitout](https://mapitout.com/#signin) to signup
-- A `auth_jwt_token` will be generated and stored in your browser localStorage
+- A `mapitout_auth_jwt_token` will be generated and stored in your browser localStorage
 - This token will expired in 7 days, to request an extended token, [contact]((team@mapitout.com)) us
 - Every API endpoint requires an `Authentication` header
 

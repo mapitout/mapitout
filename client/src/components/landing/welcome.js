@@ -29,7 +29,7 @@ class Welcome extends React.Component {
         </Link>
       </div>)
     :(<div>
-        <Link to='signup'>
+        <Link to='explore'>
           <button className='btn btn-success btn-block btn-lg try-it-out'>
             Explore now
           </button>

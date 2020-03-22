@@ -59,7 +59,7 @@ export function signupVerificationReducer(state = INITIAL_STATE, action) {
     case SIGNUP_EMAIL_BAD:
         return { ...state, authUserError: action.payload }
     case SIGNUP_EMAIL_GOOD:
-        window.location = '/#user/settings';
+        window.location = '/';
         break;
     case SIGNUP_EMAIL_RESET:
         return INITIAL_STATE;

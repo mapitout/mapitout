@@ -14,7 +14,7 @@ export function authReducer(state=INITIAL_STATE, action) {
     switch (action.type) {
         case AUTH_USER:
             if(action.payload.token){
-                localStorage.setItem('auth_jwt_token', action.payload.token);
+                localStorage.setItem('mapitout_auth_jwt_token', action.payload.token);
             }
             return { ...state,
                 authenticated: true
@@ -26,7 +26,7 @@ export function authReducer(state=INITIAL_STATE, action) {
                 isAdmin: action.payload
             }
         case UNAUTH_USER:
-            localStorage.removeItem('auth_jwt_token');
+            localStorage.removeItem('mapitout_auth_jwt_token');
             localStorage.removeItem('is_admin');
             return { ...state,
                 authenticated: false,
