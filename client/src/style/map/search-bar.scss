@@ -1,0 +1,30 @@
+.mapboxgl-ctrl-top-left {
+  margin-top: 64px;
+  .mapboxgl-ctrl-geocoder--input {
+    height: 40px;
+    border-radius: 8px;
+    font-weight: 600;
+  }
+  .mapboxgl-ctrl-geocoder.mapboxgl-ctrl.mapboxgl-ctrl-geocoder--collapsed {
+    width: 40px;
+  }
+  svg.mapboxgl-ctrl-geocoder--icon.mapboxgl-ctrl-geocoder--icon-search {
+    height: 25px;
+    width: 25px;
+    transform: translateY(-1px);
+    fill: black;
+  }
+  svg.mapboxgl-ctrl-geocoder--icon.mapboxgl-ctrl-geocoder--icon-loading {
+    height: 25px;
+    width: 25px;
+    transform: translateY(-1px);
+  }
+  .mapboxgl-ctrl-geocoder--icon.mapboxgl-ctrl-geocoder--icon-close {
+    height: 20px;
+    width: 20px;
+    transform: translateY(1px);
+  }
+  div, span, svg, button{
+    outline: none;
+  }
+}

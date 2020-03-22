@@ -1,3 +1,6 @@
+@import './search-bar.scss';
+@import url('https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.css');
+
 .mapboxgl-ctrl-attrib-inner, a.mapboxgl-ctrl-logo {
   display: none;
 }
