@@ -58,7 +58,7 @@ class Navbar extends Component {
     }
     render() {
         return (
-            <nav className="navbar navbar-expand sticky-top navbar-light">
+            <nav className="navbar navbar-expand navbar-light">
                 <LoadingBar className='mapitout-loading-bar' />
                 <a className="navbar-brand" href="/">
                     <div className="logo-big">

@@ -1,5 +1,9 @@
 import React from 'react'
-import ReactMapGL, {GeolocateControl} from 'react-map-gl';
+import MapGL, { 
+  GeolocateControl,
+  ScaleControl
+} from 'react-map-gl';
+import MAP_STYLE from './map-style-basic-v8.js'
 
 const geolocateStyle = {
   position: 'absolute',
@@ -16,44 +20,37 @@ const Index = () => {
     longitude: -122.4376,
     zoom: 14
   });
-  var options = {
-    enableHighAccuracy: true,
-    timeout: 5000,
-    maximumAge: 0
-  };
 
   function getLocation(pos) {
-    const crd = pos.coords;
     setViewport({
       ...viewport,
-      latitude: crd.latitude,
-      longitude: crd.longitude,
+      latitude: pos.coords.latitude,
+      longitude: pos.coords.longitude,
     })
-  }
-
-  function error(err) {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
   }
 
   function _onViewportChange(viewport) {
     setViewport({...viewport})
-    console.log(viewport)
+    // console.log(viewport)
   }
 
-  navigator.geolocation.getCurrentPosition(getLocation, error, options)
+  navigator.geolocation.getCurrentPosition(getLocation, (e)=>console.error(e.message), { enableHighAccuracy: true })
   return (
     <div className='map-view-conatiner'>
-      <ReactMapGL
-        mapboxApiAccessToken='pk.eyJ1IjoiYW1hemluZ2FuZHl5eSIsImEiOiJjamZqM25pZGYwamRvMnFvM3RsMTFyZDFzIn0.1YaQZ-Y0SXLmwfs0vQtO7w'
+      <MapGL
+        mapboxApiAccessToken={process.env.MAPBOX_API_KEY}
         {...viewport}
         onViewportChange={_onViewportChange}
+        mapStyle={MAP_STYLE.LIGHT}
       >
         <GeolocateControl
           style={geolocateStyle}
           positionOptions={{enableHighAccuracy: true}}
           trackUserLocation={true}
         />
-      </ReactMapGL>
+        {/* <NavigationControl /> */}
+        <ScaleControl />
+      </MapGL>
     </div>
   );
 };
