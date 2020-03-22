@@ -1,5 +1,12 @@
-import React from 'react'
+import React from 'react';
+import USData from './USData';
 
-const Index = () => <div>COVID 19 Info Page</div>;
+const Index = () => {
 
+  return(
+    <div>
+      <USData/>
+    </div>
+  )
+}
 export default Index;

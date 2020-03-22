@@ -13,3 +13,5 @@ note.txt
 .deprecated/
 
 docs/
+
+package-lock.json
