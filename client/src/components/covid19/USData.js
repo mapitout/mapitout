@@ -15,8 +15,6 @@ class USData extends React.Component {
   componentDidMount() {
     axios.get('https://pomber.github.io/covid19/timeseries.json')
       .then(res => {
-        console.log(res)
-        console.log(res.data.US)
         let USData = res.data.US;
         let newData = USData.slice(39, USData.length);
         this.setState({
