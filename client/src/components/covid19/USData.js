@@ -28,23 +28,23 @@ class USData extends React.Component {
 
   render() {
     return (
-      <div className="container text-center mt-5">
-        <div className="row text-center">
-
-        <h5 >Total confirmed cases and deaths in United States since March 1st</h5>
-          <ResponsiveContainer width="95%" height={600}>
-          
-            <BarChart data={this.state.data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="confirmed" fill="#8884d8" />
-              <Bar dataKey="deaths" fill="#82ca9d" />
-              {/* <Bar dataKey="recovered" fill="#82ca9d" /> */}
-            </BarChart>
-          </ResponsiveContainer>
+      <div className="usdata">
+        <div className="container text-center">
+          <div className="row text-center">
+            <h5 >Total confirmed cases and deaths in United States since March 1st</h5>
+            <ResponsiveContainer width="95%" height={600}>
+              <BarChart data={this.state.data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="date" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="confirmed" fill="#8884d8" />
+                <Bar dataKey="deaths" fill="#82ca9d" />
+                {/* <Bar dataKey="recovered" fill="#82ca9d" /> */}
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
         </div>
       </div>
     )
