@@ -1,6 +1,12 @@
 <div align="center">
   <img src='https://github.com/mapitout/design/blob/master/assets/logo.png?raw=true' width='120px' alt='mapitout-logo.png'/>
+  <h1>Mapitout</h1>
+  <p>
+    A crowdsourcing platform that everyone can update and share useful location based information with the community.
+  </p>
 </div>
+
+---
 
 ## Initial Setup
 
