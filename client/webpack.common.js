@@ -79,7 +79,12 @@ module.exports = {
         }),
         new CopyWebpackPlugin([
             { from: path.resolve(__dirname, './src/assets'), to: 'assets' }
-        ])
+        ]),
+        new webpack.DefinePlugin({
+            'process.env': {
+                'MAPBOX_API_KEY': JSON.stringify('pk.eyJ1IjoiYW1hemluZ2FuZHl5eSIsImEiOiJjamZqM25pZGYwamRvMnFvM3RsMTFyZDFzIn0.1YaQZ-Y0SXLmwfs0vQtO7w')
+            }
+        })
     ],
     node: {
         console: true,

@@ -22,6 +22,7 @@ import reducers from './reducers';
 import {serverConnect} from './actions';
 
 import './style/style.scss'
+import * as serviceWorker from './services/serviceWorker';
 
 export const store = createStore(
   reducers,
@@ -52,3 +53,8 @@ ReactDOM.render(
     </HashRouter>
   </Provider>
   , document.getElementById('root'));
+
+// If you want your app to work offline and load faster, you can change
+// Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+serviceWorker.register()

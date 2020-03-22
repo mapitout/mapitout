@@ -10,7 +10,7 @@ request.defaults.headers.common['Authorization'] = localStorage.getItem('mapitou
 
 request.interceptors.request.use(config => {
   if (config.url.includes('/api')){
-    if(!localStorage.getItem('mapitout_auth_jwt_token')) return Promise.reject('Is not logged in (No Authorization)');
+    if(!localStorage.getItem('mapitout_auth_jwt_token')) return Promise.reject('User is not logged in (No Authorization)');
     config.headers['Authorization'] = localStorage.getItem('mapitout_auth_jwt_token');
   }
   return config;

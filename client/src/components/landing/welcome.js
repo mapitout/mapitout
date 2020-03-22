@@ -11,7 +11,7 @@ class Welcome extends React.Component {
             MapOut Useful Information
           </div>
           <div className='subtitle'>
-            Share useful localtion based information with the world.
+            Share useful location based information with the world.
           </div>
           <div  className='button-container'>
             {this.renderButton()}

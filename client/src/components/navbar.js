@@ -58,26 +58,26 @@ class Navbar extends Component {
     }
     render() {
         return (
-            <nav className="navbar navbar-expand sticky-top navbar-light">
+            <nav className="navbar navbar-expand navbar-light">
                 <LoadingBar className='mapitout-loading-bar' />
                 <a className="navbar-brand" href="/">
                     <div className="logo-big">
                         MapItOut
                     </div>
-                    {/* <img src="../assets/svgs/logo-r.svg" height="30" className='d-sm-none'/> */}
+                    {/* <img src="../assets/svgs/mapitout-logo.svg" height="30" className='main-navbar-logo'/> */}
                     {/* <img src="../assets/svgs/logo-long.svg" height="30" className='d-none d-sm-block'/> */}
                 </a>
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav mr-auto">
+                        
+                    </ul>
+                    <ul className="navbar-nav">
                         <li className="nav-item">
                             <NavLink className={this.renderClass('nav-link', 'map')} to="/map">Map</NavLink>
                         </li>
                         <li className="nav-item">
                             <NavLink className={this.renderClass('nav-link', 'covid19')} to="/covid19">Covid19</NavLink>
                         </li>
-                    </ul>
-                    <ul className="navbar-nav">
-                        {/* {this.renderSignButton()} */}
                     </ul>
                 </div>
             </nav>
