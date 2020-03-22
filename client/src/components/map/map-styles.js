@@ -1,7 +1,8 @@
+const MAPITOUT_LIGHT = 'mapbox://styles/amazingandyyy/ck82lqyds1dk61iph9hlcc7p6';
 const DARK = 'mapbox://styles/mapbox/dark-v10';
 const LIGHT = 'mapbox://styles/mapbox/light-v10';
 const STREET = 'mapbox://styles/mapbox/streets-v11';
-const BASIC = {
+const USER_BASIC = {
   "version": 8,
   "name": "Basic",
   "metadata": {
@@ -872,5 +873,6 @@ export default {
   DARK,
   LIGHT,
   STREET,
-  BASIC
+  USER_BASIC,
+  MAPITOUT_LIGHT
 }

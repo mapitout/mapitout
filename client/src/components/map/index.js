@@ -3,7 +3,7 @@ import MapGL, {
   GeolocateControl,
   ScaleControl
 } from 'react-map-gl';
-import MAP_STYLE from './map-style-basic-v8.js'
+import MAP_STYLE from './map-styles'
 
 const geolocateStyle = {
   position: 'absolute',
@@ -41,7 +41,7 @@ const Index = () => {
         mapboxApiAccessToken={process.env.MAPBOX_API_KEY}
         {...viewport}
         onViewportChange={_onViewportChange}
-        mapStyle={MAP_STYLE.LIGHT}
+        mapStyle={MAP_STYLE.MAPITOUT_LIGHT}
       >
         <GeolocateControl
           style={geolocateStyle}
