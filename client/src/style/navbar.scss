@@ -1,23 +1,6 @@
-.admin-component nav.navbar{
-    padding: 5px 40px;
-    box-shadow: inset 0px -1px 0px rgba(black, 0.05), 0 0.2rem 0.75rem rgba(0, 0, 0,.05);
-    z-index: 1;
-    .navbar-brand {
-        margin-top: 0rem;
-        letter-spacing: 0.5px;
-    }
-    @media (max-width: 600px) {
-        padding: 5px 10px 5px 15px;
-        font-size: 0.9rem;
-        .navbar-brand{
-            font-size: 1rem;
-        }
-    }
-}
-
 nav.navbar {
   background: white;
-  padding: 15px 40px;
+  padding: 10px 20px;
   box-shadow: inset 0px -1px 0px rgba(black, 0.05), 0 0.2rem 0.75rem rgba(0, 0, 0,.05);
   @media (max-width: 600px) {
       padding: 5px 10px;
@@ -29,8 +12,6 @@ nav.navbar {
   .navbar-brand {
       display: inline-block;
       padding: 0.225rem;
-      margin-right: 1rem;
-      margin-top: -0.31rem;
       .logo-big {
         font-weight: 900;
         font-size: 1.5rem;

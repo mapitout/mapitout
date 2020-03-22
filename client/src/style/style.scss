@@ -12,6 +12,7 @@
 @import 'moment';
 @import 'user';
 @import 'auth';
+@import 'map';
 
 * { 
     font-family: 'Open Sans', sans-serif;
@@ -30,7 +31,6 @@ body {
     .rc-anchor-normal{
         margin: auto;
     }
-
     .container-mapitout{
         margin: auto;
         padding: 5px 40px;
