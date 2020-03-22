@@ -22,7 +22,7 @@ import reducers from './reducers';
 import {serverConnect} from './actions';
 
 import './style/style.scss'
-import * as serviceWorker from './services/serviceWorker';
+import * as serviceWorker from './services/service-worker';
 
 export const store = createStore(
   reducers,

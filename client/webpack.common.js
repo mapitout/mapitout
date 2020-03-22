@@ -10,8 +10,9 @@ module.exports = {
         main: path.resolve(__dirname, './src/app.js'),
         'vendor.js': [
             'react', 'react-dom', 'redux', 
-            'react-redux', 'react-router-dom', 'redux-form', 
-            'axios', 'prop-types'
+            'react-redux', 'react-router-dom', 'redux-form', 'redux-thunk',
+            'axios', 'prop-types', 'lodash',
+            'react-map-gl', 'react-recaptcha'
         ]
     },
     output: {
