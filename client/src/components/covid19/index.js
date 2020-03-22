@@ -1,11 +1,11 @@
 import React from 'react';
-import TestData from './testData';
+import USData from './USData';
 
 const Index = () => {
 
   return(
     <div>
-      <TestData/>
+      <USData/>
     </div>
   )
 }
