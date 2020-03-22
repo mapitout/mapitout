@@ -14,6 +14,9 @@ import SignupWithEmail from './components/auth/signupWithEmail';
 import SignupVerification from './components/auth/signupVerification';
 import Signout from './components/auth/signout';
 
+import Covid19 from './components/covid19';
+import MapView from './components/map';
+
 import RequireAuth from './components/auth/requireAuth';
 import reducers from './reducers';
 import {serverConnect} from './actions';
@@ -31,7 +34,7 @@ serverConnect()(store.dispatch);
 
 ReactDOM.render(
   <Provider store={store}>
-    <HashRouter hashType='noslash'>
+    <HashRouter hashType='slash'>
       <Switch>
         <Layout>
           <Route exact path='/' component= {Landing} />
@@ -42,6 +45,8 @@ ReactDOM.render(
           <Route path='/signupVerification' component= {SignupVerification} />
           <Route path='/signin' component= {Signin} />
           <Route path='/signout' component= {Signout} />
+          <Route path='/covid19' component= {Covid19} />
+          <Route path='/map' component= {MapView} />
         </Layout>
       </Switch>
     </HashRouter>

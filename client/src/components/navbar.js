@@ -70,7 +70,10 @@ class Navbar extends Component {
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item">
-                            {/* <NavLink className={this.renderClass('nav-link', 'pocket')} to="/pocket">Pocket</NavLink> */}
+                            <NavLink className={this.renderClass('nav-link', 'map')} to="/map">Map</NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className={this.renderClass('nav-link', 'covid19')} to="/covid19">Covid19</NavLink>
                         </li>
                     </ul>
                     <ul className="navbar-nav">
