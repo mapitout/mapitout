@@ -10,7 +10,7 @@ $ cd mapitout
 $ ./scripts/setup.sh
 ```
 
-## Developement
+## Develop
 
 ```
 $ cd client
@@ -30,7 +30,7 @@ $ npm run dev
 $ npm run test
 ```
 
-## Deployment
+## Deploy
 
 1. Deploy frontend: push/merge to master, will trigger this Travis Worker[![Build Status](https://travis-ci.org/mapitout/mapitout.svg?branch=master)](https://travis-ci.org/mapitout/mapitout) to build and push files to [this repo](https://github.com/mapitout/mapitout.github.io)
 2. Deploy backend: run NPM scripts and it will push server subfoler to this [heroku app](https://dashboard.heroku.com/apps/mapitout-server)
@@ -45,9 +45,6 @@ $ npm run test
 - Backend: https://mapitout-server.herokuapp.com/
 - Google Analysis: https://analytics.google.com/analytics/web/?authuser=0#/report-home/a161563089w226557909p214189300
 
-## Styling
-
-
-
 ## License
+
 MIT
