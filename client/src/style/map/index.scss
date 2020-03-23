@@ -64,4 +64,14 @@
   .mapboxgl-ctrl button.mapboxgl-ctrl-zoom-out .mapboxgl-ctrl-icon {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' height='16' width='16' fill='currentColor'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z'%3E%3C/path%3E%3C/svg%3E");
   }
+
+  .item-view-container {
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 20px, rgba(0, 0, 0, 0.01) 0px 0px 0px 1px;
+    border-radius: 8px;
+    background: white;
+    display: inline-block;
+    margin: 120px 10px;
+    padding: 10px;
+    width: 360px;
+  }
 }

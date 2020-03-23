@@ -1,21 +1,19 @@
 import React from 'react'
-import MapGL, {
-  GeolocateControl,
-  NavigationControl,
-  Marker
-} from 'react-map-gl';
+import MapGL, { GeolocateControl, NavigationControl, Marker } from 'react-map-gl';
 import MAP_STYLE from './map-styles'
 import Geocoder from 'react-map-gl-geocoder';
 import qs from 'qs';
+import Item from '../item';
 
+const ZOOM = 16;
 const Index = () => {
   const [viewport, setViewport] = React.useState({
     width: '100%',
     height: '100%',
     latitude: 37.7577,
     longitude: -122.4376,
-    zoom: 14,
-    transitionDuration: 500
+    zoom: ZOOM,
+    transitionDuration: 400
   });
   const [focused, setFocused] = React.useState(false)
   const [focusport, setFocusport] = React.useState({
@@ -31,7 +29,7 @@ const Index = () => {
     resizeId = setTimeout(doneResizing, 500);
   });
   function doneResizing() {
-    setViewport({ ...viewport, width: '100%', height: '100%' })
+    setViewport({ ...viewport, width: '100%', height: '100%', transitionDuration: 100 })
   }
   function getLocation({ coords: { latitude, longitude } }) {
     console.log('Corrdinates updated')
@@ -40,11 +38,12 @@ const Index = () => {
   function onGeocoderSelected(v) {
     setFocused(true);
     setFocusport({
+      ...focusport,
       key: 'current-focused-item',
       longitude: v.longitude,
       latitude: v.latitude
     })
-    setViewport({ ...viewport, ...v })
+    setViewport({ ...viewport, ...v, transitionDuration: 300 })
   }
   function onInputChange(input) {
     const uri_params = qs.stringify({
@@ -61,7 +60,7 @@ const Index = () => {
   }
   function onGeocoderLoading({query}){
     const uri_params = qs.stringify({
-      input: query
+      q: query
     })
     updateURL(uri_params)
   }
@@ -80,7 +79,7 @@ const Index = () => {
           key: 'current-focused-item',
           longitude, latitude, name
         })
-        setViewport({ ...viewport, longitude, latitude, zoom: 16, transitionDuration: 700 })
+        setViewport({ ...viewport, longitude, latitude, transitionDuration: 400 })
       }catch(e){
         console.error(e.message);
       }
@@ -100,6 +99,9 @@ const Index = () => {
         onViewportChange={setViewport}
         mapStyle={MAP_STYLE.MAPITOUT_LIGHT}
       >
+        <div className='item-view-container'>
+          <Item />
+        </div>
         <Geocoder
           onLoading={onGeocoderLoading}
           inputValue={focusport.name}
@@ -108,14 +110,14 @@ const Index = () => {
           mapboxApiAccessToken={MAPBOX_API_KEY}
           position='top-left'
           enableEventLogging={false}
-          limit={8}
+          limit={10}
           onResult={onInputChange}
           countries='us'
           placeholder='Search On The Map'
           proximity={{longitude: viewport.longitude, latitude: viewport.latitude}}
           // collapsed={true}
           trackProximity={true}
-          bbox={[-124.409591, 32.534156, -114.131211, 42.009518]}
+          bbox={[-124.409591, 32.534156, -114.131211, 42.009518]} // boundary of California
         />
         {focused && <Marker key={focusport.key}
           latitude={focusport.latitude}
