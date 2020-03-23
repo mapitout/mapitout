@@ -15,7 +15,7 @@ import SignupVerification from './components/auth/signupVerification';
 import Signout from './components/auth/signout';
 
 import Covid19 from './components/covid19';
-import MapView from './components/map';
+import MapView from './components/maps';
 
 import RequireAuth from './components/auth/requireAuth';
 import reducers from './reducers';
@@ -47,7 +47,7 @@ ReactDOM.render(
           <Route path='/signin' component= {Signin} />
           <Route path='/signout' component= {Signout} />
           <Route path='/covid19' component= {Covid19} />
-          <Route path='/map' component= {MapView} />
+          <Route path='/maps' component= {MapView} />
         </Layout>
       </Switch>
     </HashRouter>

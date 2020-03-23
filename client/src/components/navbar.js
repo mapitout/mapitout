@@ -73,7 +73,7 @@ class Navbar extends Component {
                     </ul>
                     <ul className="navbar-nav">
                         <li className="nav-item">
-                            <NavLink className={this.renderClass('nav-link', 'map')} to="/map">Map</NavLink>
+                            <NavLink className={this.renderClass('nav-link', 'map')} to="/maps">Maps</NavLink>
                         </li>
                         <li className="nav-item">
                             <NavLink className={this.renderClass('nav-link', 'covid19')} to="/covid19">Covid19</NavLink>
