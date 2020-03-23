@@ -1,6 +1,7 @@
 import User from './user/controller';
 import { loginRequired } from './middlewares';
 import api from './api';
+import publicApi from './publicApi';
 
 const router = require('express').Router();
 router.get('/', (req, res)=>res.send({message: 'connect to server.mapitout.com', webhook: 'https://server.mapitout.com/webhook', openapi:'https://server.mapitout.com/openapi', api: 'https://server.mapitout.com/api'}));
@@ -10,7 +11,8 @@ router.post('/signupWithEmail', User.signupWithEmail);
 router.post('/verifyEmailToken', User.verifyEmailToken);
 router.post('/signup/:token', User.signup);
 router.post('/signin', User.signin);
-
+router.use('/publicApi', publicApi);
 router.use('/api', loginRequired, api);
 
 export default router;
+

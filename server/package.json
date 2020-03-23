@@ -13,7 +13,7 @@
     "axios": "^0.19.2",
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.15.2",
-    "cheerio": "^1.0.0-rc.2",
+    "cheerio": "^1.0.0-rc.3",
     "cors": "^2.8.1",
     "crypto-js": "^3.1.9-1",
     "dotenv": "^2.0.0",
@@ -27,7 +27,7 @@
     "plaid": "^4.7.0",
     "qs": "^6.5.1",
     "raven": "^2.4.1",
-    "request": "^2.88.0"
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
