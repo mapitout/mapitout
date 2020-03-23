@@ -6,8 +6,9 @@
     "start": "serve ../docs",
     "dev": "webpack-dev-server --open --config webpack.dev.js",
     "build": "rm -rf ../docs && webpack -p --config webpack.prod.js --optimize-minimize && npm run copy-files",
-    "copy-files": "npm run copy-manifest && npm run copy-readme",
+    "copy-files": "npm run copy-sw && npm run copy-manifest && npm run copy-readme",
     "create-cname": "touch ../docs/CNAME && echo \"www.mapitout.com\" >> ../docs/CNAME ",
+    "copy-sw": "cp src/services/service-worker.js ../docs",
     "copy-manifest": "cp src/manifest.json ../docs",
     "copy-readme": "cp ./readme.md ../docs"
   },
@@ -46,7 +47,6 @@
     "lodash": "^4.17.15",
     "mapbox-gl": "^1.8.1",
     "prop-types": "^15.6.0",
-    "qrcode": "^1.4.4",
     "qs": "^6.5.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
