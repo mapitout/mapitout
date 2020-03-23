@@ -5,8 +5,11 @@ import bbox from '@turf/bbox';
 
 import ControlPanel from './control-panel';
 import MAP_STYLE from './map-style';
+import axios from 'axios';
+const VectorTile = require('@mapbox/vector-tile').VectorTile;
+import Protobuf from 'pbf';
 
-const TOKEN = ''; // Set your mapbox token here
+const TOKEN = process.env.MAPBOX_API_KEY; // Set your mapbox token here
 
 export default class CACounty extends Component {
   constructor(props) {
@@ -24,6 +27,19 @@ export default class CACounty extends Component {
 
     this._map = React.createRef();
   }
+  componentDidMount() {
+    axios.get('https://api.mapbox.com/v4/amazingshellyyy.4inziplc/5/5/12.vector.pbf?style=mapbox://styles/amazingshellyyy/ck83x174r0nmk1ip5rcv4n00c@0&access_token=pk.eyJ1IjoiYW1hemluZ3NoZWxseXl5IiwiYSI6ImNrODNxOWRydTB2aDAzbXBndng5Y3h6ZWUifQ.Y-g83bzDXck4LEpS5tIMEQ')
+      .then(res => {
+        console.log(res)
+        let tile = new VectorTile(new Protobuf(res.data))
+        console.log(tile)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+  long2tile(lon, zoom) { return (Math.floor((lon + 180) / 360 * Math.pow(2, zoom))); }
+  lat2tile(lat, zoom) { return (Math.floor((1 - Math.log(Math.tan(lat * Math.PI / 180) + 1 / Math.cos(lat * Math.PI / 180)) / Math.PI) / 2 * Math.pow(2, zoom))); }
 
   _updateViewport(viewport) {
     this.setState({ viewport });
@@ -62,13 +78,13 @@ export default class CACounty extends Component {
       <MapGL
         ref={this._map}
         mapStyle={MAP_STYLE}
-        interactiveLayerIds={['sf-neighborhoods-fill']}
+        interactiveLayerIds={['counties']}
         {...viewport}
         width="100%"
         height="100%"
         onClick={this._onClick.bind(this)}
         onViewportChange={this._updateViewport.bind(this)}
-        mapboxApiAccessToken={process.env.MAPBOX_API_KEY}
+        mapboxApiAccessToken={TOKEN}
       >
         <ControlPanel containerComponent={this.props.containerComponent} />
       </MapGL>
