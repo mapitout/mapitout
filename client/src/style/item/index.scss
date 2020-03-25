@@ -1,0 +1,24 @@
+.item-details-container {
+
+  .action-container {
+    display: flex;
+    justify-content: space-around;
+    .action {
+      width: 25%;
+      text-align: center;
+      padding: 5px;
+      border-radius: 8px;
+      opacity: 0.9;
+      &:hover{
+        opacity: 1;
+        background: rgb(245, 245, 245);
+      }
+      &:active{
+        background: rgb(245, 245, 245);
+      }
+      .title {
+        font-size: 0.7rem;
+      }
+    }
+  }
+}
