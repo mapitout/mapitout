@@ -1,5 +1,5 @@
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ComposedChart, Line } from 'recharts';
+import { LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ComposedChart, Line, Bar } from 'recharts';
 import axios from 'axios';
 
 
@@ -43,8 +43,9 @@ class USData extends React.Component {
                 <Line type='monotone' dataKey='confirmed' stroke='#6562a1' />
                 <Bar dataKey='deaths' barSize={20} fill='#82ca9d' />
                 <Line type='monotone' dataKey='deaths' stroke='#538265' />
-                
+
               </ComposedChart>
+
             </ResponsiveContainer>
           </div>
         </div>

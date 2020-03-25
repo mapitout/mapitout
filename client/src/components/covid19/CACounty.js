@@ -37,7 +37,7 @@ class CACounty extends React.Component {
               <BarChart layout="vertical" data={this.state.data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis type="number"/>
-                <YAxis type="category" dataKey="county" />
+                <YAxis type="category" dataKey="county" width={100}/>
                 <Tooltip />
                 <Legend />
                 <Bar dataKey="case" fill="#8884d8" />
