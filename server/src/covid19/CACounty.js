@@ -4,7 +4,6 @@ const cheerio = require("cheerio");
 const getdata = (req, res) => {
   let data = []
   let countyData = [];
-  console.log('hii')
   request({
     method: 'GET',
     url: 'https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_California'
