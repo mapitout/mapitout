@@ -59,7 +59,7 @@ class WorldMap extends React.Component {
     const hoveredFeature = features && features.find(f => f.layer.id === 'data');
 
     this.setState({hoveredFeature, x: offsetX, y: offsetY});
-  };
+  }
 
   _renderTooltip() {
     const {hoveredFeature, x, y} = this.state;
