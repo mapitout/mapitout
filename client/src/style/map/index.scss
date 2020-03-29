@@ -2,6 +2,7 @@
 @import "./drawer.scss";
 
 .map-view-conatiner {
+  position: relative;
   .pin-001 {
     transform: translate(calc(-50% + 0px), calc(0% + 0px));
     left: 50%;
@@ -65,6 +66,18 @@
       transform: translate(-50%, 0px) rotate(45deg);
       width: 8px;
       z-index: auto;
+    }
+  }
+  .ctrl-panel-container {
+    width: 40px;
+    float: right;
+    margin: 10px;
+    margin-top: 74px;
+    .mapboxgl-ctrl.mapboxgl-ctrl-group:first-child {
+      margin-bottom: 10px;
+    }
+    @media (max-width: 672px) {
+      margin-top: calc(74px + 32px);
     }
   }
 }

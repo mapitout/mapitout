@@ -112,7 +112,7 @@ const Index = () => {
   const { MAPBOX_API_KEY } = process.env;
   return (
     <div>
-      <div className={`map-info-drawer-container`} ref={geocoderContainerRef}/>
+      <div className={`map-info-drawer-container search`} ref={geocoderContainerRef}/>
       <div className={`map-info-drawer-container ${focused} info`}>
       {focused && <div className='item-view-container'>
         <Item data={focusport} />
@@ -164,25 +164,14 @@ const Index = () => {
               </button>
             </div>
           </Marker>}
+          <div className='ctrl-panel-container'>
           <GeolocateControl
-            style={{
-              position: 'absolute',
-              top: 64,
-              right: 0,
-              margin: 10
-            }}
             positionOptions={{ enableHighAccuracy: true }}
             trackUserLocation={true}
             showAccuracyCircle={true}
             showUserLocation={true}
             timeout={60000}
           />
-          <div style={{
-            position: 'absolute',
-            top: 64 + 50,
-            padding: 10,
-            right: 0,
-          }}>
             <NavigationControl
               positionOptions={{ enableHighAccuracy: true }}
               trackUserLocation={true}

@@ -12,7 +12,7 @@
       margin: 20px 0px;
       height: 200px;
     }
-    @media (max-width: 543px) {
+    @media (max-width: 672px) {
       img{
         height: 150px;
         margin: 10px 0px 40px;
@@ -36,7 +36,7 @@
       font-size: 2.5rem;
       font-weight: 900;
       color: #001b0f;
-      @media (max-width: 543px) {
+      @media (max-width: 672px) {
         font-size: 3rem;
         line-height: 3rem;
         text-align: left;
@@ -46,7 +46,7 @@
       font-weight: 500;
       color: rgba(#585858, 0.8);
       font-size: 1.5rem;
-      @media (max-width: 543px) {
+      @media (max-width: 672px) {
         margin-top: 10px;
         font-size: 1.7rem;
         line-height: 2.3rem;
@@ -57,11 +57,11 @@
       margin: auto;
       margin-top: 30px;
       max-width: 350px;
-      @media (max-width: 543px) {
+      @media (max-width: 672px) {
         max-width: 100%;
       }
       .btn{
-        @media (max-width: 543px) {
+        @media (max-width: 672px) {
           text-align: right;
           padding-right: 1.5rem;
         } 
