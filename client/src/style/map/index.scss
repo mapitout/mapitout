@@ -1,6 +1,11 @@
 @import "./drawer.scss";
 @import "./overwrite-mapbox.scss";
-
+.map-view-outter-container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: white;
+}
 .map-view-conatiner {
   position: relative;
   @media (max-width: 672px) {

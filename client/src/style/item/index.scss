@@ -1,7 +1,26 @@
 .item-view-container {
   height: 100%;
   overflow-y: scroll;
+
   .item-info-container {
+    &.editting-true {
+      .session.details-container .session-title {
+        display: block;
+        font-weight: 900;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        opacity: 0.3;
+        padding: 2px;
+        padding-top: 5px;
+      }
+      .session.action-container .action.action-editting-true {
+        background: $brand-color;
+        color: white;
+        transform: scale(0.90);
+        box-shadow: inset 1px 1px 5px 0px rgba(darken($brand-color, 10%), 0.9);
+      }
+    }
     .session {
       padding: 10px;
       border-bottom: 0.1px solid rgb(198, 198, 198);
@@ -15,12 +34,16 @@
           padding: 5px;
           border-radius: 8px;
           opacity: 0.9;
+          letter-spacing: 1px;
           &:hover {
             opacity: 1;
             background: rgb(245, 245, 245);
           }
           &:active {
-            background: rgb(245, 245, 245);
+            background: rgb(235, 235, 235);
+            user-select: none;
+            color: black;
+            transform: scale(0.95);
           }
           .title {
             font-size: 0.7rem;
@@ -35,6 +58,25 @@
         .title {
           font-weight: 800;
           font-size: 1.4rem;
+          input {
+            border-radius: 4px;
+            width: 100%;
+            padding-left: 8px;
+            outline: none;
+            border-width: 2px;
+            border-color: rgba(0, 0, 0, 0.3);
+            &:focus, &:focus:hover{
+              border-color: rgba(darken($brand-color, 5%), 1)
+            }
+            &:hover{
+              border-color: rgba(black, 0.8)
+            }
+            &:disabled {
+              padding-left: 0px;
+              color: black;
+              border-color: rgba(0, 0, 0, 0);
+            }
+          }
         }
         .address {
           .fade {
@@ -53,9 +95,9 @@
             margin: 3px 3px;
           }
         }
-        .open-hour {
+        // .open-hour {
           
-        }
+        // }
         .menu {
           text-align: left;
           img {
@@ -64,13 +106,7 @@
           }
         }
         .session-title {
-          font-weight: 900;
-          font-size: 0.9rem;
-          text-transform: uppercase;
-          letter-spacing: 3px;
-          opacity: 0.3;
-          padding: 2px;
-          padding-top: 5px;
+          display: none;
         }
       }
     }
