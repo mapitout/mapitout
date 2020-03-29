@@ -1,8 +1,12 @@
-@import "./overwrite-mapbox.scss";
 @import "./drawer.scss";
+@import "./overwrite-mapbox.scss";
 
 .map-view-conatiner {
   position: relative;
+  @media (max-width: 672px) {
+    margin-top: $bavbar-sm-height;
+    height: 40vh;
+  }
   .pin-001 {
     transform: translate(calc(-50% + 0px), calc(0% + 0px));
     left: 50%;
@@ -72,12 +76,11 @@
     width: 40px;
     float: right;
     margin: 10px;
-    margin-top: 74px;
     .mapboxgl-ctrl.mapboxgl-ctrl-group:first-child {
       margin-bottom: 10px;
     }
     @media (max-width: 672px) {
-      margin-top: calc(74px + 32px);
+      display: none;
     }
   }
 }

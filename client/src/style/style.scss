@@ -24,6 +24,9 @@
     // div, a {
     //     outline: 1px solid rgba(black, 0.3) !important;
     // }
+    div, span, svg, button {
+        outline: none !important;
+    }
 }
 html.touch * {
     text-rendering: optimizeSpeed; 

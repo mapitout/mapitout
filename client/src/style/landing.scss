@@ -147,13 +147,13 @@
   padding: 80px 10px 70px;
   text-align: left;
   padding-left: 15%;
-  @media (max-width: 600px) {
+  @media (max-width: 672px) {
     padding-left: 0%;
     text-align: center;
   }
   .footer-modules {
     margin-bottom: 10px;
-    @media (max-width: 600px) {
+    @media (max-width: 672px) {
       margin-bottom: 30px;
     }
     .module-title{

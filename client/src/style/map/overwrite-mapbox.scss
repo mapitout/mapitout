@@ -1,4 +1,6 @@
 @import url('https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.css');
+@import "../config";
+
 .mapboxgl-ctrl-attrib-inner, a.mapboxgl-ctrl-logo, .mapboxgl-ctrl-attrib.mapboxgl-compact:after {
   display: none;
 }
@@ -6,9 +8,10 @@
   background-color: rgba(0, 0, 0, 0);
 }
 .map-view-conatiner {
-  width: calc(100% - 350px);
+  width: calc(100% - #{$drawer-width});
   height: 100vh;
-  margin: 0;
+  margin: 0px;
+  margin-top: $bavbar-md-height;
   background: $brand-color;
   position: relative;
   float: right;
