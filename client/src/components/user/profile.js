@@ -24,13 +24,13 @@ class Settings extends React.Component {
     return (
       <CenterCard121 className='settings-component'>
         <div className='card'>
-        <h4 className="card-header">
+          <h4 className="card-header">
           Settings
-        </h4>
-        {this.renderDropzone(profile)}
-        <div className='card-body'>
-          {profile && this.renderProfileForm()}
-        </div>
+          </h4>
+          {this.renderDropzone(profile)}
+          <div className='card-body'>
+            {profile && this.renderProfileForm()}
+          </div>
         </div>
       </CenterCard121>
     );
@@ -38,19 +38,19 @@ class Settings extends React.Component {
   renderDropzone(profile){
     if(profile.avatar){
       return (<div className='card-body profile-avatar-dropzone with-avatar-image'>
-      <Dropzone
-        accept="image/jpeg, image/png"
-        onDrop={this.onDrop.bind(this)}>
-        <div className='image-container'>
-          <img className='avatar-image' src={profile.avatar} />
-        </div>
-        <div className='hint'>
-          <i className="fas fa-camera"></i>
+        <Dropzone
+          accept="image/jpeg, image/png"
+          onDrop={this.onDrop.bind(this)}>
+          <div className='image-container'>
+            <img className='avatar-image' src={profile.avatar} />
+          </div>
+          <div className='hint'>
+            <i className="fas fa-camera"></i>
           Update Photo
-        </div>
-        <div className='overflow'></div>
-      </Dropzone>
-    </div>)
+          </div>
+          <div className='overflow'></div>
+        </Dropzone>
+      </div>)
     }else{
       return (
         <div className='card-body profile-avatar-dropzone without-avatar-image'>
@@ -58,7 +58,7 @@ class Settings extends React.Component {
             accept="image/jpeg, image/png"
             onDrop={this.onDrop.bind(this)}
           >
-          <p>No photo!<br/>Drop or select your profile photo</p>
+            <p>No photo!<br/>Drop or select your profile photo</p>
           </Dropzone>
         </div>)
     }
@@ -99,70 +99,70 @@ class Settings extends React.Component {
             className="form-control form-control-lg"
             placeholder="First Name"
             required
-            />
-      </div>
-
-      <div className="form-group">
-        <label>Last Name:</label>
-        <Field
-          disabled={!editting}
-          type= 'text'
-          name="lastName"
-          component="input"
-          className="form-control form-control-lg"
-          placeholder="Last Name"
-          required
-        />
-      </div>
-
-      <div className="form-group">
-        <label>Email:</label>
-        <Field
-          disabled
-          readOnly='true'
-          type= 'email'
-          name="email"
-          component="input"
-          className="form-control form-control-lg"
-          placeholder="your email adddress"
-          required
           />
-      </div>
-      {dirty && <div className="form-group">
-        <label>Password:</label>
-        <Field
-          type= 'password'
-          name="password"
-          component="input"
-          className={(updateProfileFailMsg)?"form-control form-control-lg is-invalid":"form-control form-control-lg"}
-          placeholder="your password"
-          required
-        />
-        {(updateProfileFailMsg) && <div className="invalid-feedback">
-          {updateProfileFailMsg}
+        </div>
+
+        <div className="form-group">
+          <label>Last Name:</label>
+          <Field
+            disabled={!editting}
+            type= 'text'
+            name="lastName"
+            component="input"
+            className="form-control form-control-lg"
+            placeholder="Last Name"
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Email:</label>
+          <Field
+            disabled
+            readOnly='true'
+            type= 'email'
+            name="email"
+            component="input"
+            className="form-control form-control-lg"
+            placeholder="your email adddress"
+            required
+          />
+        </div>
+        {dirty && <div className="form-group">
+          <label>Password:</label>
+          <Field
+            type= 'password'
+            name="password"
+            component="input"
+            className={(updateProfileFailMsg)?"form-control form-control-lg is-invalid":"form-control form-control-lg"}
+            placeholder="your password"
+            required
+          />
+          {(updateProfileFailMsg) && <div className="invalid-feedback">
+            {updateProfileFailMsg}
+          </div>}
         </div>}
-      </div>}
-      <div style={{'paddingTop': '30px'}}>
-        {this.renderButtons()}
-      </div>
-    </form>);
+        <div style={{'paddingTop': '30px'}}>
+          {this.renderButtons()}
+        </div>
+      </form>);
   }
 }
 
 function mapStateToProps({server, profile, auth}) {
   return profile.name?{
-      profile: profile,
-      initialValues: {
-        email: profile.email,
-        firstName: profile.name.first,
-        lastName: profile.name.last,
-        venmoId: profile.venmoId
-      },
-      updateProfileFailMsg: profile.updateProfileFailMsg,
-      isLoggedin: auth.authentication
-    }:{
-      profile: profile,
-      isLoggedin: auth.authentication
+    profile: profile,
+    initialValues: {
+      email: profile.email,
+      firstName: profile.name.first,
+      lastName: profile.name.last,
+      venmoId: profile.venmoId
+    },
+    updateProfileFailMsg: profile.updateProfileFailMsg,
+    isLoggedin: auth.authentication
+  }:{
+    profile: profile,
+    isLoggedin: auth.authentication
   }
 }
 

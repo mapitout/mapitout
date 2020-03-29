@@ -28,7 +28,7 @@ class Welcome extends React.Component {
           </button>
         </Link>
       </div>)
-    :(<div>
+      :(<div>
         <Link to='map'>
           <button className='btn btn-success btn-block btn-lg try-it-out'>
             Explore now

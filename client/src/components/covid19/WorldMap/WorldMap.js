@@ -35,15 +35,15 @@ class WorldMap extends React.Component {
       })
       .catch(err => console.log(err))
     axios.get('http://amazingshellyyy.com/CA-county-GEOJSON/CACounty.json')
-    .then(res => {
+      .then(res => {
       // console.log(res)
-      console.log(res.data)
+        console.log(res.data)
       // need to change the data structure of geojson
       // this.setState({
       //   data2: updatePercentiles(data, f => f.properties.NAME[this.state.day])
       // })
-    })
-    .catch(err => console.log(err))
+      })
+      .catch(err => console.log(err))
   }
 
   _goToSF () {
@@ -78,21 +78,21 @@ class WorldMap extends React.Component {
   render() {
     return (
       <div>
-      <ReactMapGL
-        {...this.state.viewport}
-        width="50vw"
-        height="50vh"
-        mapStyle="mapbox://styles/mapbox/dark-v9"
-        onViewportChange={viewport => this.setState({viewport})}
-        mapboxApiAccessToken={MAPBOX_API_KEY}
-        onHover={this._onHover.bind(this)}
-      >
-        <Source type="geojson" data={this.state.data}>
+        <ReactMapGL
+          {...this.state.viewport}
+          width="50vw"
+          height="50vh"
+          mapStyle="mapbox://styles/mapbox/dark-v9"
+          onViewportChange={viewport => this.setState({viewport})}
+          mapboxApiAccessToken={MAPBOX_API_KEY}
+          onHover={this._onHover.bind(this)}
+        >
+          <Source type="geojson" data={this.state.data}>
             <Layer {...dataLayer} />
           </Source>
           {this._renderTooltip()}
-      </ReactMapGL>
-      <button onClick={this._goToSF.bind(this)}>Back to SF</button>
+        </ReactMapGL>
+        <button onClick={this._goToSF.bind(this)}>Back to SF</button>
       </div>
 
     )

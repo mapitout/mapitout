@@ -11,14 +11,14 @@ const epochs = [
 
 const getDuration = (timeAgoInSeconds) => {
   for (let [name, seconds] of epochs) {
-      const interval = Math.floor(timeAgoInSeconds / seconds);
+    const interval = Math.floor(timeAgoInSeconds / seconds);
 
-      if (interval >= 1) {
-          return {
-              interval: interval,
-              epoch: name
-          };
-      }
+    if (interval >= 1) {
+      return {
+        interval: interval,
+        epoch: name
+      };
+    }
   }
 };
 

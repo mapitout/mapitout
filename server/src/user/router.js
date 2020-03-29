@@ -4,8 +4,8 @@ import multer from 'multer';
 const router = require('express').Router();
 
 const upload = multer({
-    storage: multer.memoryStorage()
-    // limits: { fileSize: 52428800 }
+  storage: multer.memoryStorage()
+  // limits: { fileSize: 52428800 }
 });
 
 router.get('/', (req, res)=>res.json({ "message": "/api/user connected" }));

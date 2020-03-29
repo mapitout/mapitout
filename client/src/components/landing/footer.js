@@ -5,11 +5,11 @@ class Footer extends React.Component {
   render() {
     return (
       <div className='footer-component'>
-      <div className='container'>
-        <div className='row'>
-          {this.renderModules(data)}
-        </div>  
-      </div>
+        <div className='container'>
+          <div className='row'>
+            {this.renderModules(data)}
+          </div>  
+        </div>
       </div>)
   }
   renderModules(modules){

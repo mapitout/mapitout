@@ -3,24 +3,6 @@
   overflow-y: scroll;
 
   .item-info-container {
-    &.editting-true {
-      .session.details-container .session-title {
-        display: block;
-        font-weight: 900;
-        font-size: 0.9rem;
-        text-transform: uppercase;
-        letter-spacing: 3px;
-        opacity: 0.3;
-        padding: 2px;
-        padding-top: 5px;
-      }
-      .session.action-container .action.action-editting-true {
-        background: $brand-color;
-        color: white;
-        transform: scale(0.90);
-        box-shadow: inset 1px 1px 5px 0px rgba(darken($brand-color, 10%), 0.9);
-      }
-    }
     .session {
       padding: 10px;
       border-bottom: 0.1px solid rgb(198, 198, 198);

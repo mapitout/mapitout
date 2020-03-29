@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import { signUserOut } from '../../actions';
 
 class Signout extends React.Component {
-    componentDidMount() {
-        this.props.signUserOut()
-    }
+  componentDidMount() {
+    this.props.signUserOut()
+  }
   render() {
     return (
       <div className='welcome logout' style={{'height': '92vh'}}>
@@ -19,10 +19,10 @@ class Signout extends React.Component {
             Review more, explore more, earn more!
           </div>
           <div  className='button-container'>
-          <div>
-            <Link style={{'cursor': 'pointer'}} className='btn btn-success btn-block btn-lg' to='signin'>Sign Back In Now</Link>
-            <Link style={{'cursor': 'pointer'}} className='btn btn-light btn-block btn-lg' to='company/contacts'>Any Feedback?</Link>
-          </div>
+            <div>
+              <Link style={{'cursor': 'pointer'}} className='btn btn-success btn-block btn-lg' to='signin'>Sign Back In Now</Link>
+              <Link style={{'cursor': 'pointer'}} className='btn btn-light btn-block btn-lg' to='company/contacts'>Any Feedback?</Link>
+            </div>
           </div>
         </div>
       </div>)
