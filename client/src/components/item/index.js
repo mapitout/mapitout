@@ -1,6 +1,7 @@
 import React from 'react'
 
 const item = (props) => {
+  console.log('props.data', props.data)
   // const [editting, setEditting] = React.useState(false)
   const [item, setItem] = React.useState({})
   React.useEffect(()=>{
@@ -26,13 +27,21 @@ const item = (props) => {
     </div>
   </div>
   <div className='session details-container'>
-    <div className='title'> {item.details.title} </div>
-    <div className='address'> {item.details.address} </div>
+    <div className='title'>
+    <div className='session-title'>name</div>
+      {item.details.title}
+    </div>
+    <div className='address'>
+    <div className='session-title'>address</div>
+    <div className='fade'>{item.details.address}</div>
+    </div>
     <div className='category'>
+    <div className='session-title'>category</div>
     {item.details.category.length>0 && item.details.category.map((c)=>(<div className='item' key={c}>{c}</div>))}
     </div>
     <div className='open-hour'> {item.details.open_hour} </div>
     <div className='menu'>
+      <div className='session-title'>menu</div>
       <img
         src={item.details.menu}
       />

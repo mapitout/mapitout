@@ -1,4 +1,5 @@
 @import "./overwrite-mapbox.scss";
+@import "./drawer.scss";
 
 .map-view-conatiner {
   .pin-001 {
@@ -6,7 +7,6 @@
     left: 50%;
     position: absolute;
     bottom: 0px;
-    z-index: 3000;
     pointer-events: auto;
     .button-inner {
       outline: none;
@@ -68,20 +68,3 @@
     }
   }
 }
-
-.map-left-drawer-container {
-  background: white;
-  display: inline-block;
-  height: 100vh;
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 20px, rgba(0, 0, 0, 0.01) 0px 0px 0px 1px;
-}
-
-.item-view-container {
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 20px, rgba(0, 0, 0, 0.01) 0px 0px 0px 1px;
-  border-radius: 8px;
-  background: white;
-  display: inline-block;
-  margin: 120px 10px;
-  padding: 10px;
-  width: 100%;
-}  

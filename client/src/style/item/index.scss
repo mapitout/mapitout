@@ -1,66 +1,77 @@
-.item-info-container {
-  height: 300px;
+.item-view-container {
+  height: 100%;
   overflow-y: scroll;
-  .session {
-    padding: 15px 0px;
-    border-bottom: 0.1px solid rgb(198, 198, 198);
-
-    &.action-container {
-      display: flex;
-      justify-content: space-around;
-      padding-top: 5px;
-      .action {
-        width: 25%;
-        text-align: center;
-        padding: 5px;
-        border-radius: 8px;
-        opacity: 0.9;
-        &:hover{
-          opacity: 1;
-          background: rgb(245, 245, 245);
+  .item-info-container {
+    .session {
+      padding: 10px;
+      border-bottom: 0.1px solid rgb(198, 198, 198);
+      &.action-container {
+        display: flex;
+        justify-content: space-around;
+        .action {
+          cursor: pointer;
+          width: 25%;
+          text-align: center;
+          padding: 5px;
+          border-radius: 8px;
+          opacity: 0.9;
+          &:hover {
+            opacity: 1;
+            background: rgb(245, 245, 245);
+          }
+          &:active {
+            background: rgb(245, 245, 245);
+          }
+          .title {
+            font-size: 0.7rem;
+          }
         }
-        &:active{
-          background: rgb(245, 245, 245);
+      }
+
+      &.details-container {
+        & > div {
+          padding: 5px 10px;
         }
         .title {
-          font-size: 0.7rem;
+          font-weight: 800;
+          font-size: 1.4rem;
         }
-      }
-    }
-
-    &.details-container {
-      &>div {
-        padding: 5px 10px;
-      }
-      .title {
-        font-weight: 800;
-        font-size: 1.4rem;
-      }
-      .address {
-        opacity: 0.7;
-      }
-      .category {
-        .item {
-          display: inline-block;
-          background: rgb(214, 254, 238);
-          padding: 2px 10px;
-          border-radius: 8px;
-          margin-right: 5px;
-          color: $brand-color;
-          font-weight: 600;
+        .address {
+          .fade {
+            opacity: 0.7;
+          }
+        }
+        .category {
+          .item {
+            display: inline-block;
+            background: rgb(214, 254, 238);
+            padding: 2px 10px;
+            border-radius: 8px;
+            color: $brand-color;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin: 3px 3px;
+          }
+        }
+        .open-hour {
+          
+        }
+        .menu {
+          text-align: left;
+          img {
+            border-radius: 8px;
+            width: 100%;
+          }
+        }
+        .session-title {
+          font-weight: 900;
           font-size: 0.9rem;
+          text-transform: uppercase;
+          letter-spacing: 3px;
+          opacity: 0.3;
+          padding: 2px;
+          padding-top: 5px;
         }
-      }
-      .open-hour{
-
-      }
-      .menu {
-        text-align: left;
-        img {
-          border-radius: 8px;
-          width: 100%;
-        }
-
       }
     }
   }

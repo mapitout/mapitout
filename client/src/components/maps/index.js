@@ -4,7 +4,7 @@ import MAP_STYLE from './map-styles'
 import Geocoder from 'react-map-gl-geocoder';
 import qs from 'qs';
 import _ from 'lodash';
-// import Item from '../item';
+import Item from '../item';
 
 const ZOOM = 16;
 const Index = () => {
@@ -37,13 +37,19 @@ const Index = () => {
       latitude: v.latitude
     })
     setViewport({ ...viewport, ...v, transitionDuration: 300 })
-    console.log('v', v)
   }
   function onInputChange(input) {
     const uri_params = qs.stringify({
       lon: input.result.center[0],
       lat: input.result.center[1],
       q: input.result.place_name
+    })
+    setFocused(true);
+    setFocusport({
+      ...focusport,
+      name: input.result.place_name,
+      longitude: input.result.center[0],
+      latitude: input.result.center[1]
     })
     updateURL(uri_params)
   }
@@ -102,14 +108,16 @@ const Index = () => {
     }
   }, [])
   let mapRef = React.useRef()
+  let geocoderContainerRef = React.useRef()
   const { MAPBOX_API_KEY } = process.env;
   return (
     <div>
-      {/* <div className="map-left-drawer-container">
+      <div className={`map-info-drawer-container`} ref={geocoderContainerRef}/>
+      <div className={`map-info-drawer-container ${focused} info`}>
       {focused && <div className='item-view-container'>
-          <Item data={focusport} />
-        </div>}
-      </div> */}
+        <Item data={focusport} />
+      </div>}
+      </div>
       <div className='map-view-conatiner'>
         <MapGL
           ref={mapRef}
@@ -118,25 +126,24 @@ const Index = () => {
           onViewportChange={setViewport}
           mapStyle={MAP_STYLE.MAPITOUT_LIGHT}
         >
-          <div className='map-left-drawer-container'>
-            <Geocoder
-              onLoading={onGeocoderLoading}
-              inputValue={focusport.name}
-              mapRef={mapRef}
-              onViewportChange={onGeocoderSelected}
-              mapboxApiAccessToken={MAPBOX_API_KEY}
-              position='top-left'
-              enableEventLogging={false}
-              limit={10}
-              onResult={onInputChange}
-              countries='us'
-              placeholder='Search On The Map'
-              proximity={{ longitude: viewport.longitude, latitude: viewport.latitude }}
-              // collapsed={true}
-              trackProximity={true}
-              bbox={[-124.409591, 32.534156, -114.131211, 42.009518]} // boundary of California
-            />
-          </div>
+        <Geocoder
+          onLoading={onGeocoderLoading}
+          inputValue={focusport.name}
+          containerRef={geocoderContainerRef}
+          mapRef={mapRef}
+          onViewportChange={onGeocoderSelected}
+          mapboxApiAccessToken={MAPBOX_API_KEY}
+          position='top-left'
+          enableEventLogging={false}
+          limit={10}
+          onResult={onInputChange}
+          countries='us'
+          placeholder='Search On The Map'
+          // proximity={{ longitude: viewport.longitude, latitude: viewport.latitude }}
+          // collapsed={true}
+          trackProximity={true}
+          bbox={[-124.409591, 32.534156, -114.131211, 42.009518]} // boundary of California
+        />
           {focused && <Marker key={focusport.key}
             latitude={focusport.latitude}
             longitude={focusport.longitude}

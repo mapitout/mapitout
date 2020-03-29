@@ -20,6 +20,9 @@
     font-family: 'Open Sans', sans-serif;
     text-rendering: optimizeLegibility;
     @media (max-width: 543px) {}
+    // div, a {
+    //     outline: 1px solid rgba(black, 0.3) !important;
+    // }
 }
 html.touch * {
     text-rendering: optimizeSpeed; 
