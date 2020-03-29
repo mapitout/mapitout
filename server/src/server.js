@@ -12,11 +12,11 @@ const app = express();
 
 // DB Setup
 mongoose.connect(config.mongoose.uri, { 
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
 })
-.catch(err=>console.error(err));
+  .catch(err=>console.error(err));
 mongoose.Promise = global.Promise;
 
 // App Setup
@@ -28,14 +28,14 @@ app.use('/', routers);
 app.use(errorHandler);
 
 function errorHandler (err, req, res, next) {
-    console.log('errrrr', err)
-    const error = ((typeof err) == 'string' && err.search(':')>0)?err.split(':'):err;
-    let [statusCode, msg] = (error.length > 1)?error:[500, err];
-    (res.headersSent)?next(msg):res.status(statusCode).send(msg);
+  console.log('errrrr', err)
+  const error = ((typeof err) == 'string' && err.search(':')>0)?err.split(':'):err;
+  let [statusCode, msg] = (error.length > 1)?error:[500, err];
+  (res.headersSent)?next(msg):res.status(statusCode).send(msg);
 }
 
 // Server Setup
 const port = process.env.PORT || 8000;
 createServer(app).listen(port, ()=>{
-    console.log(`\x1b[32m`, `> Server listening on ${port}`, `\x1b[0m`)
+  console.log(`\x1b[32m`, `> Server listening on ${port}`, `\x1b[0m`)
 });

@@ -8,32 +8,32 @@ export const signupWithEmailReset = () => (dispatch) => dispatch({type: SIGNUP_W
 
 export function signupWithEmail(email) {
   return function (dispatch) {
-      // Submit email/password to server
-      request
-          .post(`/signupWithEmail`, {email})
-          .then(res => {
-            if(res.data.deepLink) {
-              dispatch({ type: SIGNUP_EMAIL_SENT, payload: {deepLink: res.data.deepLink} })
-            }else{
-              dispatch({ type: SIGNUP_EMAIL_SENT, payload: {email: res.data.email} })
-            }
-          })
-          .catch((err) => {
-            if(err.response){
-              const message = err.response.data;
-              const status = err.response.status;
-              switch (status) {
-                case 403:
-                  dispatch({
-                    type: SIGNUP_EMAIL_IS_IN_USE,
-                    payload: message
-                  })
-                  break
-                default:
-                  break;
-              }
-            }
-          });
+    // Submit email/password to server
+    request
+      .post(`/signupWithEmail`, {email})
+      .then(res => {
+        if(res.data.deepLink) {
+          dispatch({ type: SIGNUP_EMAIL_SENT, payload: {deepLink: res.data.deepLink} })
+        }else{
+          dispatch({ type: SIGNUP_EMAIL_SENT, payload: {email: res.data.email} })
+        }
+      })
+      .catch((err) => {
+        if(err.response){
+          const message = err.response.data;
+          const status = err.response.status;
+          switch (status) {
+          case 403:
+            dispatch({
+              type: SIGNUP_EMAIL_IS_IN_USE,
+              payload: message
+            })
+            break
+          default:
+            break;
+          }
+        }
+      });
   }
 }
 
@@ -45,13 +45,13 @@ let INITIAL_STATE = {
 
 export function signupWithEmailReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case SIGNUP_EMAIL_SENT:
-      return { ...state, emailSentTo: action.payload.email, deepLink: action.payload.deepLink }
-    case SIGNUP_EMAIL_IS_IN_USE:
-      return { ...state, emailStateError: action.payload }
-    case SIGNUP_WITH_EMAIL_RESET:
-      return INITIAL_STATE
-    default:
-      return state
+  case SIGNUP_EMAIL_SENT:
+    return { ...state, emailSentTo: action.payload.email, deepLink: action.payload.deepLink }
+  case SIGNUP_EMAIL_IS_IN_USE:
+    return { ...state, emailStateError: action.payload }
+  case SIGNUP_WITH_EMAIL_RESET:
+    return INITIAL_STATE
+  default:
+    return state
   }
 }

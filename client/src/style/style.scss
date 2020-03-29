@@ -20,10 +20,13 @@
 * { 
     font-family: 'Open Sans', sans-serif;
     text-rendering: optimizeLegibility;
-    @media (max-width: 543px) {}
+    @media (max-width: 672px) {}
     // div, a {
     //     outline: 1px solid rgba(black, 0.3) !important;
     // }
+    div, span, svg, button {
+        outline: none !important;
+    }
 }
 html.touch * {
     text-rendering: optimizeSpeed; 
@@ -40,25 +43,13 @@ body {
     .container-mapitout{
         margin: auto;
         padding: 5px 40px;
-        @media (max-width: 543px) {
+        @media (max-width: 672px) {
             padding: 0px 0px;
         }
         &.xs-padding{
-            @media (max-width: 543px) {
+            @media (max-width: 672px) {
                 padding: 5px 15px;
             }
         }
     }
 }
-
-
-@media (max-width: 543px) {
-    body {
-    }
-}
-
-@media (min-width: 767px) { 
-    
- }
-
-

@@ -7,7 +7,7 @@
   transition: transform 100ms cubic-bezier(0, 0.86, 1, 0.82) !important;
   box-shadow: 0px -5px 20px rgba(darken($brand-color, 30%), 0.2);
 
-  @media (max-width: 543px) {
+  @media (max-width: 672px) {
       height: 0.1.5rem;
       transition: transform 150ms cubic-bezier(0, 0.86, 1, 0.82) !important;
       box-shadow: 0px -5px 20px rgba(darken($brand-color, 30%), 0.1);

@@ -1,7 +1,17 @@
-@import "./overwrite-mapbox.scss";
 @import "./drawer.scss";
-
+@import "./overwrite-mapbox.scss";
+.map-view-outter-container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: white;
+}
 .map-view-conatiner {
+  position: relative;
+  @media (max-width: 672px) {
+    margin-top: $bavbar-sm-height;
+    height: 40vh;
+  }
   .pin-001 {
     transform: translate(calc(-50% + 0px), calc(0% + 0px));
     left: 50%;
@@ -65,6 +75,17 @@
       transform: translate(-50%, 0px) rotate(45deg);
       width: 8px;
       z-index: auto;
+    }
+  }
+  .ctrl-panel-container {
+    width: 40px;
+    float: right;
+    margin: 10px;
+    .mapboxgl-ctrl.mapboxgl-ctrl-group:first-child {
+      margin-bottom: 10px;
+    }
+    @media (max-width: 672px) {
+      display: none;
     }
   }
 }

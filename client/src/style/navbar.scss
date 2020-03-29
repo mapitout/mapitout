@@ -8,7 +8,7 @@ nav.navbar {
   left: 0px;
   right: 0px;
   z-index: 1000;
-  @media (max-width: 600px) {
+  @media (max-width: 672px) {
     padding: 5px 10px;
   }
   .nav-item {
@@ -26,7 +26,7 @@ nav.navbar {
     &:hover {
       opacity: 0.8;
     }
-    @media (max-width: 600px) {
+    @media (max-width: 672px) {
       padding: 0rem;
       .logo-big {
         font-weight: 900;
@@ -45,7 +45,7 @@ nav.navbar {
     border-radius: 0.3rem;
     color: #797979;
 
-    @media (max-width: 600px) {
+    @media (max-width: 672px) {
       margin-right: 0.08rem;
       margin-left: 0.08rem;
       padding: 0.3rem 0.65rem;
@@ -82,7 +82,7 @@ nav.navbar {
       box-shadow: 0px 0px 10px rgba(black, 0.05);
       left: -100px;
       top: 52px;
-      @media (max-width: 600px) {
+      @media (max-width: 672px) {
         top: 41px;
         box-shadow: 0px 0px 10px rgba(black, 0.1);
         width: 95vw;

@@ -79,24 +79,24 @@ const Index = () => {
           key: 'current-focused-item',
           longitude, latitude, name,
           details: {
-            title: 'Taiwan Porridge Kingdom',
-            address: '20956 Homestead Rd, Cupertino, CA 95014',
-            category: ['Taiwanese Food', 'Porridge', 'Cupertino'],
-            open_hour: '',
-            menu: 'https://s3-media0.fl.yelpcdn.com/bphoto/UgtxQQlDJ9n5k8G8Y8pceQ/o.jpg',
-            order: [{
-              type: 'phone',
-              notes: 'Pick up on your own(cash only). Make a phone call and order 30 mins before picking up.',
-              action: '4082532569',
-            },{
-              type: 'grubhub',
-              notes: 'Deliver by grubhub.',
-              action: 'https://www.grubhub.com/restaurant/taiwan-porridge-kingdom-20956-homestead-road-cupertino/1827642',
-            },{
-              type: 'doordash',
-              notes: 'Deliver by doordash.',
-              action: 'https://www.doordash.com/store/taiwan-restaurant-san-jose-195/en-US',
-            }]
+            // title: 'Taiwan Porridge Kingdom',
+            // address: '20956 Homestead Rd, Cupertino, CA 95014',
+            // category: ['Taiwanese Food', 'Porridge', 'Cupertino'],
+            // open_hour: '',
+            // menu: 'https://s3-media0.fl.yelpcdn.com/bphoto/UgtxQQlDJ9n5k8G8Y8pceQ/o.jpg',
+            // order: [{
+            //   type: 'phone',
+            //   notes: 'Pick up on your own(cash only). Make a phone call and order 30 mins before picking up.',
+            //   action: '4082532569',
+            // },{
+            //   type: 'grubhub',
+            //   notes: 'Deliver by grubhub.',
+            //   action: 'https://www.grubhub.com/restaurant/taiwan-porridge-kingdom-20956-homestead-road-cupertino/1827642',
+            // },{
+            //   type: 'doordash',
+            //   notes: 'Deliver by doordash.',
+            //   action: 'https://www.doordash.com/store/taiwan-restaurant-san-jose-195/en-US',
+            // }]
           }
         })
         setViewport({ ...viewport, longitude, latitude, transitionDuration: 400 })
@@ -112,11 +112,11 @@ const Index = () => {
   const { MAPBOX_API_KEY } = process.env;
   return (
     <div>
-      <div className={`map-info-drawer-container`} ref={geocoderContainerRef}/>
+      <div className={`map-info-drawer-container search`} ref={geocoderContainerRef}/>
       <div className={`map-info-drawer-container ${focused} info`}>
-      {focused && <div className='item-view-container'>
-        <Item data={focusport} />
-      </div>}
+        {focused && <div className='item-view-container'>
+          <Item data={focusport} />
+        </div>}
       </div>
       <div className='map-view-conatiner'>
         <MapGL
@@ -126,24 +126,24 @@ const Index = () => {
           onViewportChange={setViewport}
           mapStyle={MAP_STYLE.MAPITOUT_LIGHT}
         >
-        <Geocoder
-          onLoading={onGeocoderLoading}
-          inputValue={focusport.name}
-          containerRef={geocoderContainerRef}
-          mapRef={mapRef}
-          onViewportChange={onGeocoderSelected}
-          mapboxApiAccessToken={MAPBOX_API_KEY}
-          position='top-left'
-          enableEventLogging={false}
-          limit={10}
-          onResult={onInputChange}
-          countries='us'
-          placeholder='Search On The Map'
-          // proximity={{ longitude: viewport.longitude, latitude: viewport.latitude }}
-          // collapsed={true}
-          trackProximity={true}
-          bbox={[-124.409591, 32.534156, -114.131211, 42.009518]} // boundary of California
-        />
+          <Geocoder
+            onLoading={onGeocoderLoading}
+            inputValue={focusport.name}
+            containerRef={geocoderContainerRef}
+            mapRef={mapRef}
+            onViewportChange={onGeocoderSelected}
+            mapboxApiAccessToken={MAPBOX_API_KEY}
+            position='top-left'
+            enableEventLogging={false}
+            limit={10}
+            onResult={onInputChange}
+            countries='us'
+            placeholder='Search On The Map'
+            // proximity={{ longitude: viewport.longitude, latitude: viewport.latitude }}
+            // collapsed={true}
+            trackProximity={true}
+            bbox={[-124.409591, 32.534156, -114.131211, 42.009518]} // boundary of California
+          />
           {focused && <Marker key={focusport.key}
             latitude={focusport.latitude}
             longitude={focusport.longitude}
@@ -164,25 +164,14 @@ const Index = () => {
               </button>
             </div>
           </Marker>}
-          <GeolocateControl
-            style={{
-              position: 'absolute',
-              top: 64,
-              right: 0,
-              margin: 10
-            }}
-            positionOptions={{ enableHighAccuracy: true }}
-            trackUserLocation={true}
-            showAccuracyCircle={true}
-            showUserLocation={true}
-            timeout={60000}
-          />
-          <div style={{
-            position: 'absolute',
-            top: 64 + 50,
-            padding: 10,
-            right: 0,
-          }}>
+          <div className='ctrl-panel-container'>
+            <GeolocateControl
+              positionOptions={{ enableHighAccuracy: true }}
+              trackUserLocation={true}
+              showAccuracyCircle={true}
+              showUserLocation={true}
+              timeout={60000}
+            />
             <NavigationControl
               positionOptions={{ enableHighAccuracy: true }}
               trackUserLocation={true}

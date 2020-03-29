@@ -1,18 +1,24 @@
 @import url('https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.css');
+@import "../config";
 
-.mapboxgl-ctrl-attrib-inner, a.mapboxgl-ctrl-logo {
+.mapboxgl-ctrl-attrib-inner, a.mapboxgl-ctrl-logo, .mapboxgl-ctrl-attrib.mapboxgl-compact:after {
   display: none;
 }
 .mapboxgl-ctrl button:not(:disabled):hover {
   background-color: rgba(0, 0, 0, 0);
 }
 .map-view-conatiner {
-  width: 100vw;
+  width: calc(100% - #{$drawer-width});
   height: 100vh;
-  margin: 0;
+  margin: 0px;
+  margin-top: $bavbar-md-height;
   background: $brand-color;
   position: relative;
+  float: right;
   overflow: hidden;
+  @media (max-width: 672px) {
+    width: calc(100%);
+  }
   .mapboxgl-ctrl-group:not(:empty) {
     box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 20px, rgba(0, 0, 0, 0.01) 0px 0px 0px 1px;
     border-radius: 8px;
