@@ -1,4 +1,8 @@
 import mongoose from 'mongoose';
+const Schema = mongoose.Schema;
+
+
+
 const orderSchema = new mongoose.Schema({
 	title: {
 		type: String,
@@ -28,6 +32,17 @@ const itemSchema = new mongoose.Schema({
 			true, 'address is required.'
 		]
 	},
+	location: {
+		type: {
+			type: String,
+			enum: ['Point'],
+			required: true
+		},
+		coordinates: {
+			type: [Number],
+			required: true
+		}
+	},
 	category: [{
 		type: Schema.Types.ObjectId,
 		ref: 'Category'
@@ -39,7 +54,7 @@ const itemSchema = new mongoose.Schema({
 	menu: {
 		type: String
 	},
-	orders: [orderSchema],
+	order: [orderSchema],
 })
 
 export default mongoose.model('Item', itemSchema);
