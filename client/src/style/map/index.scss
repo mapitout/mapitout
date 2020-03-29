@@ -1,77 +1,70 @@
-@import './search-bar.scss';
-@import url('https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.css');
+@import "./overwrite-mapbox.scss";
+@import "./drawer.scss";
 
-.mapboxgl-ctrl-attrib-inner, a.mapboxgl-ctrl-logo {
-  display: none;
-}
-.mapboxgl-ctrl button:not(:disabled):hover {
-  background-color: rgba(0, 0, 0, 0);
-}
 .map-view-conatiner {
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
-  background: $brand-color;
-  position: relative;
-  overflow: hidden;
-  .mapboxgl-ctrl-group:not(:empty) {
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 20px, rgba(0, 0, 0, 0.01) 0px 0px 0px 1px;
-    border-radius: 8px;
-  }
-  .mapboxgl-ctrl-group button {
-    width: 40px;
-    height: 40px;
-    outline: none;
-  }
-  .mapboxgl-ctrl-group button:focus {
-    box-shadow: rgba(0, 0, 0, 0) 0px 6px 20px;
-  }
-  .mapboxgl-ctrl button.mapboxgl-ctrl-geolocate .mapboxgl-ctrl-icon {
-    border-radius: 8px 8px;
-    &:hover {
-      background-color: rgb(247, 247, 247);
+  .pin-001 {
+    transform: translate(calc(-50% + 0px), calc(0% + 0px));
+    left: 50%;
+    position: absolute;
+    bottom: 0px;
+    pointer-events: auto;
+    .button-inner {
+      outline: none;
+      color: inherit;
+      align-items: center;
+      justify-content: normal;
+      border: none;
+      margin: 0px;
+      padding: 0px;
+      background: transparent;
+      width: auto;
+      overflow: visible;
+      font: inherit;
     }
-  }
-  .mapboxgl-ctrl-icon.mapboxgl-ctrl-geolocate.mapboxgl-ctrl-geolocate-waiting.mapboxgl-ctrl-geolocate-active {
-    span.mapboxgl-ctrl-icon {
-      background-color:rgba(0, 0, 0, 0);
+    .pin-001-wrapper {
+      transform: scale(1);
+      transform-origin: 50% 100%;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      bottom: 2px;
     }
-  }
-  .mapboxgl-ctrl button.mapboxgl-ctrl-zoom-in .mapboxgl-ctrl-icon {
-    border-radius: 8px 8px 0px 0px;
-    &:hover {
-      background-color: rgb(247, 247, 247);
+    .pin-001-wrapper-item {
+      background-color: rgb(34, 34, 34);
+      border-radius: 1px;
+      bottom: -2px;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.18) 0px 1px 2px;
+      height: 8px;
+      left: 50%;
+      position: absolute;
+      transform: translate(-50%, 0px) rotate(45deg);
+      width: 8px;
+      z-index: auto;
     }
-  }
-  .mapboxgl-ctrl button.mapboxgl-ctrl-zoom-out .mapboxgl-ctrl-icon {
-    border-radius: 0px 0px 0px 0px;
-    &:hover {
-      background-color: rgb(247, 247, 247);
+    .pin-001-wrapper-item-wrapper {
+      border-radius: 100px;
+      background-color: rgb(34, 34, 34);
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.18) 0px 1px 2px;
+      color: rgb(255, 255, 255);
+      width: 32px;
+      height: 32px;
+      svg {
+        height: 20px;
+        width: 20px;
+        fill: currentcolor;
+        transform: translateY(5px)
+      }
     }
-  }
-  .mapboxgl-ctrl button.mapboxgl-ctrl-compass .mapboxgl-ctrl-icon {
-    &:hover {
-      border-radius: 0px 0px 8px 8px;
-      background-color: rgb(247, 247, 247);
+    .pin-001-item-2 {
+      background-color: rgb(34, 34, 34);
+      border-radius: 1px;
+      bottom: -1px;
+      height: 8px;
+      left: 50%;
+      position: absolute;
+      transform: translate(-50%, 0px) rotate(45deg);
+      width: 8px;
+      z-index: auto;
     }
-  }
-  .mapboxgl-ctrl-group button+button {
-    border-top: 1px solid rgba(#ddd, 0.4);
-  }
-  .mapboxgl-ctrl button.mapboxgl-ctrl-zoom-in .mapboxgl-ctrl-icon {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' height='16' width='16' fill='currentColor'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M7 1a1 1 0 0 1 2 0v14a1 1 0 1 1-2 0V1z'%3E%3C/path%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z'%3E%3C/path%3E%3C/svg%3E");
-  }
-  .mapboxgl-ctrl button.mapboxgl-ctrl-zoom-out .mapboxgl-ctrl-icon {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' height='16' width='16' fill='currentColor'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z'%3E%3C/path%3E%3C/svg%3E");
-  }
-
-  .item-view-container {
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 20px, rgba(0, 0, 0, 0.01) 0px 0px 0px 1px;
-    border-radius: 8px;
-    background: white;
-    display: inline-block;
-    margin: 120px 10px;
-    padding: 10px;
-    width: 360px;
   }
 }
