@@ -6,14 +6,16 @@
   "scripts": {
     "dev": "babel-watch src/server.js",
     "start": "NODE_ENV=production node build/server.js",
-    "build": "rm -rf ./build && NPM_CONFIG_PRODUCTION=false babel -d ./build ./src -s"
+    "build": "rm -rf ./build && NPM_CONFIG_PRODUCTION=false babel src --out-dir build"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.8.7",
     "aws-sdk": "^2.205.0",
     "axios": "^0.19.2",
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.15.2",
     "cheerio": "^1.0.0-rc.3",
+    "core-js": "^2.6.11",
     "cors": "^2.8.1",
     "crypto-js": "^3.1.9-1",
     "dotenv": "^2.0.0",
@@ -30,13 +32,11 @@
     "request": "^2.88.2"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
-    "babel-watch": "^2.0.7"
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.9.0",
+    "@babel/plugin-transform-async-to-generator": "^7.8.3",
+    "@babel/preset-env": "^7.9.0",
+    "babel-watch": "^7.0.0"
   }
 }
