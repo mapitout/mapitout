@@ -10,6 +10,7 @@
   "scripts": {
     "try": "NPM_CONFIG_PRODUCTION=false npm i --prefix server && npm run build:server && NODE_ENV=production node ./server/build/server.js",
     "test": "eslint .",
+    "test:fix": "eslint . --fix",
     "precommit": "npm run test",
     "prepush": "npm run test",
     "postinstall": "NPM_CONFIG_PRODUCTION=false npm i --prefix server && npm run build:server",
