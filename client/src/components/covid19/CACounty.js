@@ -10,7 +10,7 @@ class CACounty extends React.Component {
     }
   }
   componentDidMount() {
-    axios.get('https://amazingshellyyy.com/covid19-CA/countyTimeseries.json')
+    axios.get('https://amazingshellyyy.com/covid19-api/US-CA/countyTimeseries.json')
       .then(res => {
         console.log('covid CA County data', res.data)
         let curData = res.data;
