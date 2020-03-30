@@ -3,11 +3,15 @@ const router = require('express').Router();
 
 
 router.get('/', (req, res)=> res.json({"message": "/publicApi/item connected"}));
-
-router.get('/show', Controller.show);
+//category search
+//open_hour search
+//long, lati search
+router.get('/all', Controller.showAll);
+router.get('/:id', Controller.show);
 router.post('/create', Controller.create);
-router.put('/edit', Controller.edit);
-router.delete('/delete', Controller.delete);
+router.put('/edit/:id', Controller.edit);
+router.delete('/delete/:id', Controller.destroy);
+
 
 
 export default router;
