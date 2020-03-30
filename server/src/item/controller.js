@@ -72,6 +72,10 @@ export default {
     } catch(err) {
       return next('500:failed to delete this pin. Please try again.')
     }
+  },
+  search: async(req, res, next) => {
+    
+    res.json("this is search")
   }
 
 }
