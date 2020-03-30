@@ -3,7 +3,7 @@
 - sample response: 
 ```
 {
-    "message": "find item successfully",
+    "message": "find pin successfully",
     "findItem": {
         "location": {
             "coordinates": [
@@ -47,7 +47,7 @@
 - sample response:
 ```
 {
-    "message": "item is created successfully",
+    "message": "Pin is created successfully",
     "createdItem": {
         "location": {
             "coordinates": [
@@ -92,7 +92,7 @@
 - sample response: 
 ```
 {
-    "message": "updated pin is saved successfully.",
+    "message": "Updated pin is saved successfully.",
     "editItem": {
         "location": {
             "coordinates": [
