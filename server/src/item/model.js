@@ -4,16 +4,16 @@ const Schema = mongoose.Schema;
 
 
 const orderSchema = new mongoose.Schema({
-  title: {
+  type: {
     type: String,
     required: [
-      true, 'order title is required'
+      true, 'order title is required.'
     ]
   },
   notes: {
     type: String
   },
-  actions: {
+  action: {
     type: String
   }
 })
