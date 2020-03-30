@@ -9,7 +9,7 @@
 .map-view-conatiner {
   position: relative;
   @media (max-width: 672px) {
-    margin-top: $bavbar-sm-height;
+    margin-top: $navbar-md-height;
     height: 40vh;
   }
   .pin-001 {

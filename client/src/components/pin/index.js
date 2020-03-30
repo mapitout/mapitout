@@ -45,14 +45,17 @@ import MultipleSelect from 'react-select'
 const item = (props) => {
 
   const [item, setItem] = React.useState({})
+  const [category, setCategory] = React.useState([])
   React.useEffect(() => {
-    console.log(props.data)
     props.data && setItem({ ...props.data });
+    if(props.data.details) {
+      const initialCategory = props.data.details.category.map(c=>({ value: c, label: c }))
+      props.data.details.category.length>0 && setCategory([...initialCategory]);
+    }
   }, [])
   const [editting, setEditting] = React.useState(!false)
   const activateEditting = () => setEditting(true);
   const cancelClose = () => setEditting(false);
-  const [category, setCategory] = React.useState([])
   const { onSubmit, onChange, inputs } = useForm('creatingForm', {
     initialValues: {
       title: props.data.name,
@@ -61,11 +64,11 @@ const item = (props) => {
       latitude: props.data.latitude
     },
     callback: (inputs) => {
-      console.log({ ...inputs, category });
+      console.log({ ...inputs, category: category.map(i => i.value.toLowerCase()) });
     }
   })
   const onCategoryChange = (inputValue) => {
-    setCategory(inputValue.map(i => i.value))
+    setCategory([...inputValue])
   }
   return (<div className='item-view-compoenet'>
     {item.details && item.details.order && <div className='item-info-container'>
@@ -98,7 +101,7 @@ const item = (props) => {
         </div>
         <div className='session-item category'>
           <div className='session-title'>category</div>
-          {item.details.category.length > 0 && item.details.category.map((c) => (<div className='item' key={c}>{c}</div>))}
+          {item.details && item.details.category.length > 0 && item.details.category.map((c) => (<div className='item' key={c}>{c}</div>))}
         </div>
         <div className='session-item open-hour'> {item.details.open_hour} </div>
         {item.details.length > 0 && <div className='menu'>
@@ -119,30 +122,29 @@ const item = (props) => {
     </div> || <div className='item-empty'>
       <img src='../../assets/svgs/no-data.svg' />
       <div>This location has no information yet, can you help to map it out.</div>
-      <button className='btn btn-primary btn-block btn-lg try-it-out' onClick={activateEditting}>Map It Out</button>
-      <Modal show={editting} onHide={cancelClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Create on the Map</Modal.Title>
-        </Modal.Header>
+      <button className='btn btn-block btn-lg try-it-out' onClick={activateEditting}>Map It Out</button>
+      <Modal className='create-editting-item-modal' show={editting} onHide={cancelClose}>
         <form onSubmit={onSubmit}>
           <Modal.Body>
+            <div className="prompt-block form-group">
+              <img src='../../assets/svgs/pin-on-the-map.svg' />
+              <div className='session-title'>Add details to</div>
+              <div className="address-prefill">
+                {inputs.address}
+              </div>
+            </div>
             <div className="form-group">
-              <label>Name</label>
+              <div className='session-title'>Name</div>
               <input className="form-control" value={inputs.title} name="title" onChange={onChange} placeholder="Location name, store name...etc" />
             </div>
             <div className="form-group">
-              <label>Address</label>
-              <input className="form-control" value={inputs.address} name="address" onChange={onChange} placeholder="Address" />
-            </div>
-            <div className="form-group">
-              <label>Category</label>
+              <div className='session-title'>Category</div>
               <MultipleSelect
                 isMulti
                 name="category"
                 className="basic-multi-select"
                 classNamePrefix="category"
-                isClearable
-                // inputValue={category}
+                value={category}
                 onChange={onCategoryChange}
                 options={[
                   // cultural(korean, thai...etc), food type(dessert, breakfase...etc), food catogory(pizza, durgers...etc)
@@ -163,15 +165,11 @@ const item = (props) => {
                   { value: 'Late night', label: 'Late night' }
                 ]} />
             </div>
+            <div className="modal-btn-group">
+              <span className="cancel" onClick={cancelClose}>Cancel</span>
+              <span className="create">Create</span>
+            </div>
           </Modal.Body>
-          <Modal.Footer>
-            <button className="btn btn-secondary" onClick={cancelClose}>
-              Close
-            </button>
-            <button type="submit" className="btn btn-primary">
-              Create
-            </button>
-          </Modal.Footer>
         </form>
       </Modal>
     </div>}
