@@ -1,3 +1,26 @@
+.item-view-compoenet {
+  text-align: center;
+  .item-empty {
+    img {
+      margin: auto;
+      margin-top: 20%;
+      width: 40%;
+      display: block;
+    }
+    div {
+      width: 75%;
+      margin: 20px auto;
+      font-weight: 400;
+      color: rgba(black, 0.5);
+    }
+    button {
+      max-width: 40%;
+      max-width: 200px;
+      margin: auto;
+      transform: scale(0.8);
+    }
+  }
+}
 .item-view-container {
   height: 100%;
   overflow-y: scroll;

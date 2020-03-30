@@ -1,7 +1,7 @@
 nav.navbar {
   user-select: none;
   background: white;
-  padding: 10px 20px;
+  padding: 0px 20px;
   box-shadow: inset 0px -1px 0px rgba(black, 0.05), 0 0.2rem 0.75rem rgba(0, 0, 0, 0.05);
   position: absolute;
   top: 0px;
@@ -9,7 +9,7 @@ nav.navbar {
   right: 0px;
   z-index: 1000;
   @media (max-width: 672px) {
-    padding: 5px 10px;
+    padding: 0px 10px;
   }
   .nav-item {
     cursor: pointer;
@@ -39,11 +39,10 @@ nav.navbar {
   &.navbar-expand .navbar-nav .nav-link {
     user-select: none;
     white-space: nowrap;
-    margin-right: 0.2rem;
-    margin-left: 0.2rem;
     padding: 0.5rem 1rem;
-    border-radius: 0.3rem;
+    border-radius: 0;
     color: #797979;
+    border-bottom: 3px solid rgba($brand-color, 0);
 
     @media (max-width: 672px) {
       margin-right: 0.08rem;
@@ -54,8 +53,8 @@ nav.navbar {
     &.hightlight,
     &.mapitout-active {
       transition: 0.2s ease;
-      background: rgba(lighten($brand-color, 10%), 0.1);
-      color: lighten($brand-color, 5%);
+      color: black;
+      border-color: $brand-color;
       &:active {
         color: darken($brand-color, 5%);
       }

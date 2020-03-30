@@ -1,0 +1,14 @@
+.mapitout-modal-component {
+  height: 100vh;
+  width: 100vw;
+  background: rgba($brand-color, 1);
+  z-index: 99999;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  text-align: center;
+  padding: 10px;
+  padding-top: 100px;
+}

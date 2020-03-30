@@ -22,15 +22,15 @@ class Welcome extends React.Component {
   renderButton(){
     return (!this.props.isLoggedin)?(
       <div>
-        <Link to='map'>
-          <button className='btn btn-success btn-block btn-lg try-it-out'>
+        <Link to='maps'>
+          <button className='btn btn-block btn-lg try-it-out'>
             Map It Now
           </button>
         </Link>
       </div>)
       :(<div>
-        <Link to='map'>
-          <button className='btn btn-success btn-block btn-lg try-it-out'>
+        <Link to='maps'>
+          <button className='btn btn-block btn-lg try-it-out'>
             Explore now
           </button>
         </Link>

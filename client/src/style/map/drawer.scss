@@ -5,12 +5,15 @@
   top: 0px;
   left: 0px;
   padding: 10px;
-  padding-top: 74.19px;
+  padding-top: $bavbar-md-height;
   width: $drawer-width;
   &.search {
+    .mapboxgl-ctrl-geocoder.mapboxgl-ctrl {
+      margin-top: 10px;
+    }
     @media (max-width: 672px) {
       width: 100%;
-      padding-top: 55px;
+      padding-top: $bavbar-sm-height;
       .mapboxgl-ctrl-geocoder--icon-search {
         top: 8px;
       }
@@ -21,6 +24,9 @@
         top: auto;
       }
     }
+  }
+  &.false {
+    display: none;
   }
   &.true {
     box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 20px, rgba(0, 0, 0, 0.01) 0px 0px 0px 1px;
