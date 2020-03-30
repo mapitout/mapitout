@@ -47,7 +47,7 @@ ReactDOM.render(
           <Route path='/signin' component= {Signin} />
           <Route path='/signout' component= {Signout} />
           <Route path='/covid19' component= {Covid19} />
-          <div className='map-view-outter-container'><Route path='/maps' component= {MapView} /></div>
+          <Route path='/maps' component= {MapView} />
         </Layout>
       </Switch>
     </HashRouter>

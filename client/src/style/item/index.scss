@@ -1,3 +1,26 @@
+.item-view-compoenet {
+  text-align: center;
+  .item-empty {
+    img {
+      margin: auto;
+      margin-top: 20%;
+      width: 40%;
+      display: block;
+    }
+    div {
+      width: 75%;
+      margin: 20px auto;
+      font-weight: 400;
+      color: rgba(black, 0.5);
+    }
+    button {
+      max-width: 40%;
+      max-width: 200px;
+      margin: auto;
+      transform: scale(0.8);
+    }
+  }
+}
 .item-view-container {
   height: 100%;
   overflow-y: scroll;
@@ -47,11 +70,13 @@
             outline: none;
             border-width: 2px;
             border-color: rgba(0, 0, 0, 0.3);
+            box-sizing: border-box;
             &:focus, &:focus:hover{
               border-color: rgba(darken($brand-color, 5%), 1)
             }
             &:hover{
-              border-color: rgba(black, 0.8)
+              border-color: rgba(black, 0.8);
+              background: white;
             }
             &:disabled {
               padding-left: 0px;
@@ -89,6 +114,114 @@
         }
         .session-title {
           display: none;
+        }
+      }
+    }
+  }
+}
+
+.create-editting-item-modal {
+  text-align: center;
+  .session-title {
+    opacity: 0.4;
+    font-weight: 900;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  input.form-control{
+    padding: 10px;
+  }
+  .basic-multi-select .css-yk16xz-control {
+    padding: 6px;
+  }
+  input.form-control, .basic-multi-select .css-yk16xz-control {
+    font-size: 1.2rem;
+    border-radius: 0px;
+    background: rgb(245, 245, 245);
+    text-align: center;
+    &:focus{
+      background: white;
+    }
+  }
+  .css-1rhbuit-multiValue {
+    background: lighten($brand-color, 5%);
+    border-radius: 5px;
+    padding: 0px;
+    padding-left: 8px;
+    color: white;
+  }
+  .css-12jo7m5 {
+    padding: 2px auto;
+    color: white;
+  }
+  .css-xb97g8 {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    cursor: pointer;
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+  .css-xb97g8:hover {
+    background-color: lighten($brand-color, 10%);
+    color: white;
+  }
+  .prompt-block {
+    display: block;
+    margin: auto;
+    .address-prefill {
+      font-family: 'PT Serif', serif;
+      text-align: center;
+      font-weight: 800;
+      border: none;
+      width: 50%;
+      margin: 10px auto;
+      display: block;
+      font-size: 1.3rem;
+    }
+    img {
+      width: 120px;
+      margin: 30px auto;
+    }
+  }
+  .category__control--menu-is-open {
+    border-color: $brand-color;
+    box-shadow: 0 0 0 1px $brand-color;
+    border-radius: 0px;
+  }
+  .css-1pahdxq-control, .css-1pahdxq-control:hover{
+    border-radius: 0px;
+    border-color: $brand-color;
+    box-shadow: 0 0 0 1px $brand-color;
+  }
+  .modal-body {
+    padding: 0px;
+  }
+
+  .modal-btn-group {
+    width: 100%;
+    display: flexbox;
+    margin-top: 50px;
+    span {
+      display: inline-block;
+      width: 50%;
+      cursor: pointer;
+      padding: 15px;
+      &.cancel{
+        background-color: rgb(245, 245, 245);
+        &:hover{
+          background-color: rgb(235, 235, 235);
+        }
+      }
+      &.create{
+        background-color: $brand-color;
+        color: white;
+        font-weight: 700;
+        
+        &:hover{
+          background-color: lighten($brand-color, 10%);
         }
       }
     }

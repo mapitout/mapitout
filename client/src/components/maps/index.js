@@ -4,7 +4,7 @@ import MAP_STYLE from './map-styles'
 import Geocoder from 'react-map-gl-geocoder';
 import qs from 'qs';
 import _ from 'lodash';
-import Item from '../item';
+import Pin from '../pin';
 
 const ZOOM = 16;
 const Index = () => {
@@ -26,7 +26,11 @@ const Index = () => {
   })
 
   window.addEventListener('resize', _.debounce(function (d) {
-    setViewport({ ...viewport, width: '100%', latitude: focusport.latitude, longitude: focusport.longitude, height: '100%', transitionDuration: 0 })
+    if(focusport.latitude && focusport.longitude) {
+      setViewport({ ...viewport, width: '100%', height: '100%', latitude: focusport.latitude, longitude: focusport.longitude, transitionDuration: 0 })
+    }else{
+      setViewport({ ...viewport, width: '100%', height: '100%', transitionDuration: 0 })
+    }
   }, 200));
   function onGeocoderSelected(v) {
     setFocused(true);
@@ -80,8 +84,8 @@ const Index = () => {
           longitude, latitude, name,
           details: {
             // title: 'Taiwan Porridge Kingdom',
-            // address: '20956 Homestead Rd, Cupertino, CA 95014',
-            // category: ['Taiwanese Food', 'Porridge', 'Cupertino'],
+            address: '20956 Homestead Rd, Cupertino, CA 95014',
+            category: ['Taiwanese', 'Chinese', 'Thai'],
             // open_hour: '',
             // menu: 'https://s3-media0.fl.yelpcdn.com/bphoto/UgtxQQlDJ9n5k8G8Y8pceQ/o.jpg',
             // order: [{
@@ -111,11 +115,11 @@ const Index = () => {
   let geocoderContainerRef = React.useRef()
   const { MAPBOX_API_KEY } = process.env;
   return (
-    <div>
+    <div className='map-view-outter-container'>
       <div className={`map-info-drawer-container search`} ref={geocoderContainerRef}/>
       <div className={`map-info-drawer-container ${focused} info`}>
         {focused && <div className='item-view-container'>
-          <Item data={focusport} />
+          <Pin data={focusport} />
         </div>}
       </div>
       <div className='map-view-conatiner'>
