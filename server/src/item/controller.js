@@ -7,9 +7,29 @@ export default {
     const itemId = req.params.id;
     try {
       const findItem = await Item.findById(itemId)
-      return res.json({"message":"find item successfully",findItem})
+      return res.json({"message":"find pin successfully",findItem})
     } catch(err) {
-      return next('500:Cannot find the item you are looking for')
+      return next('500:Cannot find the pin you are looking for')
+    }
+  },
+  showAll: async(req, res, next) => {
+    try {
+      const allItem = await Item.find({});
+      const items = []
+      for (let i = 0; i < allItem.length; i++) {
+        const item = allItem[i];
+        let newItem = {
+          _id: item._id,
+          title: item.title,
+          address: item.address,
+          longitude: item.location.coordinates[0],
+          latitude: item.location.coordinates[1]
+        }
+        items.push(newItem);
+      }
+      res.status(200).json({"message":"successfully find all pins.", items})
+    } catch(err) {
+      res.status(500).json({"message":err})
     }
   },
   create: async(req, res, next) => {
@@ -19,7 +39,7 @@ export default {
     console.log(item)
     try{
       const createdItem = await Item.create(item);
-      return res.json({"message":"item is created successfully",createdItem})
+      return res.json({"message":"Pin is created successfully",createdItem})
     }catch(err){
       if (err.code === 11000) {
         return next(`500:iten title must be uniqued.`)
@@ -38,9 +58,9 @@ export default {
     const updateditem = req.body.details;
     try {
       const editItem = await Item.findByIdAndUpdate(itemId, updateditem,{new: true});
-      return res.status(200).json({"message":"edit item successfully",editItem})
+      return res.status(200).json({"message":"Updated pin is saved successfully.",editItem})
     } catch(err) {
-      return next('500:failed to update item. Please try again.')
+      return next('500:failed to update this pin. Please try again.')
     }
     
   },
@@ -48,10 +68,14 @@ export default {
     const itemId = req.params.id;
     try {
       const deletedItem = await Item.findByIdAndDelete(itemId);
-      return res.status(200).json({"message":"delete item successfully",deletedItem})
+      return res.status(200).json({"message":"Pin is deleted successfully.",deletedItem})
     } catch(err) {
-      return next('500:failed to delete item. Please try again.')
+      return next('500:failed to delete this pin. Please try again.')
     }
+  },
+  search: async(req, res, next) => {
+    
+    res.json("this is search")
   }
 
 }
