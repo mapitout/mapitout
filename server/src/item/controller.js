@@ -10,12 +10,20 @@ export default {
     // const open_hour = req.body.details.open_hour;
     // delete req.body.details.open_hour;
     const item = req.body.details;
-    let createdItem; 
+    console.log(item)
     try{
-      createdItem = await Item.create(item);
-      res.json(createdItem)
+      const createdItem = await Item.create(item);
+      return res.json({"message":"item is created successfully",createdItem})
     }catch(err){
-      return next('Error when creating item')
+      if (err.code === 11000) {
+        return next(`500:iten must be unique`)
+      } 
+      if (err.errors && err.errors.title) {
+        return next(`500:${err.errors.title.message}`)
+      } else if (err.errors && err.errors.address) {
+        return next(`500:${err.errors.address.message}`)
+      } 
+      return res.json({"message": err})
     }
 
   },
