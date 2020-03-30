@@ -154,4 +154,34 @@
 ```
 
 ### GET ALL
+- route: /publicApi/item/all
+- sample response: 
+```
+{
+    "message": "successfully find all pins.",
+    "items": [
+        {
+            "_id": "5e8146c2e3de4c0b5b1e8cf0",
+            "title": "Taiwan Porridge Kingdom1",
+            "address": "20956 Homestead Rd, Cupertino, CA 95014",
+            "longitude": 40,
+            "latitude": -122
+        },
+        {
+            "_id": "5e814b09e497c40c4a723643",
+            "title": "Taiwan Porridge Kingdom1ddd",
+            "address": "20956 Homestead Rd, Cupertinoddd, CA 95014",
+            "longitude": 40,
+            "latitude": -122
+        },
+        {
+            "_id": "5e8191b51b7e8e1481629a76",
+            "title": "Sample restaurant",
+            "address": "20956 Homestead Rd, Cupertinoddd, CA 95014",
+            "longitude": 40,
+            "latitude": -122
+        }
+    ]
+}
+```
 ### GET search
