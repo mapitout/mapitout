@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import useForm from '../utils/useForm';
-import MultipleSelect from 'react-select'
+import MultipleSelect from 'react-select';
 
 // const example_d = {
 //   details: {
