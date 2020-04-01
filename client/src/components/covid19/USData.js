@@ -15,7 +15,7 @@ class USData extends React.Component {
   componentDidMount() {
     axios.get('https://pomber.github.io/covid19/timeseries.json')
       .then(res => {
-        console.log(res.data.US)
+        // console.log(res.data.US)
         let USData = res.data.US;
         let newData = USData.slice(39, USData.length);
         this.setState({
@@ -39,10 +39,10 @@ class USData extends React.Component {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey='confirmed' barSize={20} fill='#8884d8' />
-                <Line type='monotone' dataKey='confirmed' stroke='#6562a1' />
-                <Bar dataKey='deaths' barSize={20} fill='#82ca9d' />
-                <Line type='monotone' dataKey='deaths' stroke='#538265' />
+                <Bar dataKey='confirmed' barSize={20} fill='#75D6B1' />
+                <Line type='monotone' dataKey='confirmed' stroke='#75D6B1' />
+                <Bar dataKey='deaths' barSize={20} fill='#757272' />
+                <Line type='monotone' dataKey='deaths' stroke='#757272' />
 
               </ComposedChart>
 

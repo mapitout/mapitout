@@ -13,7 +13,7 @@ class States extends React.Component {
   componentDidMount(){
     axios.get('https://amazingshellyyy.com/covid19-api/US/statesTimeseries.json')
       .then(res => {
-        console.log('us state',res.data)
+        // console.log('us state',res.data)
         let curData = res.data;
         let latest = curData[curData.length - 1];
         let Top10 = latest.data.sort((a,b) => (a.case > b.case) ? -1 : 1).slice(0,10)
@@ -38,8 +38,8 @@ class States extends React.Component {
                 <YAxis type="category" dataKey="state" width={100}/>
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="case" fill="#8884d8" />
-                <Bar dataKey="death" fill="#82ca9d" />
+                <Bar dataKey="case" fill="#75D6B1" />
+                <Bar dataKey="death" fill="#757272" />
                 {/* <Bar dataKey="recovered" fill="#82ca9d" /> */}
               </BarChart>
             </ResponsiveContainer>
