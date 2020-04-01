@@ -76,9 +76,9 @@ class CACounty extends React.Component {
                   {this.state.curState}
                 </Dropdown.Toggle>
                 <Dropdown.Menu onClick={this.choose.bind(this)}>
-                  <Dropdown.Item id="CA" href="">California</Dropdown.Item>
-                  <Dropdown.Item id="WA" href="">Washington</Dropdown.Item>
-                  <Dropdown.Item id="NY" href="">New York</Dropdown.Item>
+                  <Dropdown.Item id="CA">California</Dropdown.Item>
+                  <Dropdown.Item id="WA">Washington</Dropdown.Item>
+                  <Dropdown.Item id="NY">New York</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </div>
