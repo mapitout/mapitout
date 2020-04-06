@@ -53,7 +53,7 @@ const item = (props) => {
       props.data.details.category.length>0 && setCategory([...initialCategory]);
     }
   }, [])
-  const [editting, setEditting] = React.useState(!false)
+  const [editting, setEditting] = React.useState(false)
   const activateEditting = () => setEditting(true);
   const cancelClose = () => setEditting(false);
   const { onSubmit, onChange, inputs } = useForm('creatingForm', {
