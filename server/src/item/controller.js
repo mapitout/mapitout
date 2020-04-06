@@ -114,7 +114,24 @@ export default {
         return next('500:Something went wrong.')
       }
     } else {
-      return next('500: This is not a valid search.')
+      try {
+        const allItem = await Item.find({});
+        const items = []
+        for (let i = 0; i < allItem.length; i++) {
+          const item = allItem[i];
+          let newItem = {
+            _id: item._id,
+            title: item.title,
+            address: item.address,
+            longitude: item.location.coordinates[0],
+            latitude: item.location.coordinates[1]
+          }
+          items.push(newItem);
+        }
+        res.status(200).json({ "message": "successfully find all pins.", items })
+      } catch (err) {
+        res.status(500).json({ "message": err })
+      }
     }
   }
 }
