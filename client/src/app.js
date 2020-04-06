@@ -15,7 +15,7 @@ import SignupVerification from './components/auth/signupVerification';
 import Signout from './components/auth/signout';
 
 import Covid19 from './components/covid19';
-import MapView from './components/maps';
+import MapView from './components/maps/index-3';
 
 import RequireAuth from './components/auth/requireAuth';
 import reducers from './reducers';
