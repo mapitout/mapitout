@@ -56,6 +56,6 @@ const itemSchema = new mongoose.Schema({
   },
   order: [orderSchema],
 })
-
+itemSchema.index({ location: "2dsphere" });
 export default mongoose.model('Item', itemSchema);
 
