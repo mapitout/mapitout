@@ -80,6 +80,7 @@ class Index extends React.Component {
     }
   }
   onMapGLViewportChange(v) {
+    if(v.zoom < 12) v.zoom = 12;
     this.setState({...this.state, viewport: v})
   }
   onGeocoderLoading({ query }) {
