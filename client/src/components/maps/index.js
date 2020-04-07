@@ -7,7 +7,8 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 
 import { changeFocusport } from '../../actions';
-import Pin from '../pin';
+import Item from '../item';
+
 const ZOOM = 16;
 const MAPBOX_API_KEY = process.env.MAPBOX_API_KEY;
 const BOUNDARY_OF_CA = [-124.409591, 32.534156, -114.131211, 42.009518];  // boundary of California
@@ -25,24 +26,46 @@ class Index extends React.Component {
       },
       focused: false
     }
-    window.addEventListener('resize', _.debounce(d => {
-      const { focusport } = this.props;
-      if(focusport.latitude && focusport.longitude) {
-        this.changeState({viewport: { width: '100%', height: '100%', latitude: focusport.latitude, longitude: focusport.longitude, transitionDuration: 0 }})
-      }
-      this.changeState({viewport: { width: '100%', height: '100%', transitionDuration: 0 }})
-    }, 200))
+    this.mapRef = React.createRef()
+    this.geocoderContainerRef = React.createRef()
   }
-  static changeState(obj) {
-    this.setState({ ...this.state, ...obj })
+  handleResize() {
+    const { focusport } = this.props;
+    if(focusport.latitude && focusport.longitude) {
+      this.setState({ ...this.state, 
+        viewport: { width: '100%', height: '100%', latitude: focusport.latitude, longitude: focusport.longitude, transitionDuration: 0 }
+      });
+    }
+    this.setState({ ...this.state, width: '100%', height: '100%', transitionDuration: 0 })
   }
-  static updateURL(params) {
+  componentDidMount() {
+    const query = qs.parse(window.location.href.split('?')[1]);
+    const lat = Number(query.lat);
+    const lon = Number(query.lon);
+    if(query.lat && query.lon) {
+      this.setState({...this.state, focused: true});
+      this.setState({ ...this.state, 
+        viewport: { ...this.state.viewport, latitude: lat, longitude: lon }
+      })
+      this.props.changeFocusport({
+        ...this.props.focusport,
+        name: query.q || '',
+        longitude: lon,
+        latitude: lat
+      })
+    }
+    window.addEventListener('resize', _.debounce(this.handleResize.bind(this), 200));
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize.bind(this));
+  }
+  updateURL(params) {
     if (window.history.replaceState) {
       window.history.replaceState({}, '', `/#/maps?${params}`);
     }
   }
   onMapGLViewportChange(v) {
-    this.changeState({viewport: v})
+    this.setState({...this.state, viewport: v})
   }
   onGeocoderLoading({ query }) {
     const uri_params = qs.stringify({
@@ -51,14 +74,13 @@ class Index extends React.Component {
     this.updateURL(uri_params)
   }
   onGeocoderSelected(v) {
-    this.changeState({focused: true});
+    this.setState({...this.state, focused: true});
     this.props.changeFocusport({
       ...this.props.focusport,
-      key: 'current-focused-item',
       longitude: v.longitude,
       latitude: v.latitude
     })
-    this.changeState({ viewport: { ...v, transitionDuration: 300 } })
+    this.setState({ ...this.state, viewport: { ...v, transitionDuration: 300 } })
   }
   onGeocoderResult(i) {
     const uri_params = qs.stringify({
@@ -66,7 +88,7 @@ class Index extends React.Component {
       lat: i.result.center[1],
       q: i.result.place_name
     })
-    this.changeState({focused: true});
+    this.setState({ ...this.state, focused: true });
     this.props.changeFocusport({
       ...this.props.focusport,
       name: i.result.place_name,
@@ -76,21 +98,19 @@ class Index extends React.Component {
     this.updateURL(uri_params)
   }
   render() {
-    const mapRef = React.useRef()
-    const geocoderContainerRef = React.useRef()
     const { focused, viewport } = this.state;
-    const { focusport } = this.props.item;
+    const { focusport } = this.props;
     return (
       <div className='map-view-outter-container'>
-        <div className={`map-info-drawer-container search`} ref={geocoderContainerRef}/>
+        <div className={`map-info-drawer-container search`} ref={this.geocoderContainerRef}/>
         <div className={`map-info-drawer-container ${focused} info`}>
           {focused && <div className='item-view-container'>
-            <Pin data={focusport} />
+            <Item />
           </div>}
         </div>
         <div className='map-view-conatiner'>
           <MapGL
-            ref={mapRef}
+            ref={this.mapRef}
             mapboxApiAccessToken={MAPBOX_API_KEY}
             {...viewport}
             onViewportChange={this.onMapGLViewportChange.bind(this)}
@@ -99,8 +119,8 @@ class Index extends React.Component {
             <Geocoder
               onLoading={this.onGeocoderLoading.bind(this)}
               inputValue={focusport.name}
-              containerRef={geocoderContainerRef}
-              mapRef={mapRef}
+              containerRef={this.geocoderContainerRef}
+              mapRef={this.mapRef}
               onViewportChange={this.onGeocoderSelected.bind(this)}
               mapboxApiAccessToken={MAPBOX_API_KEY}
               position='top-left'
@@ -113,11 +133,10 @@ class Index extends React.Component {
               trackProximity={true}
               bbox={BOUNDARY_OF_CA}
             />
-            {focused && <Marker key={focusport.key}
+            {<Marker key={focusport.name}
               latitude={focusport.latitude}
               longitude={focusport.longitude}
             >
-              {/* <img alt='pin' width='20px' src='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Google_Maps_pin.svg/1200px-Google_Maps_pin.svg.png'/>*/}
               <div className='pin-001'>
                 <button className='button-inner'>
                   <div className='pin-001-wrapper'>
@@ -151,8 +170,6 @@ class Index extends React.Component {
       </div>
     )
   }
-
-
 }
 
 function mapStateToProps({item}) {
