@@ -1,19 +1,56 @@
-// import request from './request';
+import qs from 'qs';
+import request from './request';
 
 const CHANGE_FOCUSPORT = 'CHANGE_FOCUSPORT';
+const SEND_FOCUSPORT_TO_EDITTING = 'SEND_FOCUSPORT_TO_EDITTING';
 
 export function changeFocusport(focusport) {
+  console.log('changeFocusport')
+  console.log('focusport', focusport)
   return function (dispatch) {
-    dispatch({ type: CHANGE_FOCUSPORT, payload: focusport })
+    // use lon+lat to query from db
+    const query = qs.stringify({
+      lon: focusport.longitude,
+      lat: focusport.latitude
+    })
+    request.get(`/publicApi/item?${query}`)
+      .then(d=>{
+        // if it's found, insert to edittingItem and focusport
+        console.log(d)
+      })
+      .catch(()=>{
+        // if it's not found, use input as item.details.address
+        const payload = focusport;
+        payload.details.address = focusport.input;
+        dispatch({ type: CHANGE_FOCUSPORT, payload })
+      })
   }
+}
+export function edittingItem() {
+  return function (dispatch) {
+    dispatch({ type: SEND_FOCUSPORT_TO_EDITTING })
+  }
+}
+
+const INITIAL_ITEM_STATE = {
+  title: '',
+  address: '',
+  location: {
+    coordinates: [0,0]
+  },
+  category: [],
+  menu: '',
+  order: []
 }
 
 let INITIAL_STATE = {
   focusport: {
     latitude: 0,
     longitude: 0,
-    name: '',
-    details: {}
+    input: '',
+    details: {
+      ...INITIAL_ITEM_STATE
+    }
   }
 }
 

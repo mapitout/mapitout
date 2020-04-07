@@ -53,7 +53,7 @@ class Index extends React.Component {
       console.log('this.state 2', this.state);
       this.props.changeFocusport({
         ...this.props.focusport,
-        name: query.q || '',
+        input: query.q || '',
         longitude: lon,
         latitude: lat
       })
@@ -95,7 +95,7 @@ class Index extends React.Component {
     this.setState({ ...this.state, focused: true });
     this.props.changeFocusport({
       ...this.props.focusport,
-      name: i.result.place_name,
+      input: i.result.place_name,
       longitude: i.result.center[0],
       latitude: i.result.center[1]
     })
@@ -122,7 +122,7 @@ class Index extends React.Component {
           >
             <Geocoder
               onLoading={this.onGeocoderLoading.bind(this)}
-              inputValue={focusport.name}
+              inputValue={focusport.input}
               containerRef={this.geocoderContainerRef}
               mapRef={this.mapRef}
               onViewportChange={this.onGeocoderSelected.bind(this)}
@@ -137,7 +137,7 @@ class Index extends React.Component {
               trackProximity={true}
               bbox={BOUNDARY_OF_CA}
             />
-            {<Marker key={focusport.name}
+            {<Marker key={focusport.input}
               latitude={focusport.latitude}
               longitude={focusport.longitude}
             >

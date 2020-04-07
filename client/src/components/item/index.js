@@ -3,6 +3,8 @@ import Modal from 'react-bootstrap/Modal';
 import MultipleSelect from 'react-select';
 import { connect } from 'react-redux';
 
+import request from '../../redux/request';
+
 class Item extends React.Component {
   constructor(props) {
     super(props);
@@ -10,23 +12,41 @@ class Item extends React.Component {
       category: [],
       item: this.props.focusport,
       editting: false,
-      form: {}
+      form: {
+        title: '',
+        longtitue: 0,
+        latitute: 0,
+        category: []
+      },
+      initialCategory: []
     }
     // if(props.data.details) {
     //   const initialCategory = props.data.details.category.map(c=>({ value: c, label: c }))
     //   props.data.details.category.length>0 && setCategory([...initialCategory]);
     // }
   }
+  componentDidMount() {
+    request.get('/publicApi/category/all')
+      .then(r=>{
+        this.setState({
+          ...this.state,
+          initialCategory: r.data.allCate.map(c=>({value: c._id, label: c.title}))
+        })
+      })
+      .catch(e=>console.error(e.message))
+  }
   activateEditting() {
-    this.setState({ ...this.state, editting: true })
+    this.setState({ ...this.state, editting: true, form: {
+      ...this.props.focusport,
+      ...this.props.focusport.details
+    }})
   }
   cancelEditting() {
     this.setState({ ...this.state, editting: false })
   }
-  render() {
-    const item = this.props.focusport;
-    return (<div className='item-view-compoenet'>
-      {item.details && item.details.order && <div className='item-info-container'>
+  renderItemView(item) {
+    return (<div>
+      {item.details && item.details.title && <div className='item-info-container'>
         <div className='session action-container'>
           <div className='action'>
             <div className='icon'>D</div>
@@ -81,64 +101,87 @@ class Item extends React.Component {
       </div>}
     </div>)
   }
+  onFormSubmit(e) {
+    e.preventDefault()
+    console.log(this.state.form);
+  }
+  onFormChange(e) {
+    this.setState({
+      ...this.state,
+      form: {
+        ...this.state.form,
+        title: e.target.name=='title'?e.target.value:this.state.form.title,
+        details: {
+          ...this.state.form.details,
+          [e.target.name]: e.target.value
+        }
+      }
+    })
+  }
+  onCategoryChange(chosenCategory) {
+    const currentCategory = this.state.form.category;
+    let updatedCategory = [...currentCategory, ...chosenCategory]
+    // if(currentCategory.indexOf(chosenCategory)!==-1){
+    //   updatedCategory.push(chosenCategory)
+    // }
+    // console.log('updatedCategory', updatedCategory)
+    this.setState({
+      ...this.state,
+      form: {
+        ...this.state.form,
+        category: updatedCategory
+      }
+    })
+    console.log('this.state.form.category', this.state.form)
+  }
+  renderModal(show) {
+    const { form } = this.state;
+    return (
+      <Modal className='create-editting-item-modal' show={show} onHide={this.cancelEditting.bind(this)}>
+        <form onSubmit={this.onFormSubmit.bind(this)}>
+          <Modal.Body>
+            <div className="prompt-block form-group">
+              <img src='../../assets/svgs/pin-on-the-map.svg' />
+              <div className='session-title'>Add details to</div>
+              <div className="address-prefill">
+                {form.address && form.address.replace(', United States of America', ', US')}
+              </div>
+            </div>
+            <div className="form-group">
+              <div className='session-title'>Name</div>
+              <input className="form-control" value={form.title} name="title" onChange={this.onFormChange.bind(this)} placeholder="Location name, store name...etc" />
+            </div>
+            <div className="form-group">
+              <div className='session-title'>Category</div>
+              <MultipleSelect
+                isMulti
+                name="category"
+                className="basic-multi-select"
+                classNamePrefix="category"
+                value={['hello', 'cool']}
+                onChange={this.onCategoryChange.bind(this)}
+                options={[...this.state.initialCategory]} />
+            </div>
+            <div className="modal-btn-group">
+              <span className="cancel" onClick={this.cancelEditting.bind(this)}>Cancel</span>
+              <button type='submit' className="create">Create</button>
+            </div>
+          </Modal.Body>
+        </form>
+      </Modal>
+    )
+  }
+  render() {
+    return (<div className='item-view-compoenet'>
+      {this.renderItemView(this.props.focusport)}
+      {this.renderModal(this.state.editting)}
+    </div>)
+  }
 }
 
 function mapStateToProps({item}) {
-  const { focusport } = item;
-  return { focusport }
+  const { focusport, edittingItem } = item;
+  return { focusport, edittingItem }
 }
 
 export default connect(mapStateToProps, { })(Item);
-
-
-
-
-// <Modal className='create-editting-item-modal' show={this.state.editting} onHide={this.cancelEditting.bind(this)}>
-//   <form onSubmit={this.onSubmit.bind(this)}>
-//     <Modal.Body>
-//       {/* <div className="prompt-block form-group">
-//         <img src='../../assets/svgs/pin-on-the-map.svg' />
-//         <div className='session-title'>Add details to</div>
-//         <div className="address-prefill">
-//           {form.details.address}
-//         </div>
-//       </div>
-//       <div className="form-group">
-//         <div className='session-title'>Name</div>
-//         <input className="form-control" value={form.title} name="title" onChange={this.onChange.bind(this)} placeholder="Location name, store name...etc" />
-//       </div>
-//       <div className="form-group">
-//         <div className='session-title'>Category</div>
-//         <MultipleSelect
-//           isMulti
-//           name="category"
-//           className="basic-multi-select"
-//           classNamePrefix="category"
-//           value={form.category}
-//           onChange={onCategoryChange}
-//           options={[
-//             // cultural(korean, thai...etc), food type(dessert, breakfase...etc), food catogory(pizza, durgers...etc)
-//             { value: 'Taiwanese', label: 'Taiwanese' },
-//             { value: 'Chinese', label: 'Chinese' },
-//             { value: 'Thai', label: 'Thai' },
-//             { value: 'Mexican', label: 'Mexican' },
-//             { value: 'Italian', label: 'Italian' },
-//             { value: 'Japanese', label: 'Japanese' },
-//             { value: 'Korean', label: 'Korean' },
-//             { value: 'American', label: 'American' },
-//             { value: 'Middle Eastern', label: 'Middle Eastern' },
-//             { value: 'Dessert', label: 'Dessert' },
-//             { value: 'Breakfast', label: 'Breakfast' },
-//             { value: 'Brunch', label: 'Brunch' },
-//             { value: 'Lunch', label: 'Lunch' },
-//             { value: 'Dinner', label: 'Dinner' },
-//             { value: 'Late night', label: 'Late night' }
-//           ]} />
-//       </div> */}
-//       <div className="modal-btn-group">
-//         <span className="cancel" onClick={this.cancelEditting.bind(this)}>Cancel</span>
-//         <span className="create">Create</span>
-//       </div>
-//     </Modal.Body>
-//   </form>
-// </Modal>
