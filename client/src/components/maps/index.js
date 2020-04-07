@@ -33,20 +33,24 @@ class Index extends React.Component {
     const { focusport } = this.props;
     if(focusport.latitude && focusport.longitude) {
       this.setState({ ...this.state, 
-        viewport: { width: '100%', height: '100%', latitude: focusport.latitude, longitude: focusport.longitude, transitionDuration: 0 }
+        viewport: { ...this.state.viewport, width: '100%', height: '100%', latitude: focusport.latitude, longitude: focusport.longitude, transitionDuration: 0 }
       });
     }
     this.setState({ ...this.state, width: '100%', height: '100%', transitionDuration: 0 })
   }
   componentDidMount() {
+    this.init()
+  }
+  init() {
     const query = qs.parse(window.location.href.split('?')[1]);
     const lat = Number(query.lat);
     const lon = Number(query.lon);
     if(query.lat && query.lon) {
-      this.setState({...this.state, focused: true});
-      this.setState({ ...this.state, 
-        viewport: { ...this.state.viewport, latitude: lat, longitude: lon }
+      this.setState({ ...this.state,
+        focused: true,
+        viewport: { ...this.state.viewport, latitude: lat, longitude: lon, transitionDuration: 0 }
       })
+      console.log('this.state 2', this.state);
       this.props.changeFocusport({
         ...this.props.focusport,
         name: query.q || '',
