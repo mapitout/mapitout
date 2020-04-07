@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 
 import { changeFocusport } from '../../actions';
 import Item from '../item';
+import request from '../../redux/request';
 
 const ZOOM = 16;
 const MAPBOX_API_KEY = process.env.MAPBOX_API_KEY;
@@ -16,6 +17,7 @@ class Index extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      allPins: [],
       viewport: {
         width: '100%',
         height: '100%',
@@ -58,6 +60,15 @@ class Index extends React.Component {
         latitude: lat
       })
     }
+    request.get('/publicApi/item')
+      .then(({data})=>{
+        this.setState({
+          ...this.state,
+          allPins: data.items
+        })
+      })
+      .catch(e=>console.error(e))
+
     window.addEventListener('resize', _.debounce(this.handleResize.bind(this), 200));
   }
   componentWillUnmount() {
@@ -95,6 +106,33 @@ class Index extends React.Component {
       latitude: i.result.center[1]
     })
     this.updateURL(uri_params)
+  }
+  onClickMarket(m) {
+    const uri_params = qs.stringify({
+      lon: m.longitude,
+      lat: m.latitude,
+      q: m.title
+    })
+    this.updateURL(uri_params)
+    this.props.changeFocusport({
+      ...this.props.focusport,
+      input: m.title,
+      longitude: m.longitude,
+      latitude: m.latitude
+    })
+  }
+  renderAllPins(pins) {
+    const { focusport } = this.props;
+    return (<div>{pins.length > 0 && pins
+      .filter(pin=>(pin.latitude !== focusport.latitude))
+      .map(pin=>(
+        <Marker key={pin._id}
+          latitude={pin.latitude}
+          longitude={pin.longitude}
+        >
+          <PinMarket onClick={this.onClickMarket.bind(this, pin)} type='display'/>
+        </Marker>
+      ))}</div>)
   }
   render() {
     const { focused, viewport } = this.state;
@@ -138,6 +176,7 @@ class Index extends React.Component {
             >
               <PinMarket type='focused'/>
             </Marker>}
+            {this.renderAllPins(this.state.allPins)}
             <div className='ctrl-panel-container'>
               <GeolocateControl
                 positionOptions={{ enableHighAccuracy: true }}
@@ -158,8 +197,8 @@ class Index extends React.Component {
   }
 }
 
-function PinMarket({ type }){
-  return (<div className={`pin-001 ${type}`}>
+function PinMarket(props){
+  return (<div {...props} className={`pin-001 ${props.type}`}>
     <button className='button-inner'>
       <div className='pin-001-wrapper'>
         <div className='pin-001-wrapper-item'></div>
