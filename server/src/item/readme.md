@@ -246,7 +246,7 @@
 ```
 
 ### GET ALL
-- route: /publicApi/item/all
+- route: /publicApi/item
 - sample response: 
 ```
 {
