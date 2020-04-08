@@ -11,7 +11,7 @@ import Item from '../item';
 import request from '../../redux/request';
 
 const FOCUS_ZOOM = 16;
-const MAX_ZOOM = 9;
+const MAX_ZOOM = 9.7;
 const MAPBOX_API_KEY = process.env.MAPBOX_API_KEY;
 const BOUNDARY_OF_CA = [-124.409591, 32.534156, -114.131211, 42.009518];  // boundary of California
 class Index extends React.Component {
@@ -22,8 +22,8 @@ class Index extends React.Component {
       viewport: {
         width: '100%',
         height: '100%',
-        latitude: 37.58601246958799,
-        longitude: -122.1573783898732,
+        latitude: 37.560955658709936,
+        longitude: -122.17270585027846,
         zoom: MAX_ZOOM,
         transitionDuration: 400
       },
@@ -39,7 +39,9 @@ class Index extends React.Component {
         viewport: { ...this.state.viewport, width: '100%', height: '100%', latitude: focusport.latitude, longitude: focusport.longitude, transitionDuration: 0 }
       });
     }
-    this.setState({ ...this.state, width: '100%', height: '100%', transitionDuration: 0 })
+    this.setState({ ...this.state, 
+      viewport: { ...this.state.viewport, width: '100%', height: '100%', transitionDuration: 0 }
+    });
   }
   componentDidMount() {
     this.init()
@@ -80,6 +82,7 @@ class Index extends React.Component {
     }
   }
   onMapGLViewportChange(v) {
+    console.log(v)
     if(v.zoom < MAX_ZOOM) v.zoom = MAX_ZOOM;
     this.setState({...this.state, viewport: v})
   }
