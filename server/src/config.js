@@ -9,6 +9,7 @@ if (process.env.NODE_ENV != 'production') {
 export default {
   jwt_secret: process.env.JWT_SECRET || 'jwt_secret_FJLK:',
   jwt_secret_email: process.env.JWT_SECRET_EMAIL || 'jwt_secret_email',
+  ServerURIDomain: process.env.NODE_ENV == 'production' ? 'https://mapitout-server.herokuapp.com' : 'localhost:8000',
   URIDomain: process.env.NODE_ENV == 'production' ? 'https://www.mapitout.com/' : 'localhost:8080/',
   mongoose: {
     uri: process.env.MONGODB_URI || 'mongodb://localhost/mapitout'
