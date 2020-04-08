@@ -8,10 +8,6 @@
 }
 .map-view-conatiner {
   position: relative;
-  @media (max-width: 672px) {
-    margin-top: $navbar-md-height;
-    height: 40vh;
-  }
   .pin-001 {
     transform: translate(calc(-50% + 0px), calc(0% + 0px));
     left: 50%;
