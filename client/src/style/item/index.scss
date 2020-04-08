@@ -1,4 +1,4 @@
-.item-view-compoenet {
+.item-view-component {
   text-align: center;
   .item-empty {
     img {
@@ -34,7 +34,7 @@
         justify-content: space-around;
         .action {
           cursor: pointer;
-          width: 25%;
+          width: 33.3333%;
           text-align: center;
           padding: 5px;
           border-radius: 8px;
@@ -57,33 +57,13 @@
       }
 
       &.details-container {
+        text-align: left;
         & > div {
           padding: 5px 10px;
         }
         .title {
           font-weight: 800;
           font-size: 1.4rem;
-          input {
-            border-radius: 4px;
-            width: 100%;
-            padding-left: 8px;
-            outline: none;
-            border-width: 2px;
-            border-color: rgba(0, 0, 0, 0.3);
-            box-sizing: border-box;
-            &:focus, &:focus:hover{
-              border-color: rgba(darken($brand-color, 5%), 1)
-            }
-            &:hover{
-              border-color: rgba(black, 0.8);
-              background: white;
-            }
-            &:disabled {
-              padding-left: 0px;
-              color: black;
-              border-color: rgba(0, 0, 0, 0);
-            }
-          }
         }
         .address {
           .fade {
@@ -128,7 +108,8 @@
     letter-spacing: 1px;
     font-size: 0.9rem;
     text-transform: uppercase;
-    margin-bottom: 10px;
+    margin: 20px 0px 10px;
+    padding: auto 10px;
   }
 
   input.form-control{
@@ -142,7 +123,11 @@
     border-radius: 0px;
     background: rgb(245, 245, 245);
     text-align: center;
+\
     &:focus{
+      background: white;
+    }
+    &:hover{
       background: white;
     }
   }
@@ -171,9 +156,13 @@
   .prompt-block {
     display: block;
     margin: auto;
+    text-align: center;
+    padding-bottom: 20px;
+    .session-title {
+      text-align: center;
+    }
     .address-prefill {
       font-family: 'PT Serif', serif;
-      text-align: center;
       font-weight: 800;
       border: none;
       width: 50%;
@@ -191,6 +180,12 @@
     box-shadow: 0 0 0 1px $brand-color;
     border-radius: 0px;
   }
+  .category__control.category__control--is-focused.css-1pahdxg-control, .category__control.category__control--is-focused.category__control--menu-is-open.css-1pahdxg-control {
+    border-color: $brand-color;
+    box-shadow: 0 0 0 1px $brand-color;
+    border-radius: 0px;
+    padding: 6px;
+  }
   .css-1pahdxq-control, .css-1pahdxq-control:hover{
     border-radius: 0px;
     border-color: $brand-color;
@@ -199,23 +194,30 @@
   .modal-body {
     padding: 0px;
   }
+  .modal-content {
+    border: none;
+  }
 
   .modal-btn-group {
     width: 100%;
     display: flexbox;
     margin-top: 50px;
     button, span {
+      justify-content: space-around;
       display: inline-block;
       width: 50%;
       cursor: pointer;
       padding: 15px;
+      border: none;
       &.cancel{
+        border-bottom-left-radius: .3rem;
         background-color: rgb(245, 245, 245);
         &:hover{
           background-color: rgb(235, 235, 235);
         }
       }
       &.create{
+        border-bottom-right-radius: .3rem;
         background-color: $brand-color;
         color: white;
         font-weight: 700;

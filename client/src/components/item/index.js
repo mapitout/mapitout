@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import MultipleSelect from 'react-select';
 import { connect } from 'react-redux';
 
-import { createItem } from '../../actions';
+import { createItem, editItem } from '../../actions';
 import request from '../../redux/request';
 
 class Item extends React.Component {
@@ -14,7 +14,15 @@ class Item extends React.Component {
       form: {
         title: '',
         category: [],
-        order: []
+        order: {
+          phone: '',
+          doordash: '',
+          postmates: '',
+          grubhub: '',
+          ubereat: '',
+          yelp: '',
+          others: '',
+        }
       },
       initialCategory: []
     }
@@ -35,6 +43,7 @@ class Item extends React.Component {
   }
   activateEditting() {
     let form = {
+      order: { ...this.state.form.order },
       address: this.props.focusport.details.address,
       location: {
         ...this.props.focusport.details.location
@@ -42,9 +51,12 @@ class Item extends React.Component {
     }
     if(this.props.focusport._id){
       form = {
+        order: { ...this.state.form.order },
         ...this.props.focusport.details
       }
+      form.category = this.props.focusport.details.category.map(c=>({value: c._id, label: c.title}))
     }
+    console.log('form', form)
     this.setState({ ...this.state, editting: true, form })
   }
   cancelEditting() {
@@ -54,10 +66,6 @@ class Item extends React.Component {
     return (<div>
       {item._id && <div className='item-info-container'>
         <div className='session action-container'>
-          <div className='action'>
-            <div className='icon'>D</div>
-            <div className='title'>Directions</div>
-          </div>
           <div className='action' onClick={this.activateEditting.bind(this)}>
             <div className='icon'>E</div>
             <div className='title'>Edit</div>
@@ -85,15 +93,16 @@ class Item extends React.Component {
             {item.details.category.map((c) => (<div className='item' key={c._id}>{c.title}</div>))}
           </div>}
           <div className='session-item open-hour'> {item.details.open_hour} </div>
-          {item.details.order.length > 0 && <div className='session-item order'>
-            <div className='session-title'>Order Method</div>
-            {item.details.order.map((o) => (<div key={o.type} className='order-method'>
-              <div className='type'> {o.type} </div>
-              <div className='notes'> {o.notes} </div>
-              <div className='action'> {o.action} </div>
-            </div>))}
-          </div>}
-          {item.details.length > 0 && <div className='menu'>
+          {/* {item.details.order &&
+            <div className='session-item order'>
+              <div className='session-title'>Order Method</div>
+              {item.details.order.map((o) => (<div key={o.type} className='order-method'>
+                <div className='type'> {o.type} </div>
+                <div className='notes'> {o.notes} </div>
+                <div className='action'> {o.action} </div>
+              </div>))}
+            </div>} */}
+          {item.details.menu > 0 && <div className='menu'>
             <div className='session-title'>menu</div>
             <img
               src={item.details.menu}
@@ -109,10 +118,17 @@ class Item extends React.Component {
   }
   onFormSubmit(e) {
     e.preventDefault()
-    console.log(this.props.focusport);
-    if(!this.props.focusport._id) {
-      this.props.createItem(this.state.form, window)
-      window.location.reload();
+    const item_id = this.props.focusport._id;
+    if(!item_id) {
+      this.props.createItem(this.state.form)
+      this.setState({ ...this.state, editting: false })
+    }else{
+      const item = this.state.form;
+      delete item.location; // location: long and lat should be changed
+      delete item.address; // address should be changed
+      delete item._id; // item _id should be changed
+      this.props.editItem(item_id, item)
+      this.setState({ ...this.state, editting: false })
     }
   }
   onFormChange(e) {
@@ -121,6 +137,18 @@ class Item extends React.Component {
       form: {
         ...this.state.form,
         [e.target.name]: e.target.value
+      }
+    })
+  }
+  onOrderFormChange(e) {
+    this.setState({
+      ...this.state,
+      form: {
+        ...this.state.form,
+        order: {
+          ...this.state.form.order,
+          [e.target.name]: e.target.value
+        }
       }
     })
   }
@@ -148,7 +176,7 @@ class Item extends React.Component {
             </div>
             <div className="form-group">
               <div className='session-title'>Name</div>
-              <input className="form-control" value={form.title} name="title" onChange={this.onFormChange.bind(this)} placeholder="Location name, store name...etc" />
+              <input required={true} className="form-control" value={form.title} name="title" onChange={this.onFormChange.bind(this)} placeholder="Location name, store name...etc" />
             </div>
             <div className="form-group">
               <div className='session-title'>Category</div>
@@ -161,9 +189,19 @@ class Item extends React.Component {
                 onChange={this.onCategoryChange.bind(this)}
                 options={[...this.state.initialCategory]} />
             </div>
+            {<div className="form-group">
+              <div className='session-title'>Order methods</div>
+              <input type='number'className="form-control" value={form.order.phone} name="phone" onChange={this.onOrderFormChange.bind(this)} placeholder="phone number" />
+              <input type='url'className="form-control" value={form.order.doordash} name="doordash" onChange={this.onOrderFormChange.bind(this)} placeholder="doordash" />
+              <input type='url'className="form-control" value={form.order.postmates} name="postmates" onChange={this.onOrderFormChange.bind(this)} placeholder="postmates" />
+              <input type='url'className="form-control" value={form.order.grubhub} name="grubhub" onChange={this.onOrderFormChange.bind(this)} placeholder="grubhub" />
+              <input type='url'className="form-control" value={form.order.UberEat} name="UberEat" onChange={this.onOrderFormChange.bind(this)} placeholder="UberEat" />
+              <input type='url'className="form-control" value={form.order.yelp} name="yelp" onChange={this.onOrderFormChange.bind(this)} placeholder="yelp" />
+              <input type='string'className="form-control" value={form.order.others} name="others" onChange={this.onOrderFormChange.bind(this)} placeholder="others" />
+            </div>}
             <div className="modal-btn-group">
               <span className="cancel" onClick={this.cancelEditting.bind(this)}>Cancel</span>
-              <button type='submit' className="create">Create</button>
+              <button type='submit' className="create">Save</button>
             </div>
           </Modal.Body>
         </form>
@@ -171,7 +209,7 @@ class Item extends React.Component {
     )
   }
   render() {
-    return (<div className='item-view-compoenet'>
+    return (<div className='item-view-component'>
       {this.renderItemView(this.props.focusport)}
       {this.renderModal(this.state.editting)}
     </div>)
@@ -183,4 +221,4 @@ function mapStateToProps({item}) {
   return { focusport }
 }
 
-export default connect(mapStateToProps, { createItem })(Item);
+export default connect(mapStateToProps, { createItem, editItem })(Item);

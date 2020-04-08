@@ -4,17 +4,33 @@ const Schema = mongoose.Schema;
 
 
 const orderSchema = new mongoose.Schema({
-  type: {
+  phone: {
     type: String,
-    required: [
-      true, 'order title is required.'
-    ]
+    default: ''
   },
-  notes: {
-    type: String
+  doordash: {
+    type: String,
+    default: ''
   },
-  action: {
-    type: String
+  postmates: {
+    type: String,
+    default: ''
+  },
+  grubhub: {
+    type: String,
+    default: ''
+  },
+  ubereat: {
+    type: String,
+    default: ''
+  },
+  yelp: {
+    type: String,
+    default: ''
+  },
+  others: {
+    type: String,
+    default: ''
   }
 })
 
@@ -54,8 +70,9 @@ const itemSchema = new mongoose.Schema({
   menu: {
     type: String
   },
-  order: [orderSchema],
+  order: orderSchema,
 })
-itemSchema.index({ location: "2dsphere" });
+itemSchema.index({
+  location: "2dsphere"
+});
 export default mongoose.model('Item', itemSchema);
-
