@@ -97,7 +97,7 @@ const INITIAL_ITEM_STATE = {
     doordash: '',
     postmates: '',
     grubhub: '',
-    ubereat: '',
+    ubereats: '',
     yelp: '',
     others: '',
   }

@@ -6,6 +6,15 @@ import { connect } from 'react-redux';
 import { createItem, editItem } from '../../actions';
 import request from '../../redux/request';
 
+const ORDER_MTHODS_COPY = {
+  phone: 'Call to order',
+  doordash: 'Doordash',
+  postmates: 'Postmates',
+  grubhub: 'Grubhub',
+  ubereats: 'UberEats',
+  yelp: 'Yelp',
+  others: 'Others'
+}
 class Item extends React.Component {
   constructor(props) {
     super(props);
@@ -19,10 +28,11 @@ class Item extends React.Component {
           doordash: '',
           postmates: '',
           grubhub: '',
-          ubereat: '',
+          ubereats: '',
           yelp: '',
           others: '',
-        }
+        },
+        activeInput: ''
       },
       initialCategory: []
     }
@@ -41,7 +51,7 @@ class Item extends React.Component {
       })
       .catch(e=>console.error(e.message))
   }
-  activateEditting() {
+  activateEditting(activeInput) {
     let form = {
       order: { ...this.state.form.order },
       address: this.props.focusport.details.address,
@@ -52,7 +62,8 @@ class Item extends React.Component {
     if(this.props.focusport._id){
       form = {
         order: { ...this.state.form.order },
-        ...this.props.focusport.details
+        ...this.props.focusport.details,
+        activeInput
       }
       form.category = this.props.focusport.details.category.map(c=>({value: c._id, label: c.title}))
     }
@@ -62,46 +73,69 @@ class Item extends React.Component {
   cancelEditting() {
     this.setState({ ...this.state, editting: false })
   }
+  renderOrderActions(k, o, isActive) {
+    if(k=='phone'){
+      return <div>{o}</div>
+    }else{
+      return (<div>
+        {isActive && <a href={o} target='_blank' rel="noopener noreferrer" >available</a>}
+        {!isActive && <span>not available yet</span>}
+      </div>)
+    }
+  }
+  renderOrderMethod(order) {
+    const keys = Object.keys(order);
+    return keys.map(k=>{
+      const o = order[k];
+      const isActive = (o!=='');
+      const isActiveClass = isActive?'active':'no-active';
+      return (ORDER_MTHODS_COPY[k] && <div key={k} className={`order-method ${isActiveClass}`}>
+        <div className='type'> {ORDER_MTHODS_COPY[k]} </div>
+        <div className={`action ${k}`}>
+          {this.renderOrderActions(k, o, isActive)}
+        </div>
+      </div>||<div></div>)
+    })
+
+  }
+  renderActionsContainer() {
+    return (<div className='session action-container'>
+      <div className='action' onClick={this.activateEditting.bind(this)}>
+        <div className='icon'>C</div>
+        <div className='title'>Contribute</div>
+      </div>
+      <div className='action'>
+        <div className='icon'>I</div>
+        <div className='title'>Info</div>
+      </div>
+      <div className='action'>
+        <div className='icon'>S</div>
+        <div className='title'>Share</div>
+      </div>
+    </div>)
+  }
   renderItemView(item) {
     return (<div>
       {item._id && <div className='item-info-container'>
-        <div className='session action-container'>
-          <div className='action' onClick={this.activateEditting.bind(this)}>
-            <div className='icon'>E</div>
-            <div className='title'>Edit</div>
-          </div>
-          <div className='action'>
-            <div className='icon'>I</div>
-            <div className='title'>Info</div>
-          </div>
-          <div className='action'>
-            <div className='icon'>S</div>
-            <div className='title'>Share</div>
-          </div>
-        </div>
+        {this.renderActionsContainer()}
         <div className='session details-container'>
           <div className='session-item title'>
-            <div className='session-title'>name</div>
+            <div className='session-title'><span/>name</div>
             {item.details.title}
           </div>
           <div className='session-item address'>
-            <div className='session-title'>address</div>
+            <div className='session-title'><span/>address</div>
             <div className='fade'>{item.details.address}</div>
           </div>
           {item.details && item.details.category.length > 0 && <div className='session-item category'>
-            <div className='session-title'>category</div>
+            <div className='session-title'><span/>category</div>
             {item.details.category.map((c) => (<div className='item' key={c._id}>{c.title}</div>))}
           </div>}
           <div className='session-item open-hour'> {item.details.open_hour} </div>
-          {/* {item.details.order &&
-            <div className='session-item order'>
-              <div className='session-title'>Order Method</div>
-              {item.details.order.map((o) => (<div key={o.type} className='order-method'>
-                <div className='type'> {o.type} </div>
-                <div className='notes'> {o.notes} </div>
-                <div className='action'> {o.action} </div>
-              </div>))}
-            </div>} */}
+          <div  className='session-item order'>
+            <div className='session-title'><span/>Order Method</div>
+            {this.renderOrderMethod(item.details.order)}
+          </div>
           {item.details.menu > 0 && <div className='menu'>
             <div className='session-title'>menu</div>
             <img

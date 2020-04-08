@@ -34,7 +34,7 @@ const orderSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
-  ubereat: {
+  ubereats: {
     type: String,
     default: ''
   },
