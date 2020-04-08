@@ -75,7 +75,7 @@ class Item extends React.Component {
   }
   renderOrderActions(k, o, isActive) {
     if(k=='phone'){
-      return <div>{o}</div>
+      return <a href={`tel:${o}`}>{o}</a>
     }else{
       return (<div>
         {isActive && <a href={o} target='_blank' rel="noopener noreferrer" >available</a>}
@@ -223,6 +223,10 @@ class Item extends React.Component {
                 onChange={this.onCategoryChange.bind(this)}
                 options={[...this.state.initialCategory]} />
             </div>
+            {<div className="form-group">
+              <div className='session-title'>Open Hours</div>
+              
+            </div>}
             {<div className="form-group">
               <div className='session-title'>Order methods</div>
               <input type='phone'className="form-control" value={form.order.phone} name="phone" onChange={this.onOrderFormChange.bind(this)} placeholder='Phone Number(Call to order)' />

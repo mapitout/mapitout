@@ -12,6 +12,9 @@
       margin-top: 10px;
     }
     @media (max-width: 672px) {
+      .mapboxgl-ctrl-geocoder.mapboxgl-ctrl {
+        margin-top: 5px;
+      }
       width: 100%;
       padding-top: $navbar-md-height;
       .mapboxgl-ctrl-geocoder--icon-search {
