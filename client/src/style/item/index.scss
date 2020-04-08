@@ -179,23 +179,25 @@
     margin: 20px 0px 10px;
     padding: auto 10px;
   }
-
-  input.form-control{
-    padding: 10px;
-  }
   .basic-multi-select .css-yk16xz-control {
     padding: 6px;
   }
   input.form-control, .basic-multi-select .css-yk16xz-control {
     font-size: 1.2rem;
-    border-radius: 0px;
-    background: rgb(245, 245, 245);
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background-color: rgb(245, 245, 245);
+    margin: 5px auto;
     text-align: center;
-    &:focus{
-      background: white;
+    border: 2px solid rgba($brand-color, 0);
+    &:focus {
+      font-weight: 700;
+      letter-spacing: 1px;
     }
-    &:hover{
-      background: white;
+    &:focus, &:hover{
+      background-color: rgb(250, 250, 250);
+      border: 2px solid rgba($brand-color, 1);
     }
   }
   .css-1rhbuit-multiValue {
@@ -245,16 +247,16 @@
   .category__control--menu-is-open {
     border-color: $brand-color;
     box-shadow: 0 0 0 1px $brand-color;
-    border-radius: 0px;
+    border-radius: 8px;
   }
   .category__control.category__control--is-focused.css-1pahdxg-control, .category__control.category__control--is-focused.category__control--menu-is-open.css-1pahdxg-control {
     border-color: $brand-color;
     box-shadow: 0 0 0 1px $brand-color;
-    border-radius: 0px;
+    border-radius: 8px;
     padding: 6px;
   }
   .css-1pahdxq-control, .css-1pahdxq-control:hover{
-    border-radius: 0px;
+    border-radius: 8px;
     border-color: $brand-color;
     box-shadow: 0 0 0 1px $brand-color;
   }
@@ -263,6 +265,7 @@
   }
   .modal-content {
     border: none;
+    padding: 15px;
   }
 
   .modal-btn-group {

@@ -101,8 +101,8 @@ class Item extends React.Component {
   renderActionsContainer() {
     return (<div className='session action-container'>
       <div className='action' onClick={this.activateEditting.bind(this)}>
-        <div className='icon'>C</div>
-        <div className='title'>Contribute</div>
+        <div className='icon'>U</div>
+        <div className='title'>Update</div>
       </div>
       <div className='action'>
         <div className='icon'>I</div>
@@ -225,13 +225,13 @@ class Item extends React.Component {
             </div>
             {<div className="form-group">
               <div className='session-title'>Order methods</div>
-              <input type='number'className="form-control" value={form.order.phone} name="phone" onChange={this.onOrderFormChange.bind(this)} placeholder="phone number" />
-              <input type='url'className="form-control" value={form.order.doordash} name="doordash" onChange={this.onOrderFormChange.bind(this)} placeholder="doordash" />
-              <input type='url'className="form-control" value={form.order.postmates} name="postmates" onChange={this.onOrderFormChange.bind(this)} placeholder="postmates" />
-              <input type='url'className="form-control" value={form.order.grubhub} name="grubhub" onChange={this.onOrderFormChange.bind(this)} placeholder="grubhub" />
-              <input type='url'className="form-control" value={form.order.UberEat} name="UberEat" onChange={this.onOrderFormChange.bind(this)} placeholder="UberEat" />
-              <input type='url'className="form-control" value={form.order.yelp} name="yelp" onChange={this.onOrderFormChange.bind(this)} placeholder="yelp" />
-              <input type='string'className="form-control" value={form.order.others} name="others" onChange={this.onOrderFormChange.bind(this)} placeholder="others" />
+              <input type='phone'className="form-control" value={form.order.phone} name="phone" onChange={this.onOrderFormChange.bind(this)} placeholder='Phone Number(Call to order)' />
+              <input type='url'className="form-control" value={form.order.doordash} name="doordash" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['doordash']} />
+              <input type='url'className="form-control" value={form.order.postmates} name="postmates" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['postmates']} />
+              <input type='url'className="form-control" value={form.order.grubhub} name="grubhub" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['grubhub']} />
+              <input type='url'className="form-control" value={form.order.UberEat} name="UberEat" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['ubereats']} />
+              <input type='url'className="form-control" value={form.order.yelp} name="yelp" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['yelp']} />
+              <input type='string'className="form-control" value={form.order.others} name="others" onChange={this.onOrderFormChange.bind(this)} placeholder={`${ORDER_MTHODS_COPY['others']} links`} />
             </div>}
             <div className="modal-btn-group">
               <span className="cancel" onClick={this.cancelEditting.bind(this)}>Cancel</span>
