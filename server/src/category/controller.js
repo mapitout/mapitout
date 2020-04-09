@@ -1,5 +1,7 @@
 import Category from './model';
+import checkCategories from './createCategory';
 
+checkCategories();
 
 export default {
   showAll: async(req, res, next) => {

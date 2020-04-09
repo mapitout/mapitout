@@ -10,7 +10,8 @@ import { changeFocusport } from '../../actions';
 import Item from '../item';
 import request from '../../redux/request';
 
-const ZOOM = 16;
+const FOCUS_ZOOM = 16;
+const MAX_ZOOM = 9.7;
 const MAPBOX_API_KEY = process.env.MAPBOX_API_KEY;
 const BOUNDARY_OF_CA = [-124.409591, 32.534156, -114.131211, 42.009518];  // boundary of California
 class Index extends React.Component {
@@ -21,9 +22,9 @@ class Index extends React.Component {
       viewport: {
         width: '100%',
         height: '100%',
-        latitude: 37.7577,
-        longitude: -122.4376,
-        zoom: ZOOM,
+        latitude: 37.560955658709936,
+        longitude: -122.17270585027846,
+        zoom: MAX_ZOOM,
         transitionDuration: 400
       },
       focused: false
@@ -38,7 +39,9 @@ class Index extends React.Component {
         viewport: { ...this.state.viewport, width: '100%', height: '100%', latitude: focusport.latitude, longitude: focusport.longitude, transitionDuration: 0 }
       });
     }
-    this.setState({ ...this.state, width: '100%', height: '100%', transitionDuration: 0 })
+    this.setState({ ...this.state, 
+      viewport: { ...this.state.viewport, width: '100%', height: '100%', transitionDuration: 0 }
+    });
   }
   componentDidMount() {
     this.init()
@@ -50,9 +53,8 @@ class Index extends React.Component {
     if(query.lat && query.lon) {
       this.setState({ ...this.state,
         focused: true,
-        viewport: { ...this.state.viewport, latitude: lat, longitude: lon, transitionDuration: 0 }
+        viewport: { ...this.state.viewport, latitude: lat, longitude: lon, transitionDuration: 0, zoom: FOCUS_ZOOM }
       })
-      console.log('this.props.focusport', this.props.focusport)
       this.props.changeFocusport({
         ...this.props.focusport,
         input: query.q || '',
@@ -80,7 +82,7 @@ class Index extends React.Component {
     }
   }
   onMapGLViewportChange(v) {
-    if(v.zoom < 12) v.zoom = 12;
+    if(v.zoom < MAX_ZOOM) v.zoom = MAX_ZOOM;
     this.setState({...this.state, viewport: v})
   }
   onGeocoderLoading({ query }) {
@@ -91,7 +93,7 @@ class Index extends React.Component {
   }
   onGeocoderViewpointChange(v) {
     this.setState({...this.state, focused: true});
-    this.setState({ ...this.state, viewport: { ...v, transitionDuration: 300 } })
+    this.setState({ ...this.state, viewport: { ...v, transitionDuration: 300, zoom: FOCUS_ZOOM } })
   }
   onGeocoderSelected(i) {
     const uri_params = qs.stringify({
@@ -109,6 +111,7 @@ class Index extends React.Component {
     this.updateURL(uri_params)
   }
   onClickMarket(m) {
+    this.setState({ ...this.state, focused: true });
     const uri_params = qs.stringify({
       lon: m.longitude,
       lat: m.latitude,

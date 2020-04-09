@@ -1,7 +1,7 @@
 import qs from 'qs';
 import request from './request';
 
-const CHANGE_FOCUSPORT = 'CHANGE_FOCUSPORT';
+const UPDATE_FOCUSPORT = 'UPDATE_FOCUSPORT';
 
 export function changeFocusport(focusport) {
   return function (dispatch) {
@@ -22,10 +22,10 @@ export function changeFocusport(focusport) {
           details: { ...item }
         };
         console.log('200 focusport', payload)
-        dispatch({ type: CHANGE_FOCUSPORT, payload })
+        dispatch({ type: UPDATE_FOCUSPORT, payload })
       })
       .catch((e)=>{
-        if(e.response.status===404){
+        if(e.response && e.response.status===404){
           // if it's 404 not found, use input as item.details.address
           console.log('404 focusport', focusport);
           const payload = {
@@ -37,9 +37,21 @@ export function changeFocusport(focusport) {
           payload.details.address = focusport.input;
           payload.details.location.coordinates[0] = focusport.longitude;
           payload.details.location.coordinates[1] = focusport.latitude;
-          dispatch({ type: CHANGE_FOCUSPORT, payload })
+          dispatch({ type: UPDATE_FOCUSPORT, payload })
+        }else{
+          console.error(e);
         }
       })
+  }
+}
+
+function buildFocusport(item) {
+  return {
+    longitude: item.location.coordinates[0],
+    latitude: item.location.coordinates[1],
+    input: item.title,
+    _id: item._id,
+    details: { ...item }
   }
 }
 
@@ -49,18 +61,31 @@ export function createItem(details) {
     const body = { details };
     request.post('/publicApi/item/create', body)
       .then((r) => {
-        const payload = {
-          longitude: r.data.createdItem.details.location.coordinates.longitude,
-          latitude: r.data.createdItem.details.location.coordinates.latitude,
-          input: r.data.createdItem.details.title,
-          details: r.data.createdItem.details
-        }
-        dispatch({ type: CHANGE_FOCUSPORT, payload })
+        const item = r.data.createdItem;
+        const payload = buildFocusport(item);
+        dispatch({ type: UPDATE_FOCUSPORT, payload })
       })
       .catch(e=>console.error(e))
   }
 }
 
+export function editItem(item_id, details) {
+  return function (dispatch) {
+    details.category = details.category.map(c=>c.value);
+    const body = { details };
+    request.put(`/publicApi/item/edit/${item_id}`, body)
+      .then((r) => {
+        const item = r.data.editItem;
+        const payload = buildFocusport(item);
+        dispatch({ type: UPDATE_FOCUSPORT, payload })
+      })
+      .catch(e=>console.error(e))
+  }
+}
+const initDayOpenHour = {
+  from: 0,
+  to: 0
+}
 // example:
 // coordinates: [-122.23432, 37.5435] -> [long, lat]
 const INITIAL_ITEM_STATE = {
@@ -72,7 +97,24 @@ const INITIAL_ITEM_STATE = {
   },
   category: [],
   menu: '',
-  order: []
+  order: {
+    phone: '',
+    doordash: '',
+    postmates: '',
+    grubhub: '',
+    ubereats: '',
+    yelp: '',
+    others: '',
+  },
+  open_hour: {
+    monday: [{...initDayOpenHour}],
+    tuesday: [{...initDayOpenHour}],
+    wednesday: [{...initDayOpenHour}],
+    thursday: [{...initDayOpenHour}],
+    friday: [{...initDayOpenHour}],
+    saturday: [{...initDayOpenHour}],
+    sunday: [{...initDayOpenHour}],
+  },
 }
 
 let INITIAL_STATE = {
@@ -88,7 +130,7 @@ let INITIAL_STATE = {
 
 export function itemReducer(state=INITIAL_STATE, action) {
   switch (action.type) {
-  case CHANGE_FOCUSPORT:
+  case UPDATE_FOCUSPORT:
     return { ...state, focusport: action.payload }
   default:
     return state;
