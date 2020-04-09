@@ -13,10 +13,8 @@ class Navbar extends Component {
       toggle: false
     }
   }
-  UNSAFE_componentWillMount(){
-    this.props.getUserProfile();
-  }
   componentDidMount(){
+    this.props.getUserProfile();
     const pathname = this.context.router.history.location.pathname;
     this.setState({ pathname })
   }

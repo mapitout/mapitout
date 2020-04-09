@@ -292,7 +292,11 @@
 ```
 
 ### GET ALL
+<<<<<<< HEAD
 - route: /publicApi/item/
+=======
+- route: /publicApi/item
+>>>>>>> master
 - sample response: 
 ```
 {

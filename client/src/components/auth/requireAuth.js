@@ -4,13 +4,7 @@ import PropTypes from 'prop-types';
 
 export default function(ComposedComponent) {
   class Authentication extends Component {
-    UNSAFE_componentWillMount() {
-      if (!localStorage.getItem('mapitout_auth_jwt_token')) {
-        this.context.router.history.push('/signin');
-      }
-    }
-
-    UNSAFE_componentWillUpdate(nextProps) {
+    componentDidMount() {
       if (!localStorage.getItem('mapitout_auth_jwt_token')) {
         this.context.router.history.push('/signin');
       }

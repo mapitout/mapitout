@@ -8,6 +8,4 @@ router.post('/create', Controller.create);
 router.put('/edit/:id', Controller.edit);
 router.delete('/delete/:id', Controller.destroy);
 
-
-
 export default router;

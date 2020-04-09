@@ -18,6 +18,12 @@
     position: absolute;
     bottom: 0px;
     pointer-events: auto;
+    &.focused {
+      .pin-001-wrapper-item, .pin-001-wrapper-item-wrapper, .pin-001-item-2 {
+        background-color: darken($brand-color, 1%);
+        box-shadow: rgba($brand-color, 0.24) 0px 0px 0px 1px inset, rgba($brand-color, 0.18) 0px 1px 2px;
+      }
+    }
     .button-inner {
       outline: none;
       color: inherit;
