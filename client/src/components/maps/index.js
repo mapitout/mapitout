@@ -82,7 +82,6 @@ class Index extends React.Component {
     }
   }
   onMapGLViewportChange(v) {
-    console.log(v)
     if(v.zoom < MAX_ZOOM) v.zoom = MAX_ZOOM;
     this.setState({...this.state, viewport: v})
   }
