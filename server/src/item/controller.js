@@ -36,15 +36,8 @@ export default {
     // const open_hour = req.body.details.open_hour;
     // delete req.body.details.open_hour;
     const item = req.body.details;
-    console.log('item', item)
     try {
       const createdItem = await Item.create(item);
-      for (let i = 0; i < createdItem.category.length; i++) {
-        const cateId = createdItem.category[i];
-        const findCate = await Category.findByIdAndUpdate(cateId);
-        findCate.items.push(createdItem._id);
-        findCate.save();
-      }
       return res.json({ "message": "Pin is created successfully", createdItem })
     } catch (err) {
       if (err.code === 11000) {
@@ -101,12 +94,33 @@ export default {
         return next('500:Something went wrong.')
       }
     } else if (req.query.category) {
+      const Ids = req.query.category.split(',');
+      const newItems = [];
+      const qId = []
+      for (let i = 0; i < Ids.length; i++) {
+        const Id = Ids[i];
+        const newId = {};
+        newId.category = Id;
+        qId.push(newId);
+      }
       try {
-        const findCate = await Category.findById(req.query.category).populate('items');
-        if (findCate.items.length === 0) {
-          return res.status(200).json({ "message": "This category currently doesn't have any item yet." })
+        const findItems = await Item.find({
+          $or: qId
+        });
+        if (findItems.length > 0) {
+          for (let i = 0; i < findItems.length; i++) {
+            const item = findItems[i];
+            const newItem = {
+              _id: item._id,
+              title: item.title,
+              address: item.address,
+              longitude: item.location.coordinates[0],
+              latitude: item.location.coordinates[1],
+            }
+            newItems.push(newItem);
+          }
         }
-        return res.status(200).json({ "message": "we've found something in this category.", "items": findCate.items })
+        return res.status(200).json(newItems)
       } catch (err) {
         return next('500:Something went wrong.')
       }

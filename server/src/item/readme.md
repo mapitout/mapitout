@@ -374,6 +374,51 @@ response:
 }
 ```
 
+for searching items within specific categories:
+```
+publicApi/item?category=CATEGORY_ID_1,CATEGORY_ID_2
+```
+response:(array of objects)
+```
+[
+    {
+        "_id": "5e8aa513dcd8c42b91170377",
+        "title": "Sample restaurant2055",
+        "address": "209511226 Homestead Rd, Cupertinoddd, CA 95014",
+        "longitude": -122.400549,
+        "latitude": 37.79641
+    },
+    {
+        "_id": "5e8aad400197292d6d671919",
+        "title": "Sample restaurant2dd055",
+        "address": "20 Homestead Rd, Cupertinoddd, CA 95014",
+        "longitude": -122.40566,
+        "latitude": 37.79766
+    },
+    {
+        "_id": "5e8aaecc61c9722dc2e15073",
+        "title": "Sample restaurantqq2dd055",
+        "address": "20 Homestead Rd, Cupertinoddd, CA 95014",
+        "longitude": -122.405665,
+        "latitude": 37.797687
+    },
+    {
+        "_id": "5e8ac36acc9c5437ddb30685",
+        "title": "Sample restaurant222",
+        "address": "2023 Homestead Rd, Cupertinoddd, CA 95014",
+        "longitude": -122.40566,
+        "latitude": 37.79768
+    },
+    {
+        "_id": "5e8ac3c2e9ec2c3809c50575",
+        "title": "Sample restaurant4",
+        "address": "2023 Homestead Rd, Cupertinoddd, CA 95014",
+        "longitude": -122.40566,
+        "latitude": 37.79768
+    }
+]
+```
+
 for searching items within specific hour in day:
 ```
 /publicApi/item?day=monday&time=11.3
