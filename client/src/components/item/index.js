@@ -182,7 +182,7 @@ class Item extends React.Component {
             </table>
           </div>
           <div  className='session-item order'>
-            <div className='session-title'><span/>Order Method</div>
+            <div className='session-title'><span/>Order Methods</div>
             {this.renderOrderMethod(item.details.order)}
           </div>
           {item.details.menu > 0 && <div className='session-item menu'>
