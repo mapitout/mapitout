@@ -2,6 +2,7 @@ import React from 'react';
 import Welcome from './welcome';
 import Feature from './feature';
 import Author from './author';
+import Discuss from './discuss';
 import Footer from './footer';
 
 const Landing= ()=> {
@@ -10,6 +11,7 @@ const Landing= ()=> {
       <Welcome />
       <Feature />
       <Author />
+      <Discuss />
       <Footer />
     </div>)
 }
