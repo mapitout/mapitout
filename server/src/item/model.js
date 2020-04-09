@@ -1,7 +1,21 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
+const openClose = new mongoose.Schema({
+  from: {
+    type: Number
+  },
+  to: {
+    type: Number
+  }
+})
 
+const openHourSchema = new mongoose.Schema({
+  monday: [openClose],
+  tuesday: [openClose],
+  wednesday: [openClose],
+  thursday: [openClose]
+})
 
 const orderSchema = new mongoose.Schema({
   type: {
@@ -47,10 +61,7 @@ const itemSchema = new mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: 'Category'
   }],
-  open_hour: [{
-    type: Schema.Types.ObjectId,
-    ref: 'OpenHour'
-  }],
+  open_hour: openHourSchema,
   menu: {
     type: String
   },
