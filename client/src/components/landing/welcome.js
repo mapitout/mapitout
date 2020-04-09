@@ -8,10 +8,10 @@ class Welcome extends React.Component {
       <div className='welcome'>
         <div className='content-container'>
           <div className='title'>
-            MapOut Useful Information
+            Map Out To Help
           </div>
           <div className='subtitle'>
-            Share useful location based information with the world.
+            Help mapping out local restaurants and support their business
           </div>
           <div  className='button-container'>
             {this.renderButton()}
@@ -23,14 +23,14 @@ class Welcome extends React.Component {
     return (!this.props.isLoggedin)?(
       <div>
         <Link to='maps'>
-          <button className='btn btn-block btn-lg try-it-out'>
+          <button className='btn btn-block btn-lg btn-landing'>
             Map It Now
           </button>
         </Link>
       </div>)
       :(<div>
         <Link to='maps'>
-          <button className='btn btn-block btn-lg try-it-out'>
+          <button className='btn btn-block btn-lg btn-landing'>
             Explore now
           </button>
         </Link>

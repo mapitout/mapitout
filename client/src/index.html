@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <link rel="icon" href="assets/favicon.ico">
-    <title>Mapitout</title>
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="mapitout">
-    <meta name="apple-mobile-web-app-title" content="mapitout">
-    <meta name="theme-color" content="#21ce99">
-    <meta name="msapplication-navbutton-color" content="#21ce99">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#21ce99">
-    <meta name="msapplication-starturl" content="#homescreen">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no user-scalable = no">
 
-    <!-- <link rel="apple-touch-icon" type="image/png" sizes="60*60" href="assets/header/apple-touch-icon-60.png">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="assets/favicon.ico">
+  <title>Mapitout</title>
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="mapitout">
+  <meta name="apple-mobile-web-app-title" content="mapitout">
+  <meta name="theme-color" content="#21ce99">
+  <meta name="msapplication-navbutton-color" content="#21ce99">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#21ce99">
+  <meta name="msapplication-starturl" content="#homescreen">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no user-scalable = no">
+
+  <!-- <link rel="apple-touch-icon" type="image/png" sizes="60*60" href="assets/header/apple-touch-icon-60.png">
     <link rel="apple-touch-icon" type="image/png" sizes="72*72" href="assets/header/apple-touch-icon-72.png">
     <link rel="apple-touch-icon" type="image/png" sizes="114*114" href="assets/header/apple-touch-icon-114.png">
     <link rel="apple-touch-icon" type="image/png" sizes="120*120" href="assets/header/apple-touch-icon-120.png">
@@ -27,25 +28,44 @@
     <link rel="icon" type="image/png" sizes="96x96" href="assets/header/icon-96.png">
     <link rel="icon" type="image/png" sizes="144x144" href="assets/header/icon-144.png">
     <link rel="icon" type="image/png" sizes="192x192" href="assets/header/icon-192.png"> -->
-    
-    <link rel="manifest" href="manifest.json">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous" rel="stylesheet">
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-161563089-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-161563089-1');
-    </script>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script> 
 
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css' rel='stylesheet' />
-    <link href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.css' rel='stylesheet' />
+  <link rel="manifest" href="manifest.json">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+    integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"
+    rel="stylesheet">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-161563089-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-161563089-1');
+  </script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-  </head>
-  <body>
-    <!-- <div class="statusbar-overlay"></div> -->
-    <div id="root"></div>
-  </body>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css' rel='stylesheet' />
+  <link href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.css'
+    rel='stylesheet' />
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://mapitout.github.io/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "mapitout-discuss-landing-page"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://mapitout.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+</head>
+
+<body>
+
+  <!-- <div class="statusbar-overlay"></div> -->
+  <div id="root"></div>
+</body>
+
 </html>
