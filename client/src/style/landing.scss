@@ -66,6 +66,16 @@
           padding-right: 1.5rem;
         } 
       }
+      .btn-landing{
+        border-color:$brand-color; 
+        background-color:$brand-color;
+        color: #fff;
+        &:hover{
+          background-color:#fff;
+          color: #000;
+          border-color: #00BF79;
+        }
+      }
     }
   }
 }
@@ -138,6 +148,30 @@
       font-weight: 400;
       font-size: 1rem;
       opacity: 0.8;
+    }
+  }
+}
+
+
+.author-component{
+  padding-top: 5vh;
+  padding-bottom: 10vh;
+  .author-title{
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #001b0f;
+    padding: 3.5rem 0;
+  }
+  .author-card{
+    // border: 1px solid green;
+  }
+  .author-img{
+    width:100%;
+  }
+  .icons{
+    margin-top: 10px;
+    .icon{
+      padding: 5px;
     }
   }
 }
