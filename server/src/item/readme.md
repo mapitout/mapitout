@@ -70,6 +70,22 @@
       	"type":"Point",
         "coordinates": [-122.40566, 37.79768]
       },
+      "open_hour": {
+            "monday": [{
+                "from":11,
+                "to":13.4
+            },{
+                "from":16,
+                "to":18
+            }],
+            "tuesday": [{
+                "from":11,
+                "to":13.4
+            },{
+                "from":16,
+                "to":18
+            }]
+      },
       "category": ["5e8a75a3a36cdf25885fc3b9", "5e8a75a3a36cdf25885fc3bf", "5e8a75a3a36cdf25885fc3c0"],
       "menu": "https://s3-media0.fl.yelpcdn.com/bphoto/UgtxQQlDJ9n5k8G8Y8pceQ/o.jpg",
       "order": [{
@@ -99,7 +115,22 @@
             "5e8a75a3a36cdf25885fc3bf",
             "5e8a75a3a36cdf25885fc3c0"
         ],
-        "open_hour": [],
+        "open_hour": {
+            "monday": [{
+                "from":11,
+                "to":13.4
+            },{
+                "from":16,
+                "to":18
+            }],
+            "tuesday": [{
+                "from":11,
+                "to":13.4
+            },{
+                "from":16,
+                "to":18
+            }]
+        },
         "_id": "5e8ac3c2e9ec2c3809c50575",
         "title": "Sample restaurant",
         "address": "2023 Homestead Rd, Cupertinoddd, CA 95014",
@@ -194,7 +225,22 @@
                 "__v": 4
             }
         ],
-        "open_hour": [],
+        "open_hour": {
+            "monday": [{
+                "from":11,
+                "to":13.4
+            },{
+                "from":16,
+                "to":18
+            }],
+            "tuesday": [{
+                "from":11,
+                "to":13.4
+            },{
+                "from":16,
+                "to":18
+            }]
+        },
         "_id": "5e8ac3c2e9ec2c3809c50575",
         "title": "Sample restaurant1",
         "address": "2023 Homestead Rd, Cupertinoddd, CA 95014",
@@ -328,72 +374,110 @@ response:
 }
 ```
 
-for searching items within specific category(_id):
+for searching items within specific hour in day:
 ```
-/publicApi/item?category=5e8a75a3a36cdf25885fc3bc
+/publicApi/item?day=monday&time=11.3
 ```
-response:
+response:(array of objects)
 ```
-{
-    "message": "we've found something in this category.",
-    "items": [
-        {
-            "location": {
-                "type": "Point",
-                "coordinates": [
-                    -122.405665,
-                    37.797687
-                ]
-            },
-            "category": [
-                "5e8a75a3a36cdf25885fc3b9",
-                "5e8a75a3a36cdf25885fc3bf",
-                "5e8a75a3a36cdf25885fc3c0"
-            ],
-            "open_hour": [],
-            "_id": "5e8aaecc61c9722dc2e15073",
-            "title": "Sample restaurantqq2dd055",
-            "address": "20 Homestead Rd, Cupertinoddd, CA 95014",
-            "menu": "https://s3-media0.fl.yelpcdn.com/bphoto/UgtxQQlDJ9n5k8G8Y8pceQ/o.jpg",
-            "order": [
+[
+    {
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                -122.40566,
+                37.79768
+            ]
+        },
+        "category": [
+           ...
+        ],
+        "_id": "5e8e50e11c4a168e96070e1a",
+        "title": "Sample restaurantss",
+        "address": "2023 Homestead Rd, Cupertinoddd, CA 95014",
+        "open_hour": {
+            "_id": "5e8e50e11c4a168e96070e1b",
+            "monday": [
                 {
-                    "_id": "5e8aaecc61c9722dc2e15074",
-                    "type": "phone",
-                    "notes": "Pick up on your own(cash only). Make a phone call and order 30 mins before picking up.",
-                    "action": "4082532569"
+                    "_id": "5e8e50e11c4a168e96070e1c",
+                    "from": 11,
+                    "to": 13.4
                 },
+                {
+                    "_id": "5e8e50e11c4a168e96070e1d",
+                    "from": 16,
+                    "to": 18
                 }
             ],
-            "__v": 0
-        },
-        {
-            "location": {
-                "type": "Point",
-                "coordinates": [
-                    -122.40566,
-                    37.79768
-                ]
-            },
-            "category": [
-                "5e8a75a3a36cdf25885fc3b9",
-                "5e8a75a3a36cdf25885fc3bf",
-                "5e8a75a3a36cdf25885fc3c0"
-            ],
-            "open_hour": [],
-            "_id": "5e8aaeea61c9722dc2e15077",
-            "title": "Sample333 restaurantqq2dd055",
-            "address": "2023 Homestead Rd, Cupertinoddd, CA 95014",
-            "menu": "https://s3-media0.fl.yelpcdn.com/bphoto/UgtxQQlDJ9n5k8G8Y8pceQ/o.jpg",
-            "order": [
+            "tuesday": [
                 {
-                    "_id": "5e8aaeea61c9722dc2e15078",
-                    "type": "phone",
-                    "notes": "Pick up on your own(cash only). Make a phone call and order 30 mins before picking up.",
-                    "action": "4082532569"
+                    "_id": "5e8e50e11c4a168e96070e1e",
+                    "from": 11,
+                    "to": 13.4
                 },
+                {
+                    "_id": "5e8e50e11c4a168e96070e1f",
+                    "from": 16,
+                    "to": 18
+                }
             ],
-            "__v": 0
-        }
-    ]
-}
+            "wednesday": [],
+            "thursday": []
+        },
+        "menu": "https://s3-media0.fl.yelpcdn.com/bphoto/UgtxQQlDJ9n5k8G8Y8pceQ/o.jpg",
+        "order": [
+            ...
+        ],
+        "__v": 0
+    },
+    {
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                -122.40566,
+                37.79768
+            ]
+        },
+        "category": [
+            ...
+        ],
+        "_id": "5e8e5bfaf03bc792d15b8477",
+        "title": "Sample restaurantss123",
+        "address": "2023 Homestead Rd, Cupertinoddd, CA 95014",
+        "open_hour": {
+            "_id": "5e8e5bfaf03bc792d15b8478",
+            "monday": [
+                {
+                    "_id": "5e8e5bfaf03bc792d15b8479",
+                    "from": 10,
+                    "to": 16.3
+                },
+                {
+                    "_id": "5e8e5bfaf03bc792d15b847a",
+                    "from": 18,
+                    "to": 22
+                }
+            ],
+            "tuesday": [
+                {
+                    "_id": "5e8e5bfaf03bc792d15b847b",
+                    "from": 11,
+                    "to": 13.4
+                },
+                {
+                    "_id": "5e8e5bfaf03bc792d15b847c",
+                    "from": 16,
+                    "to": 18
+                }
+            ],
+            "wednesday": [],
+            "thursday": []
+        },
+        "menu": "https://s3-media0.fl.yelpcdn.com/bphoto/UgtxQQlDJ9n5k8G8Y8pceQ/o.jpg",
+        "order": [
+            ...
+        ],
+        "__v": 0
+    }
+]
 ```

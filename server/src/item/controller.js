@@ -107,9 +107,49 @@ export default {
       try {
         const findCate = await Category.findById(req.query.category).populate('items');
         if (findCate.items.length === 0) {
-          return res.status(200).json({"message": "This category currently doesn't have any item yet."})
+          return res.status(200).json({ "message": "This category currently doesn't have any item yet." })
         }
         return res.status(200).json({ "message": "we've found something in this category.", "items": findCate.items })
+      } catch (err) {
+        return next('500:Something went wrong.')
+      }
+    } else if (req.query.day && req.query.time) {
+      const time = Number(req.query.time);
+      const day = req.query.day;
+      const qfrom = 'open_hour.' + day + '.from';
+      const qto = 'open_hour.' + day + '.to';
+      try {
+        const findItem = await Item.find(
+          {
+            $and: [
+              { [qfrom]: { $lte: time } },
+              { [qto]: { $gte: time } }
+            ]
+          }
+        ).populate('category')
+        const newItems = [];
+        if (findItem.length > 0) {
+          for (let i = 0; i < findItem.length; i++) {
+            const item = findItem[i];
+            const curDay = item.open_hour[day]
+            for (let j = 0; j < curDay.length; j++) {
+              const hour = curDay[j];
+              if ((time > hour.from || time == hour.from) && (time < hour.to || time == hour.to)) {
+                const newItem = {
+                  _id: item._id,
+                  title: item.title,
+                  address: item.address,
+                  longitude: item.location.coordinates[0],
+                  latitude: item.location.coordinates[1],
+                }
+                newItems.push(newItem);
+              }
+            }
+          }
+          return res.status(200).json(newItems)
+        } else {
+          return res.status(200).json([])
+        }
       } catch (err) {
         return next('500:Something went wrong.')
       }
