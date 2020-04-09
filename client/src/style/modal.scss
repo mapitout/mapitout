@@ -18,3 +18,52 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+.image-uploading-modal {
+  .image-dropping-container {
+    // border-radius: 8px;
+    // border: 2px dashed rgba(black, 0.6);
+    .image-uploader{
+      text-align: center;
+      padding: 50px;
+      // background: rgba(245, 245, 245, 1);
+      background-color: white;
+      outline: none !important;
+      cursor: default !important;
+      user-select: none;
+      position: relative;
+      font-weight: 800;
+      border: 4px dashed rgb(220, 220, 220);
+      border-radius: 0px;
+      &.draggingOverEntering{
+        border-color: $brand-color;
+        .drag-title {
+          color: $brand-color;
+        }
+      }
+      .drag-title {
+        font-size: 2rem;
+        color: rgb(220, 220, 220);
+      }
+      .drag-subtitle {
+        font-size: 0.8rem;
+        color: rgb(220, 220, 220);
+      }
+      .upload-btn {
+        cursor: pointer;
+        color: white;
+        font-size: 0.8rem;
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 10px;
+        background-color: $brand-color;
+        &:hover{
+          background-color: darken($brand-color, 5%);
+        }
+        &:active{
+          transform: scale(0.95);
+        }
+      }
+    }
+  }
+}
