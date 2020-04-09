@@ -14,7 +14,10 @@ const openHourSchema = new mongoose.Schema({
   monday: [openClose],
   tuesday: [openClose],
   wednesday: [openClose],
-  thursday: [openClose]
+  thursday: [openClose],
+  friday: [openClose],
+  saturday: [openClose],
+  sunday: [openClose],
 })
 
 const orderSchema = new mongoose.Schema({

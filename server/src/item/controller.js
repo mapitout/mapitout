@@ -36,6 +36,7 @@ export default {
     // const open_hour = req.body.details.open_hour;
     // delete req.body.details.open_hour;
     const item = req.body.details;
+    console.log('item', item)
     try {
       const createdItem = await Item.create(item);
       for (let i = 0; i < createdItem.category.length; i++) {
@@ -54,7 +55,7 @@ export default {
       } else if (err.errors && err.errors.address) {
         return next(`500:${err.errors.address.message}`)
       }
-      return res.status(500).json({ "message": err.message })
+      return next(`500:${err.message}`)
     }
 
   },

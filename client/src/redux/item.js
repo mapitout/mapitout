@@ -25,7 +25,7 @@ export function changeFocusport(focusport) {
         dispatch({ type: UPDATE_FOCUSPORT, payload })
       })
       .catch((e)=>{
-        if(e.response.status===404){
+        if(e.response && e.response.status===404){
           // if it's 404 not found, use input as item.details.address
           console.log('404 focusport', focusport);
           const payload = {
@@ -38,6 +38,8 @@ export function changeFocusport(focusport) {
           payload.details.location.coordinates[0] = focusport.longitude;
           payload.details.location.coordinates[1] = focusport.latitude;
           dispatch({ type: UPDATE_FOCUSPORT, payload })
+        }else{
+          console.error(e);
         }
       })
   }
@@ -80,7 +82,10 @@ export function editItem(item_id, details) {
       .catch(e=>console.error(e))
   }
 }
-
+const initDayOpenHour = {
+  from: 0,
+  to: 0
+}
 // example:
 // coordinates: [-122.23432, 37.5435] -> [long, lat]
 const INITIAL_ITEM_STATE = {
@@ -100,7 +105,16 @@ const INITIAL_ITEM_STATE = {
     ubereats: '',
     yelp: '',
     others: '',
-  }
+  },
+  open_hour: {
+    monday: [{...initDayOpenHour}],
+    tuesday: [{...initDayOpenHour}],
+    wednesday: [{...initDayOpenHour}],
+    thursday: [{...initDayOpenHour}],
+    friday: [{...initDayOpenHour}],
+    saturday: [{...initDayOpenHour}],
+    sunday: [{...initDayOpenHour}],
+  },
 }
 
 let INITIAL_STATE = {
