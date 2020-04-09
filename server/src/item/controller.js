@@ -1,6 +1,6 @@
 import Item from './model';
 // import OpenHour from './openHour.model';
-import Category from '../category/model';
+// import Category from '../category/model';
 
 export default {
   show: async (req, res, next) => {
@@ -184,5 +184,16 @@ export default {
         res.status(500).json({ "message": err })
       }
     }
+  },
+  uploadImage: (req, res, next) => {
+    // const file = req.file;
+    // const itemId = req.body.item_id;
+    // if(!file) return next('500:image bad');
+    // const fieldname = file.fieldname;
+    const file = req.file;
+    const body = req.body;
+    console.log(file);
+    console.log(body);
+    return res.status(200).json({'message':'you hit the image upload'})
   }
 }
