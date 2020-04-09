@@ -137,13 +137,6 @@ $red: rgb(213, 32, 32);
             }
           }
         }
-        .menu {
-          text-align: left;
-          img {
-            border-radius: 8px;
-            width: 100%;
-          }
-        }
         .session-item {
           &.open-hour {
             text-transform: capitalize;
@@ -157,6 +150,29 @@ $red: rgb(213, 32, 32);
               padding: 5px;
               padding-left: 0px;
               opacity: 0.4;
+            }
+          }
+          &.images {
+            .bottom-action {
+              text-align: center;
+            }
+            .upload-btn {
+              text-align: center;
+              cursor: pointer;
+              border: none;
+              padding: 5px 20px;
+              margin: auto;
+              border-radius: 8px;
+              width: inline-block;
+              background: rgb(245, 245, 245);
+              font-weight: 700;
+              &:hover{
+                background: rgb(240, 240, 240);
+              }
+              &:active{
+                transform: scale(0.95);
+                background: rgb(235, 235, 235);
+              }
             }
           }
         }

@@ -3,8 +3,9 @@ import Modal from 'react-bootstrap/Modal';
 import MultipleSelect from 'react-select';
 import _ from 'lodash';
 import { connect } from 'react-redux';
+import Dropzone from 'react-dropzone';
 
-import { createItem, editItem } from '../../actions';
+import { createItem, editItem, uploadImagesToItem } from '../../actions';
 import request from '../../redux/request';
 
 const ORDER_MTHODS_COPY = {
@@ -26,6 +27,8 @@ class Item extends React.Component {
     super(props);
     this.state = {
       editting: false,
+      edittingImages: false,
+      imageDraggingClass: '',
       form: {
         title: '',
         category: [],
@@ -47,6 +50,37 @@ class Item extends React.Component {
           saturday: [{...initDayOpenHour}],
           sunday: [{...initDayOpenHour}],
         },
+        images: [{
+          group: 'menu',
+          src: 'https://i.imgur.com/TtWH0Ij.png',
+          lastUpdatedAt: 1586472072895
+        },
+        {
+          group: 'food',
+          src: 'https://i.imgur.com/sxP36mb.jpg',
+          lastUpdatedAt: 1586472052895
+        },
+        {
+          group: 'menu',
+          src: 'https://i.imgur.com/TtWH0Ij.png',
+          lastUpdatedAt: 1586472032895
+        },
+        {
+          group: 'food',
+          src: 'https://i.imgur.com/toS1LUm.jpg',
+          lastUpdatedAt: 1586472012895
+        },
+        {
+          group: 'food',
+          src: 'https://i.imgur.com/xA2SP0c.jpg',
+          lastUpdatedAt: 1586472002895
+        },
+        {
+          group: 'menu',
+          src: 'https://i.imgur.com/nxuFFjK.png',
+          lastUpdatedAt: 1586472072895
+        },
+        ],
         activeInput: ''
       },
       initialCategory: []
@@ -66,10 +100,11 @@ class Item extends React.Component {
       })
       .catch(e=>console.error(e.message))
   }
-  activateEditting(activeInput) {
+  passingPropsToFormState() {
     let form = {
       ...this.state.form,
       order: { ...this.state.form.order },
+      images: { ...this.state.form.images },
       address: this.props.focusport.details.address,
       location: {
         ...this.props.focusport.details.location
@@ -78,12 +113,16 @@ class Item extends React.Component {
     if(this.props.focusport._id){
       form = {
         order: { ...this.state.form.order },
-        ...this.props.focusport.details,
-        activeInput
+        images: { ...this.state.form.images },
+        ...this.props.focusport.details
       }
       form.category = this.props.focusport.details.category.map(c=>({value: c._id, label: c.title}))
     }
-    console.log('form', form)
+    console.log('passingPropsToFormState', form)
+    return form;
+  }
+  activateEditting(activeInput) {
+    const form = this.passingPropsToFormState();
     this.setState({ ...this.state, editting: true, form })
   }
   cancelEditting() {
@@ -93,36 +132,36 @@ class Item extends React.Component {
     if(k=='phone'){
       return <a href={`tel:${o}`}>{o}</a>
     }else{
-      return (<div>
+      return (<div key={k}>
         {isActive && <a href={o} target='_blank' rel="noopener noreferrer" >available</a>}
         {!isActive && <span>not available yet</span>}
       </div>)
     }
   }
-  renderOrderMethod(order) {
+  renderOrderMethods(order) {
     const keys = Object.keys(order);
     return keys.map(k=>{
       const o = order[k];
       const isActive = (o!=='');
       const isActiveClass = isActive?'active':'no-active';
-      return (ORDER_MTHODS_COPY[k] && <div key={k} className={`order-method ${isActiveClass}`}>
+      return (ORDER_MTHODS_COPY[k] && <div key={`${k}-${o}`} className={`order-method ${isActiveClass}`}>
         <div className='type'> {ORDER_MTHODS_COPY[k]} </div>
         <div className={`action ${k}`}>
           {this.renderOrderActions(k, o, isActive)}
         </div>
-      </div>||<div></div>)
+      </div>||<div key={`${k}-${o}`}></div>)
     })
 
   }
   renderActionsContainer() {
     return (<div className='session action-container'>
       <div className='action' onClick={this.activateEditting.bind(this)}>
-        <div className='icon'>U</div>
-        <div className='title'>Update</div>
+        <div className='icon'>E</div>
+        <div className='title'>Edit</div>
       </div>
       <div className='action'>
-        <div className='icon'>I</div>
-        <div className='title'>Info</div>
+        <div className='icon'>M</div>
+        <div className='title'>Menus</div>
       </div>
       <div className='action'>
         <div className='icon'>S</div>
@@ -142,11 +181,10 @@ class Item extends React.Component {
     const keys = Object.keys(open_hour);
     return keys.map((k,weekdayNumber)=>{
       const length = open_hour[k].length;
+      const isToday = (weekday==weekdayNumber);
       return <tbody key={k}>
         {open_hour[k].map(({from, to}, i)=>{
-          const isToday = (weekday==weekdayNumber);
-          console.log(k, isToday)
-          const isNone = (from===0&&to===0);
+          const isNone = (from===0 && to===0);
           return (<tr className={`${isToday}`} key={`${k}-${i}-${from}-${to}`}>
             <td className='hour-title'>{i==0 && <span>{k}</span>}{isToday && <span> (Today)</span>}</td>
             {!isNone && <td>
@@ -158,17 +196,19 @@ class Item extends React.Component {
       </tbody>
     })
   }
+  activeImageUploading() {
+    const form = this.passingPropsToFormState();
+    this.setState({ ...this.state, edittingImages: true, form });
+  }
   renderItemView(item) {
     return (<div>
       {item._id && <div className='item-info-container'>
         {this.renderActionsContainer()}
         <div className='session details-container'>
           <div className='session-item title'>
-            {/* <div className='session-title'><span/>name</div> */}
             {item.details.title}
           </div>
           <div className='session-item address'>
-            {/* <div className='session-title'><span/>address</div> */}
             <div className='fade'>{item.details.address}</div>
           </div>
           {item.details && item.details.category.length > 0 && <div className='session-item category'>
@@ -181,16 +221,16 @@ class Item extends React.Component {
               {this.renderOpenHourForView(item.details.open_hour)}
             </table>
           </div>
-          <div  className='session-item order'>
-            <div className='session-title'><span/>Order Methods</div>
-            {this.renderOrderMethod(item.details.order)}
+          <div className='session-item images'>
+            <div className='session-title'><span/>Images</div>
+            <div className='bottom-action'>
+              <button className='upload-btn' onClick={this.activeImageUploading.bind(this)}>Add a photo</button>
+            </div>
           </div>
-          {item.details.menu > 0 && <div className='session-item menu'>
-            <div className='session-title'>menu</div>
-            <img
-              src={item.details.menu}
-            />
-          </div>}
+          <div className='session-item order'>
+            <div className='session-title'><span/>Order Methods</div>
+            {this.renderOrderMethods(item.details.order)}
+          </div>
         </div>
       </div> || <div className='item-empty'>
         <img src='../../assets/svgs/no-data.svg' />
@@ -369,6 +409,9 @@ class Item extends React.Component {
     const { form } = this.state;
     return (
       <Modal className='create-editting-item-modal' show={show} onHide={this.cancelEditting.bind(this)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit details of {this.state.form.title}</Modal.Title>
+        </Modal.Header>
         <form onSubmit={this.onFormSubmit.bind(this)}>
           <Modal.Body>
             <div className="prompt-block form-group">
@@ -426,10 +469,57 @@ class Item extends React.Component {
       </Modal>
     )
   }
+  onImageUploadingDrop(acceptedFiles, rejectedFiles) {
+    this.props.uploadImagesToItem(this.state.form._id, 'menu', acceptedFiles);
+  }
+  onDragEnter(type) {
+    this.setState({imageDraggingClass: type})
+  }
+  onDragLeave(type) {
+    this.setState({imageDraggingClass: type})
+  }
+  getAllImages(imgs) {
+    console.log('hi')
+    for(let img of imgs) {
+      console.log(img);
+    }
+  }
+  renderCurrentImages(imgs) {
+    console.log('hi 2')
+    const images = this.getAllImages(imgs);
+  }
+  renderImageUploadingModal(show) {
+    return (
+      <Modal className='image-uploading-modal' show={show} onHide={()=>this.setState({ ...this.state, edittingImages: false })}>
+        <Modal.Header closeButton>
+          <Modal.Title>Upload public photos of {this.state.form.title}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div>
+            {this.renderCurrentImages.bind(this.state.form.images)}
+          </div>
+          <div className='image-dropping-container'>
+            <Dropzone
+              onDragEnter={this.onDragEnter.bind(this, 'draggingOverEntering')}
+              onDragLeave={this.onDragLeave.bind(this, 'draggingOverLeaving')}
+              className={`image-uploader ${this.state.imageDraggingClass}`}
+              accept="image/jpeg, image/png"
+              onDrop={this.onImageUploadingDrop.bind(this)}
+            >
+              <div className='drag-title'>Drag photos here</div>
+              <div className='drag-subtitle'>Or, if you prefer...</div>
+              <div className='upload-btn'>Choose photos to upload</div>
+            </Dropzone>
+          </div>
+        </Modal.Body>
+      </Modal>
+    )
+  }
   render() {
     return (<div className='item-view-component'>
       {this.renderItemView(this.props.focusport)}
       {this.renderModal(this.state.editting)}
+      {this.renderImageUploadingModal(this.state.edittingImages)}
     </div>)
   }
 }
@@ -439,4 +529,4 @@ function mapStateToProps({item}) {
   return { focusport }
 }
 
-export default connect(mapStateToProps, { createItem, editItem })(Item);
+export default connect(mapStateToProps, { createItem, editItem, uploadImagesToItem })(Item);

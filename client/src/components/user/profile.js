@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {reduxForm, Field} from 'redux-form';
-import Dropzone from 'react-dropzone'
+import Dropzone from 'react-dropzone';
 
 import { updateUserProfile, updateProfileAvatar } from '../../actions';
 import { CenterCard121 } from '../utils';
