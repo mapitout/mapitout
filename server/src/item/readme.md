@@ -292,11 +292,7 @@
 ```
 
 ### GET ALL
-<<<<<<< HEAD
-- route: /publicApi/item/
-=======
 - route: /publicApi/item
->>>>>>> master
 - sample response: 
 ```
 {
@@ -386,102 +382,18 @@ response:(array of objects)
 ```
 [
     {
-        "location": {
-            "type": "Point",
-            "coordinates": [
-                -122.40566,
-                37.79768
-            ]
-        },
-        "category": [
-           ...
-        ],
         "_id": "5e8e50e11c4a168e96070e1a",
         "title": "Sample restaurantss",
         "address": "2023 Homestead Rd, Cupertinoddd, CA 95014",
-        "open_hour": {
-            "_id": "5e8e50e11c4a168e96070e1b",
-            "monday": [
-                {
-                    "_id": "5e8e50e11c4a168e96070e1c",
-                    "from": 11,
-                    "to": 13.4
-                },
-                {
-                    "_id": "5e8e50e11c4a168e96070e1d",
-                    "from": 16,
-                    "to": 18
-                }
-            ],
-            "tuesday": [
-                {
-                    "_id": "5e8e50e11c4a168e96070e1e",
-                    "from": 11,
-                    "to": 13.4
-                },
-                {
-                    "_id": "5e8e50e11c4a168e96070e1f",
-                    "from": 16,
-                    "to": 18
-                }
-            ],
-            "wednesday": [],
-            "thursday": []
-        },
-        "menu": "https://s3-media0.fl.yelpcdn.com/bphoto/UgtxQQlDJ9n5k8G8Y8pceQ/o.jpg",
-        "order": [
-            ...
-        ],
-        "__v": 0
+        "longitude": -122.40566,
+        "latitude": 37.79768
     },
     {
-        "location": {
-            "type": "Point",
-            "coordinates": [
-                -122.40566,
-                37.79768
-            ]
-        },
-        "category": [
-            ...
-        ],
         "_id": "5e8e5bfaf03bc792d15b8477",
         "title": "Sample restaurantss123",
         "address": "2023 Homestead Rd, Cupertinoddd, CA 95014",
-        "open_hour": {
-            "_id": "5e8e5bfaf03bc792d15b8478",
-            "monday": [
-                {
-                    "_id": "5e8e5bfaf03bc792d15b8479",
-                    "from": 10,
-                    "to": 16.3
-                },
-                {
-                    "_id": "5e8e5bfaf03bc792d15b847a",
-                    "from": 18,
-                    "to": 22
-                }
-            ],
-            "tuesday": [
-                {
-                    "_id": "5e8e5bfaf03bc792d15b847b",
-                    "from": 11,
-                    "to": 13.4
-                },
-                {
-                    "_id": "5e8e5bfaf03bc792d15b847c",
-                    "from": 16,
-                    "to": 18
-                }
-            ],
-            "wednesday": [],
-            "thursday": []
-        },
-        "menu": "https://s3-media0.fl.yelpcdn.com/bphoto/UgtxQQlDJ9n5k8G8Y8pceQ/o.jpg",
-        "order": [
-            ...
-        ],
-        "__v": 0
+        "longitude": -122.40566,
+        "latitude": 37.79768
     }
 ]
 ```
