@@ -152,7 +152,7 @@ class Item extends React.Component {
             {!isNone && <td>
               <div className={`hour-td-finish-${length-1===i}`}>{`${this.convertDecimalToTime(from)} - ${this.convertDecimalToTime(to)}`}</div>
             </td>}
-            {isNone && <td><div className={`none-data`}>no data yet</div></td>}
+            {isNone && <td><div className={`none-data`}>Closed</div></td>}
           </tr>)
         })}
       </tbody>
