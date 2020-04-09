@@ -144,6 +144,22 @@ $red: rgb(213, 32, 32);
             width: 100%;
           }
         }
+        .session-item {
+          &.open-hour {
+            text-transform: capitalize;
+            tr.true {
+              font-weight: 700;
+            }
+            .hour-td-finish-true {
+              margin-bottom: 10px;
+            }
+            .none-data {
+              padding: 5px;
+              padding-left: 0px;
+              opacity: 0.4;
+            }
+          }
+        }
         .session-title {
           font-weight: 900;
           letter-spacing: 1px;
