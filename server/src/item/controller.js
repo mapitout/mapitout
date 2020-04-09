@@ -36,18 +36,8 @@ export default {
     // const open_hour = req.body.details.open_hour;
     // delete req.body.details.open_hour;
     const item = req.body.details;
-<<<<<<< HEAD
-=======
-    console.log('item', item)
->>>>>>> master
     try {
       const createdItem = await Item.create(item);
-      for (let i = 0; i < createdItem.category.length; i++) {
-        const cateId = createdItem.category[i];
-        const findCate = await Category.findByIdAndUpdate(cateId);
-        findCate.items.push(createdItem._id);
-        findCate.save();
-      }
       return res.json({ "message": "Pin is created successfully", createdItem })
     } catch (err) {
       if (err.code === 11000) {
@@ -83,10 +73,6 @@ export default {
     }
   },
   search: async (req, res, next) => {
-<<<<<<< HEAD
-
-=======
->>>>>>> master
     if (req.query.lon && req.query.lat) {
       try {
         const findItem = await Item.find({
