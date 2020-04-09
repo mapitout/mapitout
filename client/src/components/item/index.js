@@ -15,6 +15,11 @@ const ORDER_MTHODS_COPY = {
   yelp: 'Yelp',
   others: 'Others'
 }
+
+const initDayOpenHour = {
+  from: 'closed',
+  to: 'closed'
+}
 class Item extends React.Component {
   constructor(props) {
     super(props);
@@ -31,6 +36,15 @@ class Item extends React.Component {
           ubereats: '',
           yelp: '',
           others: '',
+        },
+        open_hour: {
+          monday: [{...initDayOpenHour}],
+          tuesday: [{...initDayOpenHour}],
+          wednesday: [{...initDayOpenHour}],
+          thursday: [{...initDayOpenHour}],
+          friday: [{...initDayOpenHour}],
+          saturday: [{...initDayOpenHour}],
+          sunday: [{...initDayOpenHour}],
         },
         activeInput: ''
       },
@@ -195,10 +209,131 @@ class Item extends React.Component {
       }
     })
   }
+  onOpenHourFormChange(e) {
+    const type = e.target.name.split('.')[2];
+    const day = e.target.name.split('.')[0].toLowerCase();
+    const index = e.target.name.split('.')[1];
+    const time = e.target.value;
+    console.log(type, day, index, time);
+    const current = [...this.state.form.open_hour[day]];
+    current[index] = {
+      ...current[index],
+      [type]: time
+    }
+    const newData = [...current];
+    this.updateOpenHourOfDay(day, newData)
+  }
+  updateOpenHourOfDay(day, data) {
+    this.setState({
+      ...this.state,
+      form: {
+        ...this.state.form,
+        open_hour: {
+          ...this.state.form.open_hour,
+          [day]: data
+        }
+      }
+    })
+    console.log('this.form.open_hour', this.state.form.open_hour)
+  }
+  renderOpenHourTimeSelector() {
+    return ([
+      <option key='none'>closed</option>,
+      <option key='4.00' value={4.00}>4:00 (4:00 am)</option>,
+      <option key='4.30' value={4.30}>4:30 (4:30 am)</option>,
+      <option key='5.00' value={5.00}>5:00 (5:00 am)</option>,
+      <option key='5.30' value={5.30}>5:30 (5:30 am)</option>,
+      <option key='6.00' value={6.00}>6:00 (6:00 am)</option>,
+      <option key='6.30' value={6.30}>6:30 (6:30 am)</option>,
+      <option key='7.00' value={7.00}>7:00 (7:00 am)</option>,
+      <option key='7.30' value={7.30}>7:30 (7:30 am)</option>,
+      <option key='8.00' value={8.00}>8:00 (8:00 am)</option>,
+      <option key='8.30' value={8.30}>8:30 (8:30 am)</option>,
+      <option key='9.00' value={9.00}>9:00 (9:00 am)</option>,
+      <option key='9.30' value={9.30}>9:30 (9:30 am)</option>,
+      <option key='10.00' value={10.00}>10:00 (10:00 am)</option>,
+      <option key='10.30' value={10.30}>10:30 (10:30 am)</option>,
+      <option key='11.00' value={11.00}>11:00 (11:00 am)</option>,
+      <option key='11.30' value={11.30}>11:30 (11:30 am)</option>,
+      <option key='12.00' value={12.00}>12:00 (noon)</option>,
+      <option key='12.30' value={12.30}>12:30 (12:30 pm)</option>,
+      <option key='13.00' value={13.00}>{`13:00 (${13-12}:00 pm)`}</option>,
+      <option key='13.30' value={13.30}>{`13:30 (${13-12}:30 pm)`}</option>,
+      <option key='14.00' value={14.00}>{`14:00 (${14-12}:00 pm)`}</option>,
+      <option key='14.30' value={14.30}>{`14:30 (${14-12}:30 pm)`}</option>,
+      <option key='15.00' value={15.00}>{`15:00 (${15-12}:00 pm)`}</option>,
+      <option key='15.30' value={15.30}>{`15:30 (${15-12}:30 pm)`}</option>,
+      <option key='16.00' value={16.00}>{`16:00 (${16-12}:00 pm)`}</option>,
+      <option key='16.30' value={16.30}>{`16:30 (${16-12}:30 pm)`}</option>,
+      <option key='17.00' value={17.00}>{`17:00 (${17-12}:00 pm)`}</option>,
+      <option key='17.30' value={17.30}>{`17:30 (${17-12}:30 pm)`}</option>,
+      <option key='18.00' value={18.00}>{`18:00 (${18-12}:00 pm)`}</option>,
+      <option key='18.30' value={18.30}>{`18:30 (${18-12}:30 pm)`}</option>,
+      <option key='19.00' value={19.00}>{`19:00 (${19-12}:00 pm)`}</option>,
+      <option key='19.30' value={19.30}>{`19:30 (${19-12}:30 pm)`}</option>,
+      <option key='20.00' value={20.00}>{`20:00 (${20-12}:00 pm)`}</option>,
+      <option key='20.30' value={20.30}>{`20:30 (${20-12}:30 pm)`}</option>,
+      <option key='21.00' value={21.00}>{`21:00 (${21-12}:00 pm)`}</option>,
+      <option key='21.30' value={21.30}>{`21:30 (${21-12}:30 pm)`}</option>,
+      <option key='22.00' value={22.00}>{`22:00 (${22-12}:00 pm)`}</option>,
+      <option key='22.30' value={22.30}>{`22:30 (${22-12}:30 pm)`}</option>,
+      <option key='23.00' value={23.00}>{`23:00 (${23-12}:00 pm)`}</option>,
+      <option key='23.30' value={23.30}>{`23:30 (${23-12}:30 pm)`}</option>,
+      <option key='24.00' value={24.00}>24:00 (midnight)</option>]
+    )
+  }
+  onOpenHourAddOneMoreInput(day) {
+    const current = [...this.state.form.open_hour[day]];
+    const newData = [...current, {...initDayOpenHour}];
+    this.updateOpenHourOfDay(day, newData)
+  }
+  onOpenHourRemoveCurrentInput(day, index) {
+    const current = [...this.state.form.open_hour[day]];
+    current.splice(index, 1);
+    const newData = [...current];
+    this.updateOpenHourOfDay(day, newData);
+  }
+  renderOpenHourActions(length, index, day) {
+    if(length===1){
+      return (<div className='day-block plus' onClick={this.onOpenHourAddOneMoreInput.bind(this, day)}>
+        <i className="fas fa-plus"></i>
+      </div>)
+    }else if(index+1===length){
+      return (<div className='day-block plus' onClick={this.onOpenHourAddOneMoreInput.bind(this, day)}>
+        <i className="fas fa-plus"></i>
+      </div>)
+    }else{
+      return (<div className='day-block cancel' onClick={this.onOpenHourRemoveCurrentInput.bind(this, day, index)}>
+        <i className="fas fa-times"></i>
+      </div>)
+    }
+  }
+  renderOpenHourWeek(d, form) {
+    const title = d;
+    const day = d.toLowerCase();
+    const dayData = form.open_hour[day];
+    return dayData.map((oneDayData, index)=>{
+      return (<tr key={`${day}.${oneDayData[0].start}`}>
+        <td>{index==0 && <div className='day-block day'>{title}</div>}</td>
+        <td>
+          <div className='day-block-input'>
+            <select className="form-control" value={form.open_hour[day][index].from} name={`${d}.${index}.from`} onChange={this.onOpenHourFormChange.bind(this)} placeholder="start">
+              {this.renderOpenHourTimeSelector()}
+            </select>
+            <div className='day-block'>to</div>
+            <select className="form-control" value={form.open_hour[day][index].to} name={`${d}.${index}.to`} onChange={this.onOpenHourFormChange.bind(this)} placeholder="to">
+              {this.renderOpenHourTimeSelector()}
+            </select>
+            {this.renderOpenHourActions(dayData.length, index, day)}
+          </div>
+        </td>
+      </tr>)
+    })
+  }
   renderModal(show) {
     const { form } = this.state;
     return (
-      <Modal className='create-editting-item-modal' show={show} onHide={this.cancelEditting.bind(this)}>
+      <Modal className='create-editting-item-modal' show={!show} onHide={this.cancelEditting.bind(this)}>
         <form onSubmit={this.onFormSubmit.bind(this)}>
           <Modal.Body>
             <div className="prompt-block form-group">
@@ -225,7 +360,15 @@ class Item extends React.Component {
             </div>
             {<div className="form-group">
               <div className='session-title'>Open Hours</div>
-              
+              <div className='open-hour'>
+                {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(d=>{
+                  return (<div key={d} className='day-row'>
+                    <table style={{"width":"100%"}}>
+                      {this.renderOpenHourWeek(d, form)}
+                    </table>
+                  </div>)
+                })}
+              </div>
             </div>}
             {<div className="form-group">
               <div className='session-title'>Order methods</div>
