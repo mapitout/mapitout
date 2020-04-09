@@ -3,9 +3,23 @@ import Modal from 'react-bootstrap/Modal';
 import MultipleSelect from 'react-select';
 import { connect } from 'react-redux';
 
-import { createItem } from '../../actions';
+import { createItem, editItem } from '../../actions';
 import request from '../../redux/request';
 
+const ORDER_MTHODS_COPY = {
+  phone: 'Call to order',
+  doordash: 'Doordash',
+  postmates: 'Postmates',
+  grubhub: 'Grubhub',
+  ubereats: 'UberEats',
+  yelp: 'Yelp',
+  others: 'Others'
+}
+
+const initDayOpenHour = {
+  from: 0,
+  to: 0
+}
 class Item extends React.Component {
   constructor(props) {
     super(props);
@@ -14,7 +28,25 @@ class Item extends React.Component {
       form: {
         title: '',
         category: [],
-        order: []
+        order: {
+          phone: '',
+          doordash: '',
+          postmates: '',
+          grubhub: '',
+          ubereats: '',
+          yelp: '',
+          others: '',
+        },
+        open_hour: {
+          monday: [{...initDayOpenHour}],
+          tuesday: [{...initDayOpenHour}],
+          wednesday: [{...initDayOpenHour}],
+          thursday: [{...initDayOpenHour}],
+          friday: [{...initDayOpenHour}],
+          saturday: [{...initDayOpenHour}],
+          sunday: [{...initDayOpenHour}],
+        },
+        activeInput: ''
       },
       initialCategory: []
     }
@@ -33,8 +65,10 @@ class Item extends React.Component {
       })
       .catch(e=>console.error(e.message))
   }
-  activateEditting() {
+  activateEditting(activeInput) {
     let form = {
+      ...this.state.form,
+      order: { ...this.state.form.order },
       address: this.props.focusport.details.address,
       location: {
         ...this.props.focusport.details.location
@@ -42,58 +76,91 @@ class Item extends React.Component {
     }
     if(this.props.focusport._id){
       form = {
-        ...this.props.focusport.details
+        order: { ...this.state.form.order },
+        ...this.props.focusport.details,
+        activeInput
       }
+      form.category = this.props.focusport.details.category.map(c=>({value: c._id, label: c.title}))
     }
+    console.log('form', form)
     this.setState({ ...this.state, editting: true, form })
   }
   cancelEditting() {
     this.setState({ ...this.state, editting: false })
   }
+  renderOrderActions(k, o, isActive) {
+    if(k=='phone'){
+      return <a href={`tel:${o}`}>{o}</a>
+    }else{
+      return (<div>
+        {isActive && <a href={o} target='_blank' rel="noopener noreferrer" >available</a>}
+        {!isActive && <span>not available yet</span>}
+      </div>)
+    }
+  }
+  renderOrderMethod(order) {
+    const keys = Object.keys(order);
+    return keys.map(k=>{
+      const o = order[k];
+      const isActive = (o!=='');
+      const isActiveClass = isActive?'active':'no-active';
+      return (ORDER_MTHODS_COPY[k] && <div key={k} className={`order-method ${isActiveClass}`}>
+        <div className='type'> {ORDER_MTHODS_COPY[k]} </div>
+        <div className={`action ${k}`}>
+          {this.renderOrderActions(k, o, isActive)}
+        </div>
+      </div>||<div></div>)
+    })
+
+  }
+  renderActionsContainer() {
+    return (<div className='session action-container'>
+      <div className='action' onClick={this.activateEditting.bind(this)}>
+        <div className='icon'>U</div>
+        <div className='title'>Update</div>
+      </div>
+      <div className='action'>
+        <div className='icon'>I</div>
+        <div className='title'>Info</div>
+      </div>
+      <div className='action'>
+        <div className='icon'>S</div>
+        <div className='title'>Share</div>
+      </div>
+    </div>)
+  }
+  renderOpenHourForView(open_hour) {
+    console.log('open_hour', open_hour)
+    return <div>
+
+    </div>
+  }
   renderItemView(item) {
     return (<div>
       {item._id && <div className='item-info-container'>
-        <div className='session action-container'>
-          <div className='action'>
-            <div className='icon'>D</div>
-            <div className='title'>Directions</div>
-          </div>
-          <div className='action' onClick={this.activateEditting.bind(this)}>
-            <div className='icon'>E</div>
-            <div className='title'>Edit</div>
-          </div>
-          <div className='action'>
-            <div className='icon'>I</div>
-            <div className='title'>Info</div>
-          </div>
-          <div className='action'>
-            <div className='icon'>S</div>
-            <div className='title'>Share</div>
-          </div>
-        </div>
+        {this.renderActionsContainer()}
         <div className='session details-container'>
           <div className='session-item title'>
-            <div className='session-title'>name</div>
+            <div className='session-title'><span/>name</div>
             {item.details.title}
           </div>
           <div className='session-item address'>
-            <div className='session-title'>address</div>
+            <div className='session-title'><span/>address</div>
             <div className='fade'>{item.details.address}</div>
           </div>
           {item.details && item.details.category.length > 0 && <div className='session-item category'>
-            <div className='session-title'>category</div>
+            <div className='session-title'><span/>category</div>
             {item.details.category.map((c) => (<div className='item' key={c._id}>{c.title}</div>))}
           </div>}
-          <div className='session-item open-hour'> {item.details.open_hour} </div>
-          {item.details.order.length > 0 && <div className='session-item order'>
-            <div className='session-title'>Order Method</div>
-            {item.details.order.map((o) => (<div key={o.type} className='order-method'>
-              <div className='type'> {o.type} </div>
-              <div className='notes'> {o.notes} </div>
-              <div className='action'> {o.action} </div>
-            </div>))}
+          {<div className='session-item open-hour'>
+            <div className='session-title'>Open Hours</div>
+            {this.renderOpenHourForView(item.details.open_hour)}
           </div>}
-          {item.details.length > 0 && <div className='menu'>
+          <div  className='session-item order'>
+            <div className='session-title'><span/>Order Method</div>
+            {this.renderOrderMethod(item.details.order)}
+          </div>
+          {item.details.menu > 0 && <div className='session-item menu'>
             <div className='session-title'>menu</div>
             <img
               src={item.details.menu}
@@ -109,10 +176,17 @@ class Item extends React.Component {
   }
   onFormSubmit(e) {
     e.preventDefault()
-    console.log(this.props.focusport);
-    if(!this.props.focusport._id) {
-      this.props.createItem(this.state.form, window)
-      window.location.reload();
+    const item_id = this.props.focusport._id;
+    if(!item_id) {
+      this.props.createItem(this.state.form)
+      this.setState({ ...this.state, editting: false })
+    }else{
+      const item = this.state.form;
+      delete item.location; // location: long and lat should be changed
+      delete item.address; // address should be changed
+      delete item._id; // item _id should be changed
+      this.props.editItem(item_id, item)
+      this.setState({ ...this.state, editting: false })
     }
   }
   onFormChange(e) {
@@ -124,6 +198,18 @@ class Item extends React.Component {
       }
     })
   }
+  onOrderFormChange(e) {
+    this.setState({
+      ...this.state,
+      form: {
+        ...this.state.form,
+        order: {
+          ...this.state.form.order,
+          [e.target.name]: e.target.value
+        }
+      }
+    })
+  }
   onCategoryChange(c) {
     this.setState({
       ...this.state,
@@ -131,6 +217,142 @@ class Item extends React.Component {
         ...this.state.form,
         category: c
       }
+    })
+  }
+  onOpenHourFormChange(e) {
+    const type = e.target.name.split('.')[2];
+    const day = e.target.name.split('.')[0].toLowerCase();
+    const index = e.target.name.split('.')[1];
+    const time = e.target.value;
+    console.log(type, day, index, time);
+    const current = [...this.state.form.open_hour[day]];
+    current[index] = {
+      ...current[index],
+      [type]: time
+    }
+    const newData = [...current];
+    this.updateOpenHourOfDay(day, newData)
+  }
+  updateOpenHourOfDay(day, data) {
+    this.setState({
+      ...this.state,
+      form: {
+        ...this.state.form,
+        open_hour: {
+          ...this.state.form.open_hour,
+          [day]: data
+        }
+      }
+    })
+    console.log('this.form.open_hour', this.state.form.open_hour)
+  }
+  renderOpenHourTimeSelector(mode) {
+    const list = [
+      [<option key='4.00' value={4.00}>4:00 (4:00 am)</option>,
+        <option key='4.30' value={4.30}>4:30 (4:30 am)</option>,
+        <option key='5.00' value={5.00}>5:00 (5:00 am)</option>,
+        <option key='5.30' value={5.30}>5:30 (5:30 am)</option>,
+        <option key='6.00' value={6.00}>6:00 (6:00 am)</option>,
+        <option key='6.30' value={6.30}>6:30 (6:30 am)</option>,
+        <option key='7.00' value={7.00}>7:00 (7:00 am)</option>,
+        <option key='7.30' value={7.30}>7:30 (7:30 am)</option>,
+        <option key='8.00' value={8.00}>8:00 (8:00 am)</option>,
+        <option key='8.30' value={8.30}>8:30 (8:30 am)</option>,
+        <option key='9.00' value={9.00}>9:00 (9:00 am)</option>,
+        <option key='9.30' value={9.30}>9:30 (9:30 am)</option>,
+        <option key='10.00' value={10.00}>10:00 (10:00 am)</option>,
+        <option key='10.30' value={10.30}>10:30 (10:30 am)</option>,
+        <option key='11.00' value={11.00}>11:00 (11:00 am)</option>,
+        <option key='11.30' value={11.30}>11:30 (11:30 am)</option>,
+        <option key='12.00' value={12.00}>12:00 (noon)</option>,
+        <option key='12.30' value={12.30}>12:30 (12:30 pm)</option>],
+      [<option key='13.00' value={13.00}>{`13:00 (${13-12}:00 pm)`}</option>,
+        <option key='13.30' value={13.30}>{`13:30 (${13-12}:30 pm)`}</option>,
+        <option key='14.00' value={14.00}>{`14:00 (${14-12}:00 pm)`}</option>,
+        <option key='14.30' value={14.30}>{`14:30 (${14-12}:30 pm)`}</option>,
+        <option key='15.00' value={15.00}>{`15:00 (${15-12}:00 pm)`}</option>,
+        <option key='15.30' value={15.30}>{`15:30 (${15-12}:30 pm)`}</option>,
+        <option key='16.00' value={16.00}>{`16:00 (${16-12}:00 pm)`}</option>,
+        <option key='16.30' value={16.30}>{`16:30 (${16-12}:30 pm)`}</option>,
+        <option key='17.00' value={17.00}>{`17:00 (${17-12}:00 pm)`}</option>,
+        <option key='17.30' value={17.30}>{`17:30 (${17-12}:30 pm)`}</option>,
+        <option key='18.00' value={18.00}>{`18:00 (${18-12}:00 pm)`}</option>,
+        <option key='18.30' value={18.30}>{`18:30 (${18-12}:30 pm)`}</option>,
+        <option key='19.00' value={19.00}>{`19:00 (${19-12}:00 pm)`}</option>,
+        <option key='19.30' value={19.30}>{`19:30 (${19-12}:30 pm)`}</option>,
+        <option key='20.00' value={20.00}>{`20:00 (${20-12}:00 pm)`}</option>,
+        <option key='20.30' value={20.30}>{`20:30 (${20-12}:30 pm)`}</option>,
+        <option key='21.00' value={21.00}>{`21:00 (${21-12}:00 pm)`}</option>,
+        <option key='21.30' value={21.30}>{`21:30 (${21-12}:30 pm)`}</option>,
+        <option key='22.00' value={22.00}>{`22:00 (${22-12}:00 pm)`}</option>,
+        <option key='22.30' value={22.30}>{`22:30 (${22-12}:30 pm)`}</option>,
+        <option key='23.00' value={23.00}>{`23:00 (${23-12}:00 pm)`}</option>,
+        <option key='23.30' value={23.30}>{`23:30 (${23-12}:30 pm)`}</option>,
+        <option key='24.00' value={24.00}>24:00 (midnight)</option>]
+    ];
+    if(mode=='from') {
+      return [<option key='none' value={0}>closed</option>, ...list[0], ...list[1]]
+    }else if(mode=='to'){
+      return [<option key='none' value={0}>closed</option>, ...list[1], ...list[0]]
+    }
+    return 
+  }
+  onOpenHourAddOneMoreInput(day) {
+    const current = [...this.state.form.open_hour[day]];
+    const newData = [...current, {...initDayOpenHour}];
+    this.updateOpenHourOfDay(day, newData)
+  }
+  onOpenHourRemoveCurrentInput(day, index) {
+    const current = [...this.state.form.open_hour[day]];
+    current.splice(index, 1);
+    const newData = [...current];
+    this.updateOpenHourOfDay(day, newData);
+  }
+  renderOpenHourActions(length, index, day) {
+    // return (
+    //   <div>
+    //     <div className='day-block plus' onClick={this.onOpenHourAddOneMoreInput.bind(this, day)}>
+    //       <i className="fas fa-plus"></i>
+    //     </div>
+    //     <div className='day-block cancel' onClick={this.onOpenHourRemoveCurrentInput.bind(this, day, index)}>
+    //       <i className="fas fa-times"></i>
+    //     </div>
+    //   </div>
+    // )
+    if(length===1){
+      return (<div className='day-block plus' onClick={this.onOpenHourAddOneMoreInput.bind(this, day)}>
+        <i className="fas fa-plus"></i>
+      </div>)
+    }else if(index+1===length){
+      return (<div className='day-block plus' onClick={this.onOpenHourAddOneMoreInput.bind(this, day)}>
+        <i className="fas fa-plus"></i>
+      </div>)
+    }else{
+      return (<div className='day-block cancel' onClick={this.onOpenHourRemoveCurrentInput.bind(this, day, index)}>
+        <i className="fas fa-times"></i>
+      </div>)
+    }
+  }
+  renderOpenHourWeek(d, form) {
+    const title = d;
+    const day = d.toLowerCase();
+    const dayData = form.open_hour[day];
+    return dayData.map((oneDayData, index)=>{
+      return (<tr key={`${day}.${index}`}>
+        <td>{index==0 && <div className='day-block day'>{title}</div>}</td>
+        <td>
+          <div className='day-block-input'>
+            <select className="form-control" value={form.open_hour[day][index].from} name={`${d}.${index}.from`} onChange={this.onOpenHourFormChange.bind(this)} placeholder="start">
+              {this.renderOpenHourTimeSelector('from')}
+            </select>
+            <div className='day-block'>to</div>
+            <select className="form-control" value={form.open_hour[day][index].to} name={`${d}.${index}.to`} onChange={this.onOpenHourFormChange.bind(this)} placeholder="to">
+              {this.renderOpenHourTimeSelector('to')}
+            </select>
+            {this.renderOpenHourActions(dayData.length, index, day)}
+          </div>
+        </td>
+      </tr>)
     })
   }
   renderModal(show) {
@@ -148,7 +370,7 @@ class Item extends React.Component {
             </div>
             <div className="form-group">
               <div className='session-title'>Name</div>
-              <input className="form-control" value={form.title} name="title" onChange={this.onFormChange.bind(this)} placeholder="Location name, store name...etc" />
+              <input required={true} className="form-control" value={form.title} name="title" onChange={this.onFormChange.bind(this)} placeholder="Location name, store name...etc" />
             </div>
             <div className="form-group">
               <div className='session-title'>Category</div>
@@ -161,9 +383,34 @@ class Item extends React.Component {
                 onChange={this.onCategoryChange.bind(this)}
                 options={[...this.state.initialCategory]} />
             </div>
+            {<div className="form-group">
+              <div className='session-title'>Open Hours</div>
+              <div className='open-hour'>
+                {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((d, i)=>{
+                  console.log('d', d)
+                  return (<div key={i} className='day-row'>
+                    <table style={{"width":"100%"}}>
+                      <tbody>
+                        {this.renderOpenHourWeek(d, form)}
+                      </tbody>
+                    </table>
+                  </div>)
+                })}
+              </div>
+            </div>}
+            {<div className="form-group">
+              <div className='session-title'>Order methods</div>
+              <input type='phone'className="form-control" value={form.order.phone} name="phone" onChange={this.onOrderFormChange.bind(this)} placeholder='Phone Number(Call to order)' />
+              <input type='url'className="form-control" value={form.order.doordash} name="doordash" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['doordash']} />
+              <input type='url'className="form-control" value={form.order.postmates} name="postmates" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['postmates']} />
+              <input type='url'className="form-control" value={form.order.grubhub} name="grubhub" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['grubhub']} />
+              <input type='url'className="form-control" value={form.order.UberEat} name="UberEat" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['ubereats']} />
+              <input type='url'className="form-control" value={form.order.yelp} name="yelp" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['yelp']} />
+              <input type='string'className="form-control" value={form.order.others} name="others" onChange={this.onOrderFormChange.bind(this)} placeholder={`${ORDER_MTHODS_COPY['others']} links`} />
+            </div>}
             <div className="modal-btn-group">
               <span className="cancel" onClick={this.cancelEditting.bind(this)}>Cancel</span>
-              <button type='submit' className="create">Create</button>
+              <button type='submit' className="create">Save</button>
             </div>
           </Modal.Body>
         </form>
@@ -171,7 +418,7 @@ class Item extends React.Component {
     )
   }
   render() {
-    return (<div className='item-view-compoenet'>
+    return (<div className='item-view-component'>
       {this.renderItemView(this.props.focusport)}
       {this.renderModal(this.state.editting)}
     </div>)
@@ -183,4 +430,4 @@ function mapStateToProps({item}) {
   return { focusport }
 }
 
-export default connect(mapStateToProps, { createItem })(Item);
+export default connect(mapStateToProps, { createItem, editItem })(Item);

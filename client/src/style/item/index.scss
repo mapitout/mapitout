@@ -1,4 +1,5 @@
-.item-view-compoenet {
+$red: rgb(213, 32, 32);
+.item-view-component {
   text-align: center;
   .item-empty {
     img {
@@ -28,13 +29,13 @@
   .item-info-container {
     .session {
       padding: 10px;
-      border-bottom: 0.1px solid rgb(198, 198, 198);
+      border-bottom: 0.1px solid rgb(222, 222, 222);
       &.action-container {
         display: flex;
         justify-content: space-around;
         .action {
           cursor: pointer;
-          width: 25%;
+          width: 33.3333%;
           text-align: center;
           padding: 5px;
           border-radius: 8px;
@@ -57,35 +58,16 @@
       }
 
       &.details-container {
+        text-align: left;
         & > div {
           padding: 5px 10px;
         }
         .title {
-          font-weight: 800;
-          font-size: 1.4rem;
-          input {
-            border-radius: 4px;
-            width: 100%;
-            padding-left: 8px;
-            outline: none;
-            border-width: 2px;
-            border-color: rgba(0, 0, 0, 0.3);
-            box-sizing: border-box;
-            &:focus, &:focus:hover{
-              border-color: rgba(darken($brand-color, 5%), 1)
-            }
-            &:hover{
-              border-color: rgba(black, 0.8);
-              background: white;
-            }
-            &:disabled {
-              padding-left: 0px;
-              color: black;
-              border-color: rgba(0, 0, 0, 0);
-            }
-          }
+          font-weight: 900;
+          font-size: 1.6rem;
         }
         .address {
+          font-weight: 700;
           .fade {
             opacity: 0.7;
           }
@@ -93,10 +75,12 @@
         .category {
           .item {
             display: inline-block;
-            background: rgb(214, 254, 238);
+            // background: rgba(33, 206, 153, 0.1);          
+            // color: $brand-color;
+            background: $brand-color;
+            color: white;
             padding: 2px 10px;
             border-radius: 8px;
-            color: $brand-color;
             font-weight: 600;
             font-size: 0.9rem;
             margin: 3px 3px;
@@ -105,6 +89,54 @@
         // .open-hour {
           
         // }
+        .order {
+          .order-method {
+            padding: 5px;
+            padding-bottom: 10px;
+            &.no-active {
+              opacity: 0.2;
+              .action {
+                background: rgb(235, 235, 235);
+                color: black;
+              }
+            }
+            .type {
+              display: inline-block;
+              font-weight: 600;
+            }
+            .action {
+              display: inline-block;
+              padding: 2px 15px;
+              border-radius: 100px;
+              font-weight: 900;
+              font-size: 1.05rem;
+              margin-right: 5px;
+              margin-left: 10px;
+              letter-spacing: 1px;
+              cursor: pointer;
+            }
+            .action {
+              display: inline-block;
+              font-weight: 600;
+            }
+            &.active {
+              .action {
+                background: rgba(33, 206, 153, 0.1);
+                color: $brand-color;
+              }
+              .action:hover{
+                // transform: scale(1.1);
+                font-weight: 900;
+              }
+              .action:active{
+                transform: scale(0.95);
+              }
+              div, a{
+                color: $brand-color;
+              }
+            }
+          }
+        }
         .menu {
           text-align: left;
           img {
@@ -113,7 +145,24 @@
           }
         }
         .session-title {
-          display: none;
+          font-weight: 900;
+          letter-spacing: 1px;
+          font-size: 0.9rem;
+          text-transform: uppercase;
+          margin: 10px 0px 10px;
+          color: rgb(205, 205, 205);
+          padding: auto 10px;
+          position: relative;
+          span {
+            display: inline-block;
+            background: rgb(210, 210, 210);
+            position: absolute;
+            top: 6px;
+            right: 0;
+            left: -25px;
+            height: 5px;
+            width: 20px;
+          }
         }
       }
     }
@@ -128,22 +177,89 @@
     letter-spacing: 1px;
     font-size: 0.9rem;
     text-transform: uppercase;
-    margin-bottom: 10px;
+    margin: 20px 0px 10px;
+    padding: auto 10px;
   }
-
-  input.form-control{
-    padding: 10px;
+  .form-group{
+    .open-hour{
+      .day-row {
+        width: 100%;
+        div.day-block, input.form-control, select.form-control {
+          border-radius: 0px;
+          height: 50px;
+        }
+        .day-block-input {
+          display: flex;
+        }
+        select.form-control {
+          border-radius: 0px !important;
+        }
+        .day-block, select.form-control {
+          font-size: 1rem;
+          padding: 11px;
+          background-color: rgb(245, 245, 245);
+          margin: 2px;
+          text-align: center;
+          border: 4px solid rgb(245, 245, 245);
+          &.plus {
+            cursor: pointer;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+            &:hover{
+              color: white;
+              background-color: $brand-color;
+              border-color: $brand-color;
+            }
+            &:active{
+              transform: scale(0.95);
+              border-color: darken($color: $brand-color, $amount: 5%);
+              background-color: darken($color: $brand-color, $amount: 5%);
+            }
+          }
+          &.cancel {
+            cursor: pointer;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+            &:hover{
+              color: white;
+              background-color: $red;
+              border-color: $red;
+            }
+            &:active{
+              transform: scale(0.95);
+              border-color: darken($red, 5%);
+              background-color: darken($red, 5%);
+            }
+          }
+          &.day {
+            text-align: left;
+            width: 130px;
+            border-bottom-left-radius: 8px;
+            border-top-left-radius: 8px;
+          }
+        }
+      }
+    }
   }
   .basic-multi-select .css-yk16xz-control {
     padding: 6px;
   }
   input.form-control, .basic-multi-select .css-yk16xz-control {
     font-size: 1.2rem;
-    border-radius: 0px;
-    background: rgb(245, 245, 245);
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background-color: rgb(245, 245, 245);
+    margin: 5px auto;
     text-align: center;
-    &:focus{
-      background: white;
+    border: 2px solid rgb(245, 245, 245);
+    &:focus {
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    &:focus, &:hover{
+      background-color: rgb(250, 250, 250);
+      border: 2px solid rgba($brand-color, 1);
     }
   }
   .css-1rhbuit-multiValue {
@@ -171,15 +287,19 @@
   .prompt-block {
     display: block;
     margin: auto;
+    text-align: center;
+    padding-bottom: 20px;
+    .session-title {
+      text-align: center;
+    }
     .address-prefill {
       font-family: 'PT Serif', serif;
-      text-align: center;
       font-weight: 800;
       border: none;
-      width: 50%;
+      width: 70%;
       margin: 10px auto;
       display: block;
-      font-size: 1.3rem;
+      font-size: 1.6rem;
     }
     img {
       width: 120px;
@@ -189,15 +309,25 @@
   .category__control--menu-is-open {
     border-color: $brand-color;
     box-shadow: 0 0 0 1px $brand-color;
-    border-radius: 0px;
+    border-radius: 8px;
+  }
+  .category__control.category__control--is-focused.css-1pahdxg-control, .category__control.category__control--is-focused.category__control--menu-is-open.css-1pahdxg-control {
+    border-color: $brand-color;
+    box-shadow: 0 0 0 1px $brand-color;
+    border-radius: 8px;
+    padding: 6px;
   }
   .css-1pahdxq-control, .css-1pahdxq-control:hover{
-    border-radius: 0px;
+    border-radius: 8px;
     border-color: $brand-color;
     box-shadow: 0 0 0 1px $brand-color;
   }
   .modal-body {
     padding: 0px;
+  }
+  .modal-content {
+    border: none;
+    padding: 15px;
   }
 
   .modal-btn-group {
@@ -205,17 +335,21 @@
     display: flexbox;
     margin-top: 50px;
     button, span {
+      justify-content: space-around;
       display: inline-block;
       width: 50%;
       cursor: pointer;
       padding: 15px;
+      border: none;
       &.cancel{
+        border-bottom-left-radius: .3rem;
         background-color: rgb(245, 245, 245);
         &:hover{
           background-color: rgb(235, 235, 235);
         }
       }
       &.create{
+        border-bottom-right-radius: .3rem;
         background-color: $brand-color;
         color: white;
         font-weight: 700;
