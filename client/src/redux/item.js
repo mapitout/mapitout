@@ -147,6 +147,11 @@ const INITIAL_ITEM_STATE = {
     lastUpdatedAt: 1586472072895
   },
   {
+    group: 'menu',
+    src: 'https://i.imgur.com/TtWH0Ij.png',
+    lastUpdatedAt: 1586472073895
+  },
+  {
     group: 'food',
     src: 'https://i.imgur.com/sxP36mb.jpg',
     lastUpdatedAt: 1586472052895

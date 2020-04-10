@@ -22,6 +22,7 @@ const initDayOpenHour = {
   from: 0,
   to: 0
 }
+
 class Item extends React.Component {
   constructor(props) {
     super(props);
@@ -29,6 +30,9 @@ class Item extends React.Component {
       editting: false,
       edittingImages: false,
       imageDraggingClass: '',
+      modal: {
+        event: 'menu'
+      },
       form: {
         title: '',
         category: [],
@@ -56,6 +60,16 @@ class Item extends React.Component {
           lastUpdatedAt: 1586472072895
         },
         {
+          group: 'menu',
+          src: 'https://i.imgur.com/TtWH0Ij.png',
+          lastUpdatedAt: 1586472023895
+        },
+        {
+          group: 'menu',
+          src: 'https://i.imgur.com/TtWH0Ij.png',
+          lastUpdatedAt: 1586472073893
+        },
+        {
           group: 'food',
           src: 'https://i.imgur.com/sxP36mb.jpg',
           lastUpdatedAt: 1586472052895
@@ -79,8 +93,7 @@ class Item extends React.Component {
           group: 'menu',
           src: 'https://i.imgur.com/nxuFFjK.png',
           lastUpdatedAt: 1586472072895
-        },
-        ],
+        }],
         activeInput: ''
       },
       initialCategory: []
@@ -222,7 +235,7 @@ class Item extends React.Component {
             </table>
           </div>
           <div className='session-item images'>
-            <div className='session-title'><span/>Images</div>
+            {this.renderCurrentImages(this.state.form.images)}
             <div className='bottom-action'>
               <button className='upload-btn' onClick={this.activeImageUploading.bind(this)}>Add a photo</button>
             </div>
@@ -479,14 +492,36 @@ class Item extends React.Component {
     this.setState({imageDraggingClass: type})
   }
   getAllImages(imgs) {
-    console.log('hi')
-    for(let img of imgs) {
-      console.log(img);
+    const dict = {};
+    for(let img in imgs) {
+      img = imgs[img]
+      const g = img.group;
+      if(!dict[g]){
+        dict[g] = []
+      }
+      dict[g].push(img)
     }
+    return dict;
   }
   renderCurrentImages(imgs) {
-    console.log('hi 2')
     const images = this.getAllImages(imgs);
+    const keys = Object.keys(images);
+    return keys.map(group => {
+      const groupImages = images[group];
+      return (<div key={group}>
+        <div className='session-title'><span/>{group} Photos</div>
+        <div className='img-container'>
+          {groupImages.length < 0 && groupImages.map(img=>{
+            return (<div className='img-frame' key={img.lastUpdatedAt}>
+              <img className='img' src={img.src} />
+            </div>)
+          })||<div className='img-frame holder'>
+            <i className="fas fa-cloud-upload-alt"></i>
+            Upload {group} Photos
+          </div>}
+        </div>
+      </div>)
+    })
   }
   renderImageUploadingModal(show) {
     return (
@@ -495,10 +530,10 @@ class Item extends React.Component {
           <Modal.Title>Upload public photos of {this.state.form.title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div>
-            {this.renderCurrentImages.bind(this.state.form.images)}
-          </div>
-          <div className='image-dropping-container'>
+          {/* <div>
+            {this.renderCurrentImages(this.state.form.images)}
+          </div> */}
+          {/* <div className='image-dropping-container'>
             <Dropzone
               onDragEnter={this.onDragEnter.bind(this, 'draggingOverEntering')}
               onDragLeave={this.onDragLeave.bind(this, 'draggingOverLeaving')}
@@ -510,7 +545,7 @@ class Item extends React.Component {
               <div className='drag-subtitle'>Or, if you prefer...</div>
               <div className='upload-btn'>Choose photos to upload</div>
             </Dropzone>
-          </div>
+          </div> */}
         </Modal.Body>
       </Modal>
     )
