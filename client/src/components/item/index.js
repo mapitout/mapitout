@@ -178,7 +178,7 @@ class Item extends React.Component {
         {open_hour[k].map(({ from, to }, i) => {
           const isNone = (from === 0 && to === 0);
           return (<tr className={`${isToday}`} key={`${k}-${i}-${from}-${to}`}>
-            <td className='hour-title'>{i == 0 && <span>{k}</span>}{isToday && <span> (Today)</span>}</td>
+            <td className='hour-title'>{i == 0 && <span>{k}<span>{isToday && <span> (Today)</span>}</span></span>}</td>
             {!isNone && <td>
               <div className={`hour-td-finish-${length - 1 === i}`}>{`${this.convertDecimalToTime(from)} - ${this.convertDecimalToTime(to)}`}</div>
             </td>}

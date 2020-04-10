@@ -39,7 +39,8 @@ export default {
     const item = req.body.details;
     try {
       const createdItem = await Item.create(item);
-      return res.json({ "message": "Pin is created successfully", createdItem })
+      const findItem = await Item.findById(createdItem._id).populate('category')
+      return res.json({ "message": "Pin is created successfully", createdItem: findItem })
     } catch (err) {
       if (err.code === 11000) {
         return next(`500:item title must be uniqued.`)
