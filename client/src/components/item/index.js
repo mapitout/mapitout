@@ -9,7 +9,6 @@ import { Toast } from 'react-bootstrap';
 
 import { createItem, editItem, uploadImagesToItem } from '../../actions';
 import request from '../../redux/request';
-import { getFormInitialValues } from 'redux-form';
 
 const ORDER_MTHODS_COPY = {
   phone: 'Call to order',
