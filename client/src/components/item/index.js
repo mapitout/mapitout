@@ -459,9 +459,7 @@ class Item extends React.Component {
   }
   onImageUploadingDrop(acceptedFiles, rejectedFiles) {
     const group = this.state.modal.group;
-    console.log('group')
-    console.log(group)
-    // this.props.uploadImagesToItem(acceptedFiles, this.props.focusport._id, group);
+    this.props.uploadImagesToItem(acceptedFiles, this.props.focusport._id, group);
   }
   onDragEnter(type) {
     this.setState({ imageDraggingClass: type })
