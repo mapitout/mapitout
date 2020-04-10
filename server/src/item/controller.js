@@ -187,6 +187,8 @@ export default {
     }
   },
   uploadImage: (req, res, next) => {
+    const S3_REGION = 'us-west-2';
+    const S3_ROOT_BUCKET = 'mapitout-image-2';
     const file = req.file;
     const {itemId, group, lastUpdatedAt} = req.query;
     console.log('file', file);
@@ -194,31 +196,28 @@ export default {
     let filenameParts = file.originalname.split('.');
     let ext;
     if (filenameParts.length > 1) {
-      ext = "." + filenameParts[1]
+      ext = "." + filenameParts[filenameParts.length -1]
     } else {
       ext = " ";
     }
     const AWS_KEY_ID = config.aws.s3.accessKeyId;
     const AWS_SECRET = config.aws.s3.secretKey;
-    console.log('AWS_KEY_ID',AWS_KEY_ID);
-    console.log('AWS_SECRET', AWS_SECRET);
     AWS.config.update({
       accessKeyId: AWS_KEY_ID,
       secretAccessKey: AWS_SECRET,
-      subregion: 'us-west-2'
+      subregion: S3_REGION
     })
     const uuidKey = `${config.environment}/item/${itemId}/${group}/${uuid()}${ext}`;
     const s3 = new AWS.S3();
     s3.putObject({
-      Bucket: 'mapitout-image',
+      Bucket: S3_ROOT_BUCKET,
       Key: uuidKey,
       Body: file.buffer,
       ACL: 'public-read'
     }, async(err, result) => {
       if (err) return next('500: Uploading Photo Failed');
       
-      const imageURL = `https://mapitout-image.s3-us-west-2.amazonaws.com/${uuidKey}`
-      console.log('imageURL',imageURL);
+      const imageURL = `https://${S3_ROOT_BUCKET}.s3-${S3_REGION}.amazonaws.com/${uuidKey}`
       const imgToSave = {
         group,
         lastUpdatedAt,
@@ -227,10 +226,16 @@ export default {
       try {
         const findItem = await Item.findById(itemId);
         findItem.images.push(imgToSave);
-        findItem.save();
-        return res.status(200).json({"url":imageURL});
+        try {
+          const findItemAgain = await findItem.save();
+          const imgs = findItemAgain.images;
+          const result = imgs[imgs.length -1];
+          return res.send(result);          
+        }catch(err) {
+          return next('500:Failed to save item.');
+        }
       } catch(err) {
-        return console.log(err)
+        return next('500:Failed to upload images.');
       }
     })
   }

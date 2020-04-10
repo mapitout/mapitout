@@ -92,19 +92,14 @@ export function uploadImagesToItem(file, itemId, group) {
     group,
     lastUpdatedAt: Date.now()
   }
-  console.log('body', {...body, file});
   return function (dispatch) {
     superagent
       .post(`${baseURL}/publicApi/item/image?${qs.stringify(body)}`)
       .attach('mapitout_item_image', file[0])
       .end((err, res) => {
         if (err) return console.log(err);
-        const imageURL = res.body.url;
-        console.log(res.body)
-        console.log(imageURL);
-        
-        // console.log(images)
-        // dispatch({ type: UPLOAD_IMAGES_TO_ITEM, payload: images })
+        const image = res.body;
+        dispatch({ type: UPLOAD_IMAGES_TO_ITEM, payload: image })
       })
   }
 }
@@ -141,41 +136,7 @@ const INITIAL_ITEM_STATE = {
     saturday: [{...initDayOpenHour}],
     sunday: [{...initDayOpenHour}],
   },
-  images: [{
-    group: 'menu',
-    src: 'https://i.imgur.com/TtWH0Ij.png',
-    lastUpdatedAt: 1586472072895
-  },
-  {
-    group: 'menu',
-    src: 'https://i.imgur.com/TtWH0Ij.png',
-    lastUpdatedAt: 1586472073895
-  },
-  {
-    group: 'food',
-    src: 'https://i.imgur.com/sxP36mb.jpg',
-    lastUpdatedAt: 1586472052895
-  },
-  {
-    group: 'menu',
-    src: 'https://i.imgur.com/TtWH0Ij.png',
-    lastUpdatedAt: 1586472032895
-  },
-  {
-    group: 'food',
-    src: 'https://i.imgur.com/toS1LUm.jpg',
-    lastUpdatedAt: 1586472012895
-  },
-  {
-    group: 'food',
-    src: 'https://i.imgur.com/xA2SP0c.jpg',
-    lastUpdatedAt: 1586472002895
-  },
-  {
-    group: 'menu',
-    src: 'https://i.imgur.com/nxuFFjK.png',
-    lastUpdatedAt: 1586472072895
-  }],
+  images: [],
 }
 
 let INITIAL_STATE = {
@@ -199,7 +160,7 @@ export function itemReducer(state=INITIAL_STATE, action) {
         ...state.focusport,
         details: {
           ...state.focusport.details,
-          images: action.payload
+          images: [...state.forcusport.images, action.payload]
         }
       }
     }

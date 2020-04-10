@@ -4,6 +4,7 @@ import MultipleSelect from 'react-select';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
+import ImageSlider from './imageSlider';
 
 import { createItem, editItem, uploadImagesToItem } from '../../actions';
 import request from '../../redux/request';
@@ -54,46 +55,7 @@ class Item extends React.Component {
           saturday: [{...initDayOpenHour}],
           sunday: [{...initDayOpenHour}],
         },
-        images: [{
-          group: 'menu',
-          src: 'https://i.imgur.com/TtWH0Ij.png',
-          lastUpdatedAt: 1586472072895
-        },
-        {
-          group: 'menu',
-          src: 'https://i.imgur.com/TtWH0Ij.png',
-          lastUpdatedAt: 1586472023895
-        },
-        {
-          group: 'menu',
-          src: 'https://i.imgur.com/TtWH0Ij.png',
-          lastUpdatedAt: 1586472073893
-        },
-        {
-          group: 'food',
-          src: 'https://i.imgur.com/sxP36mb.jpg',
-          lastUpdatedAt: 1586472052895
-        },
-        {
-          group: 'menu',
-          src: 'https://i.imgur.com/TtWH0Ij.png',
-          lastUpdatedAt: 1586472032895
-        },
-        {
-          group: 'food',
-          src: 'https://i.imgur.com/toS1LUm.jpg',
-          lastUpdatedAt: 1586472012895
-        },
-        {
-          group: 'food',
-          src: 'https://i.imgur.com/xA2SP0c.jpg',
-          lastUpdatedAt: 1586472002895
-        },
-        {
-          group: 'menu',
-          src: 'https://i.imgur.com/nxuFFjK.png',
-          lastUpdatedAt: 1586472072895
-        }],
+        images: [],
         activeInput: ''
       },
       initialCategory: []
@@ -117,7 +79,6 @@ class Item extends React.Component {
     let form = {
       ...this.state.form,
       order: { ...this.state.form.order },
-      images: { ...this.state.form.images },
       address: this.props.focusport.details.address,
       location: {
         ...this.props.focusport.details.location
@@ -127,11 +88,10 @@ class Item extends React.Component {
       form = {
         order: { ...this.state.form.order },
         images: { ...this.state.form.images },
-        ...this.props.focusport.details
+        ...this.props.focusport.details,
       }
       form.category = this.props.focusport.details.category.map(c=>({value: c._id, label: c.title}))
     }
-    console.log('passingPropsToFormState', form)
     return form;
   }
   activateEditting(activeInput) {
@@ -209,7 +169,7 @@ class Item extends React.Component {
       </tbody>
     })
   }
-  activeImageUploading() {
+  activateImageUploading() {
     const form = this.passingPropsToFormState();
     this.setState({ ...this.state, edittingImages: true, form });
   }
@@ -235,10 +195,7 @@ class Item extends React.Component {
             </table>
           </div>
           <div className='session-item images'>
-            {this.renderCurrentImages(this.state.form.images)}
-            <div className='bottom-action'>
-              <button className='upload-btn' onClick={this.activeImageUploading.bind(this)}>Add a photo</button>
-            </div>
+            {this.renderCurrentImages(item.details.images)}
           </div>
           <div className='session-item order'>
             <div className='session-title'><span/>Order Methods</div>
@@ -423,7 +380,7 @@ class Item extends React.Component {
     return (
       <Modal className='create-editting-item-modal' show={show} onHide={this.cancelEditting.bind(this)}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit details of {this.state.form.title}</Modal.Title>
+          <Modal.Title>Edit details of {this.props.focusport.details.title}</Modal.Title>
         </Modal.Header>
         <form onSubmit={this.onFormSubmit.bind(this)}>
           <Modal.Body>
@@ -483,10 +440,7 @@ class Item extends React.Component {
     )
   }
   onImageUploadingDrop(acceptedFiles, rejectedFiles) {
-    this.props.uploadImagesToItem(acceptedFiles, this.state.form._id, 'menu');
-    // acceptedFiles.forEach(file => {
-    //   this.props.uploadImagesToItem(file, this.state.form._id, 'menu');
-    // });
+    this.props.uploadImagesToItem(acceptedFiles, this.props.focusport._id, 'menu');
   }
   onDragEnter(type) {
     this.setState({imageDraggingClass: type})
@@ -495,7 +449,10 @@ class Item extends React.Component {
     this.setState({imageDraggingClass: type})
   }
   getAllImages(imgs) {
-    const dict = {};
+    const dict = {
+      menu: [],
+      food: []
+    }
     for(let img in imgs) {
       img = imgs[img]
       const g = img.group;
@@ -514,11 +471,11 @@ class Item extends React.Component {
       return (<div key={group}>
         <div className='session-title'><span/>{group} Photos</div>
         <div className='img-container'>
-          {groupImages.length < 0 && groupImages.map(img=>{
-            return (<div className='img-frame' key={img.lastUpdatedAt}>
+          {groupImages.length > 0 && groupImages.map(img=>{
+            return (<div onClick={this.activateImageUploading.bind(this)} className='img-frame' key={img.lastUpdatedAt}>
               <img className='img' src={img.src} />
             </div>)
-          })||<div className='img-frame holder'>
+          })||<div onClick={this.activateImageUploading.bind(this)} className='img-frame holder'>
             <i className="fas fa-cloud-upload-alt"></i>
             Upload {group} Photos
           </div>}
@@ -530,13 +487,13 @@ class Item extends React.Component {
     return (
       <Modal className='image-uploading-modal' show={show} onHide={()=>this.setState({ ...this.state, edittingImages: false })}>
         <Modal.Header closeButton>
-          <Modal.Title>Upload public photos of {this.state.form.title}</Modal.Title>
+          <Modal.Title>Upload public photos of {this.props.focusport.details.title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {/* <div>
-            {this.renderCurrentImages(this.state.form.images)}
-          </div> */}
-          {/* <div className='image-dropping-container'>
+          <div>
+            <ImageSlider data={this.props.focusport.details.images} />
+          </div>
+          <div className='image-dropping-container'>
             <Dropzone
               onDragEnter={this.onDragEnter.bind(this, 'draggingOverEntering')}
               onDragLeave={this.onDragLeave.bind(this, 'draggingOverLeaving')}
@@ -548,7 +505,7 @@ class Item extends React.Component {
               <div className='drag-subtitle'>Or, if you prefer...</div>
               <div className='upload-btn'>Choose photos to upload</div>
             </Dropzone>
-          </div> */}
+          </div>
         </Modal.Body>
       </Modal>
     )
