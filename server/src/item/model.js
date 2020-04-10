@@ -1,6 +1,15 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
+const imageSchema = new mongoose.Schema({
+  group: String,
+  src: String,
+  lastUpdatedAt: Number,
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }
+})
 const openClose = new mongoose.Schema({
   from: {
     type: Number
@@ -76,6 +85,7 @@ const itemSchema = new mongoose.Schema({
       required: true
     }
   },
+  images:[imageSchema],
   category: [{
     type: Schema.Types.ObjectId,
     ref: 'Category'

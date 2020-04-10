@@ -167,6 +167,18 @@
 }
 ```
 
+### POST - image
+- route: /publicApi/item/image?itemId=ITEM_ID&group=menu&lastUpdatedAt=TIMEINMILLISEC
+
+- sample response: new upload img url
+```
+{
+    "url": "https://mapitout-image.s3-us-west-2.amazonaws.com/…t/item/5e8eac70d7e550a16e9081e3/menu/e0c2716f.png"}url: "https://mapitout-image.s3-us-west-2.amazonaws.com/development/item/5e8eac70d7e550a16e9081e3/menu/e0c2716f.png"
+
+}
+```
+
+
 ### PUT
 - route: /publicApi/item/edit/:id
 - sample request body: *if any order or category has been modified, they have to be sent in full(include the original), other can be sent just the new update.
@@ -442,3 +454,5 @@ response:(array of objects)
     }
 ]
 ```
+
+
