@@ -6,7 +6,7 @@ import qs from 'qs';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 
-import { changeFocusport } from '../../actions';
+import { changeFocusport, resetFocusport } from '../../actions';
 import Item from '../item';
 import request from '../../redux/request';
 
@@ -145,6 +145,13 @@ class Index extends React.Component {
         </Marker>
       ))}</div>)
   }
+  onGeocoderClear() {
+    this.setState({ ...this.state, focused: false });
+    this.props.resetFocusport({
+      ...this.props.focusport,
+    })
+    this.updateURL('')
+  }
   render() {
     const { focused, viewport } = this.state;
     const { focusport } = this.props;
@@ -165,6 +172,7 @@ class Index extends React.Component {
             mapStyle={MAP_STYLE.MAPITOUT_LIGHT}
           >
             <Geocoder
+              onClear={this.onGeocoderClear.bind(this)}
               onLoading={this.onGeocoderLoading.bind(this)}
               onViewportChange={this.onGeocoderViewpointChange.bind(this)}
               onResult={this.onGeocoderSelected.bind(this)}
@@ -230,4 +238,4 @@ function mapStateToProps({item}) {
   return { focusport };
 }
 
-export default connect(mapStateToProps, { changeFocusport })(Index);
+export default connect(mapStateToProps, { changeFocusport, resetFocusport })(Index);

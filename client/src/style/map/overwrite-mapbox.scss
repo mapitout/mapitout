@@ -8,6 +8,7 @@
   background-color: rgba(0, 0, 0, 0);
 }
 .map-view-conatiner {
+  z-index: 95;
   width: calc(100% - #{$drawer-width});
   height: 100vh;
   margin: 0px;
@@ -19,7 +20,7 @@
   @media (max-width: 672px) {
     width: calc(100%);
     margin-top: $navbar-sm-height;
-    height: 40vh;
+    height: 85vh;
   }
   .mapboxgl-ctrl-group:not(:empty) {
     box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 20px, rgba(0, 0, 0, 0.01) 0px 0px 0px 1px;
