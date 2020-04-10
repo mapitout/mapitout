@@ -142,7 +142,7 @@ export default {
       console.log(err, avatarURL, AWS_KEY_ID, AWS_SECRET)
       if (err) return next('500:Uploading Photo Failed');
       User.findByIdAndUpdate(userId, { $set:{avatar: avatarURL} }, { new: true })
-        .then(_ => res.sendStatus(200))
+        .then(res=> res.sendStatus(200))
         .catch(next)
     })
   }

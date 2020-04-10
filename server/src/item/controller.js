@@ -1,7 +1,7 @@
 import Item from './model';
 import AWS from 'aws-sdk';
 import config from '../config';
-import uuid from '../user/uuid'
+import uuid from '../user/uuid';
 
 export default {
   show: async (req, res, next) => {
@@ -214,15 +214,24 @@ export default {
       Key: uuidKey,
       Body: file.buffer,
       ACL: 'public-read'
-    }, (err, result) => {
+    }, async(err, result) => {
+      if (err) return next('500: Uploading Photo Failed');
+      
       const imageURL = `https://mapitout-image.s3-us-west-2.amazonaws.com/${uuidKey}`
       console.log('imageURL',imageURL);
-      if (err) return next('500: Uploading Photo Failed');
-      return res.status(200).json({'url':imageURL})
+      const imgToSave = {
+        group,
+        lastUpdatedAt,
+        src: imageURL
+      }
+      try {
+        const findItem = await Item.findById(itemId);
+        findItem.images.push(imgToSave);
+        findItem.save();
+        return res.status(200).json({"url":imageURL});
+      } catch(err) {
+        return console.log(err)
+      }
     })
-
-
-    
-    // return res.status(200).json({'message':'you hit the image upload'})
   }
 }
