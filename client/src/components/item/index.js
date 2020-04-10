@@ -25,6 +25,31 @@ const initDayOpenHour = {
   to: 0
 }
 
+const INITIAL_FORM = {
+  title: '',
+  category: [],
+  order: {
+    phone: '',
+    doordash: '',
+    postmates: '',
+    grubhub: '',
+    ubereats: '',
+    yelp: '',
+    others: '',
+  },
+  open_hour: {
+    monday: [{ ...initDayOpenHour }],
+    tuesday: [{ ...initDayOpenHour }],
+    wednesday: [{ ...initDayOpenHour }],
+    thursday: [{ ...initDayOpenHour }],
+    friday: [{ ...initDayOpenHour }],
+    saturday: [{ ...initDayOpenHour }],
+    sunday: [{ ...initDayOpenHour }],
+  },
+  images: [],
+  activeInput: ''
+}
+
 class Item extends React.Component {
   constructor(props) {
     super(props);
@@ -37,35 +62,11 @@ class Item extends React.Component {
         group: '',
         imageActiveIndex: ''
       },
-      form: {
-        title: '',
-        category: [],
-        order: {
-          phone: '',
-          doordash: '',
-          postmates: '',
-          grubhub: '',
-          ubereats: '',
-          yelp: '',
-          others: '',
-        },
-        open_hour: {
-          monday: [{ ...initDayOpenHour }],
-          tuesday: [{ ...initDayOpenHour }],
-          wednesday: [{ ...initDayOpenHour }],
-          thursday: [{ ...initDayOpenHour }],
-          friday: [{ ...initDayOpenHour }],
-          saturday: [{ ...initDayOpenHour }],
-          sunday: [{ ...initDayOpenHour }],
-        },
-        images: [],
-        activeInput: ''
-      },
+      form: { ...INITIAL_FORM },
       initialCategory: []
     }
   }
   componentDidMount() {
-    
     request.get('/publicApi/category/all')
       .then(r => {
         this.setState({
@@ -77,7 +78,7 @@ class Item extends React.Component {
   }
   passingPropsToFormState() {
     let form = {
-      ...this.state.form,
+      ...INITIAL_FORM,
       order: { ...this.state.form.order },
       address: this.props.focusport.details.address,
       location: {
@@ -86,15 +87,15 @@ class Item extends React.Component {
     }
     if (this.props.focusport._id) {
       form = {
+        ...this.props.focusport.details,
         order: { ...this.state.form.order },
         images: { ...this.state.form.images },
-        ...this.props.focusport.details,
       }
       form.category = this.props.focusport.details.category.map(c => ({ value: c._id, label: c.title }))
     }
     return form;
   }
-  activateEditting(activeInput) {
+  activateEditting() {
     const form = this.passingPropsToFormState();
     this.setState({ ...this.state, editting: true, form })
   }
@@ -150,10 +151,10 @@ class Item extends React.Component {
         <div className='icon'>E</div>
         <div className='title'>Edit</div>
       </div>
-      <div className='action'>
+      {/* <div className='action'>
         <div className='icon'>M</div>
         <div className='title'>Menus</div>
-      </div>
+      </div> */}
       <div className='action' id="holder" onClick={this.copyURL.bind(this)}>
         <div className='icon'>S</div>
         <div className='title'>Share</div>
@@ -177,7 +178,7 @@ class Item extends React.Component {
         {open_hour[k].map(({ from, to }, i) => {
           const isNone = (from === 0 && to === 0);
           return (<tr className={`${isToday}`} key={`${k}-${i}-${from}-${to}`}>
-            <td className='hour-title'>{i == 0 && <span>{k}</span>}{isToday && <span> (Today)</span>}</td>
+            <td className='hour-title'>{i == 0 && <span>{k}<span>{isToday && <span> (Today)</span>}</span></span>}</td>
             {!isNone && <td>
               <div className={`hour-td-finish-${length - 1 === i}`}>{`${this.convertDecimalToTime(from)} - ${this.convertDecimalToTime(to)}`}</div>
             </td>}
@@ -192,6 +193,7 @@ class Item extends React.Component {
     this.setState({ ...this.state, edittingImages: true, modal: { group, imageActiveIndex }, form });
   }
   renderItemView(item) {
+    if(item.input=='')return <div></div>;
     return (<div>
       {item._id && <div className='item-info-container'>
         {this.renderActionsContainer()}
@@ -398,7 +400,7 @@ class Item extends React.Component {
     return (
       <Modal className='create-editting-item-modal' show={show} onHide={this.cancelEditting.bind(this)}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit details of {this.props.focusport.details.title}</Modal.Title>
+          <Modal.Title>Edit details</Modal.Title>
         </Modal.Header>
         <form onSubmit={this.onFormSubmit.bind(this)}>
           <Modal.Body>
@@ -535,7 +537,7 @@ class Item extends React.Component {
         {this.renderItemView(this.props.focusport)}
         {this.renderModal(this.state.editting)}
         {this.renderImageUploadingModal(this.state.edittingImages)}
-        <div aria-live="polite"
+        {this.state.show && <div aria-live="polite"
           aria-atomic="true" className="toast-container">
           <Toast className="toast" onClose={() => this.setState({ show: false })} show={this.state.show} delay={3000} autohide>
             <Toast.Header>
@@ -550,7 +552,7 @@ class Item extends React.Component {
               <div className="toast-content">URL is copied to your clipboard!</div>
             </Toast.Body>
           </Toast>
-        </div>
+        </div>}
       </div>
     )
   }

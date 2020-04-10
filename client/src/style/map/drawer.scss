@@ -41,7 +41,7 @@
     z-index: 99;
     @media (max-width: 672px) {
       width: 100vw;
-      margin-top: 30vh;
+      margin-top: 80vh;
       border-radius: 8px;
       padding-top: 12px;
     }
@@ -51,6 +51,10 @@
       background: white;
       display: inline-block;
       width: 100%;
+      @media (max-width: 672px) {
+        overflow-y: visible;
+        height: auto;
+      }
     }
   }
   .mapboxgl-ctrl-geocoder.mapboxgl-ctrl {

@@ -43,7 +43,6 @@ $red: rgb(213, 32, 32);
       background:white;
       padding: 1rem;
       z-index: 90;
-      
     }
   }
   .map-it-out{
@@ -69,7 +68,7 @@ $red: rgb(213, 32, 32);
         justify-content: space-around;
         .action {
           cursor: pointer;
-          width: 33.3333%;
+          width: 50%;
           text-align: center;
           padding: 5px;
           border-radius: 8px;
@@ -371,6 +370,11 @@ $red: rgb(213, 32, 32);
             width: 130px;
             border-bottom-left-radius: 8px;
             border-top-left-radius: 8px;
+            @media (max-width: 672px) {
+              width: 70px;
+              font-size: 0.8rem;
+              padding: 11px 2px;
+            }
           }
         }
       }

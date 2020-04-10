@@ -4,6 +4,8 @@ import superagent from 'superagent';
 
 const UPDATE_FOCUSPORT = 'UPDATE_FOCUSPORT';
 const UPLOAD_IMAGES_TO_ITEM = 'UPLOAD_IMAGES_TO_ITEM';
+const NOT_FOUND_404_FOCUSPORT = 'NOT_FOUND_404_FOCUSPORT';
+const RESET_FOCUSPORT = 'RESET_FOCUSPORT';
 const baseURL = process.env.SERVERURI || 'http://localhost:8000';
 
 export function changeFocusport(focusport) {
@@ -30,17 +32,18 @@ export function changeFocusport(focusport) {
       .catch((e)=>{
         if(e.response && e.response.status===404){
           // if it's 404 not found, use input as item.details.address
-          console.log('404 focusport', focusport);
           const payload = {
-            details: focusport.details,
+            input: focusport.input,
             longitude: focusport.longitude,
             latitude: focusport.latitude,
-            input: focusport.input
+            details: {
+              ...INITIAL_ITEM_STATE
+            },
           };
           payload.details.address = focusport.input;
           payload.details.location.coordinates[0] = focusport.longitude;
           payload.details.location.coordinates[1] = focusport.latitude;
-          dispatch({ type: UPDATE_FOCUSPORT, payload })
+          dispatch({ type: NOT_FOUND_404_FOCUSPORT, payload })
         }else{
           console.error(e);
         }
@@ -103,6 +106,11 @@ export function uploadImagesToItem(file, itemId, group) {
       })
   }
 }
+export function resetFocusport() {
+  return function (dispatch) {
+    dispatch({ type: RESET_FOCUSPORT })
+  }
+}
 const initDayOpenHour = {
   from: 0,
   to: 0
@@ -152,8 +160,12 @@ let INITIAL_STATE = {
 
 export function itemReducer(state=INITIAL_STATE, action) {
   switch (action.type) {
+  case RESET_FOCUSPORT:
+    return { ...INITIAL_STATE }
   case UPDATE_FOCUSPORT:
     return { ...state, focusport: action.payload }
+  case NOT_FOUND_404_FOCUSPORT:
+    return { focusport: action.payload }
   case UPLOAD_IMAGES_TO_ITEM:
     return { ...state,
       focusport: {
