@@ -187,9 +187,9 @@ class Item extends React.Component {
       </tbody>
     })
   }
-  activateImageSlider(id, group, t) {
+  activateImageSlider(imageActiveIndex, group, t) {
     const form = this.passingPropsToFormState();
-    this.setState({ ...this.state, edittingImages: true, modal: { ...this.state.modal, group, imageActiveIndex:id }, form });
+    this.setState({ ...this.state, edittingImages: true, modal: { group, imageActiveIndex }, form });
   }
   renderItemView(item) {
     return (<div>
@@ -459,7 +459,9 @@ class Item extends React.Component {
   }
   onImageUploadingDrop(acceptedFiles, rejectedFiles) {
     const group = this.state.modal.group;
-    this.props.uploadImagesToItem(acceptedFiles, this.props.focusport._id, group);
+    console.log('group')
+    console.log(group)
+    // this.props.uploadImagesToItem(acceptedFiles, this.props.focusport._id, group);
   }
   onDragEnter(type) {
     this.setState({ imageDraggingClass: type })
@@ -494,7 +496,7 @@ class Item extends React.Component {
             return (<div onClick={this.activateImageSlider.bind(this, img._id, group)} className='img-frame' key={img.lastUpdatedAt}>
               <img className='img' src={img.src} />
             </div>)
-          })||<div onClick={this.activateImageSlider.bind(this)} className='img-frame holder'>
+          })||<div onClick={this.activateImageSlider.bind(this, null, group)} className='img-frame holder'>
             <i className="fas fa-cloud-upload-alt"></i>
             Upload {group} Photos
           </div>}
