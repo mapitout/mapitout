@@ -4,7 +4,7 @@ import MultipleSelect from 'react-select';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
-import { Row, Col, Toast, Button } from 'react-bootstrap';
+import { Toast } from 'react-bootstrap';
 
 import { createItem, editItem, uploadImagesToItem } from '../../actions';
 import request from '../../redux/request';
@@ -254,10 +254,10 @@ class Item extends React.Component {
           </div>
         </div>
       </div> || <div className='item-empty'>
-          <img src='../../assets/svgs/no-data.svg' />
-          <div>This location has no information yet, can you help to map it out.</div>
-          <button className='btn btn-block btn-lg map-it-out' onClick={this.activateEditting.bind(this)}>Map It Out</button>
-        </div>}
+        <img src='../../assets/svgs/no-data.svg' />
+        <div>This location has no information yet, can you help to map it out.</div>
+        <button className='btn btn-block btn-lg map-it-out' onClick={this.activateEditting.bind(this)}>Map It Out</button>
+      </div>}
     </div>)
   }
   onFormSubmit(e) {
