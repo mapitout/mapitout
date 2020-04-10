@@ -4,9 +4,11 @@ import MultipleSelect from 'react-select';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
+import { Toast } from 'react-bootstrap';
 
 import { createItem, editItem, uploadImagesToItem } from '../../actions';
 import request from '../../redux/request';
+import { getFormInitialValues } from 'redux-form';
 
 const ORDER_MTHODS_COPY = {
   phone: 'Call to order',
@@ -26,6 +28,7 @@ class Item extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      show: false,
       editting: false,
       edittingImages: false,
       imageDraggingClass: '',
@@ -42,13 +45,13 @@ class Item extends React.Component {
           others: '',
         },
         open_hour: {
-          monday: [{...initDayOpenHour}],
-          tuesday: [{...initDayOpenHour}],
-          wednesday: [{...initDayOpenHour}],
-          thursday: [{...initDayOpenHour}],
-          friday: [{...initDayOpenHour}],
-          saturday: [{...initDayOpenHour}],
-          sunday: [{...initDayOpenHour}],
+          monday: [{ ...initDayOpenHour }],
+          tuesday: [{ ...initDayOpenHour }],
+          wednesday: [{ ...initDayOpenHour }],
+          thursday: [{ ...initDayOpenHour }],
+          friday: [{ ...initDayOpenHour }],
+          saturday: [{ ...initDayOpenHour }],
+          sunday: [{ ...initDayOpenHour }],
         },
         images: [{
           group: 'menu',
@@ -92,13 +95,13 @@ class Item extends React.Component {
   }
   componentDidMount() {
     request.get('/publicApi/category/all')
-      .then(r=>{
+      .then(r => {
         this.setState({
           ...this.state,
-          initialCategory: r.data.allCate.map(c=>({value: c._id, label: c.title}))
+          initialCategory: r.data.allCate.map(c => ({ value: c._id, label: c.title }))
         })
       })
-      .catch(e=>console.error(e.message))
+      .catch(e => console.error(e.message))
   }
   passingPropsToFormState() {
     let form = {
@@ -110,13 +113,13 @@ class Item extends React.Component {
         ...this.props.focusport.details.location
       }
     }
-    if(this.props.focusport._id){
+    if (this.props.focusport._id) {
       form = {
         order: { ...this.state.form.order },
         images: { ...this.state.form.images },
         ...this.props.focusport.details
       }
-      form.category = this.props.focusport.details.category.map(c=>({value: c._id, label: c.title}))
+      form.category = this.props.focusport.details.category.map(c => ({ value: c._id, label: c.title }))
     }
     console.log('passingPropsToFormState', form)
     return form;
@@ -125,13 +128,31 @@ class Item extends React.Component {
     const form = this.passingPropsToFormState();
     this.setState({ ...this.state, editting: true, form })
   }
+
+  copyURL() {
+    let selectholder = document.createElement('input');
+    let url = window.location.href;
+    const holder = document.getElementById('holder');
+    holder.appendChild(selectholder);
+    selectholder.value = url;
+    selectholder.select();
+    document.execCommand('copy');
+    console.log('COPY')
+    this.setState({
+      ...this.state,
+      show: true,
+    })
+    holder.removeChild(selectholder);
+
+  }
+
   cancelEditting() {
     this.setState({ ...this.state, editting: false })
   }
   renderOrderActions(k, o, isActive) {
-    if(k=='phone'){
+    if (k == 'phone') {
       return <a href={`tel:${o}`}>{o}</a>
-    }else{
+    } else {
       return (<div key={k}>
         {isActive && <a href={o} target='_blank' rel="noopener noreferrer" >available</a>}
         {!isActive && <span>not available yet</span>}
@@ -140,16 +161,16 @@ class Item extends React.Component {
   }
   renderOrderMethods(order) {
     const keys = Object.keys(order);
-    return keys.map(k=>{
+    return keys.map(k => {
       const o = order[k];
-      const isActive = (o!=='');
-      const isActiveClass = isActive?'active':'no-active';
+      const isActive = (o !== '');
+      const isActiveClass = isActive ? 'active' : 'no-active';
       return (ORDER_MTHODS_COPY[k] && <div key={`${k}-${o}`} className={`order-method ${isActiveClass}`}>
         <div className='type'> {ORDER_MTHODS_COPY[k]} </div>
         <div className={`action ${k}`}>
           {this.renderOrderActions(k, o, isActive)}
         </div>
-      </div>||<div key={`${k}-${o}`}></div>)
+      </div> || <div key={`${k}-${o}`}></div>)
     })
 
   }
@@ -163,7 +184,7 @@ class Item extends React.Component {
         <div className='icon'>M</div>
         <div className='title'>Menus</div>
       </div>
-      <div className='action'>
+      <div className='action' id="holder" onClick={this.copyURL.bind(this)}>
         <div className='icon'>S</div>
         <div className='title'>Share</div>
       </div>
@@ -176,19 +197,19 @@ class Item extends React.Component {
   }
   renderOpenHourForView(open_hour) {
     const d = new Date();
-    const weekday = d.getDay()-1;
+    const weekday = d.getDay() - 1;
     delete open_hour._id;
     const keys = Object.keys(open_hour);
-    return keys.map((k,weekdayNumber)=>{
+    return keys.map((k, weekdayNumber) => {
       const length = open_hour[k].length;
-      const isToday = (weekday==weekdayNumber);
+      const isToday = (weekday == weekdayNumber);
       return <tbody key={k}>
-        {open_hour[k].map(({from, to}, i)=>{
-          const isNone = (from===0 && to===0);
+        {open_hour[k].map(({ from, to }, i) => {
+          const isNone = (from === 0 && to === 0);
           return (<tr className={`${isToday}`} key={`${k}-${i}-${from}-${to}`}>
-            <td className='hour-title'>{i==0 && <span>{k}</span>}{isToday && <span> (Today)</span>}</td>
+            <td className='hour-title'>{i == 0 && <span>{k}</span>}{isToday && <span> (Today)</span>}</td>
             {!isNone && <td>
-              <div className={`hour-td-finish-${length-1===i}`}>{`${this.convertDecimalToTime(from)} - ${this.convertDecimalToTime(to)}`}</div>
+              <div className={`hour-td-finish-${length - 1 === i}`}>{`${this.convertDecimalToTime(from)} - ${this.convertDecimalToTime(to)}`}</div>
             </td>}
             {isNone && <td><div className={`none-data`}>Closed</div></td>}
           </tr>)
@@ -212,40 +233,40 @@ class Item extends React.Component {
             <div className='fade'>{item.details.address}</div>
           </div>
           {item.details && item.details.category.length > 0 && <div className='session-item category'>
-            <div className='session-title'><span/>category</div>
+            <div className='session-title'><span />category</div>
             {item.details.category.map((c) => (<div className='item' key={c._id}>{c.title}</div>))}
           </div>}
           <div className='session-item open-hour'>
-            <div className='session-title'><span/>Open Hours</div>
-            <table style={{"width":"100%"}}>
+            <div className='session-title'><span />Open Hours</div>
+            <table style={{ "width": "100%" }}>
               {this.renderOpenHourForView(item.details.open_hour)}
             </table>
           </div>
           <div className='session-item images'>
-            <div className='session-title'><span/>Images</div>
+            <div className='session-title'><span />Images</div>
             <div className='bottom-action'>
               <button className='upload-btn' onClick={this.activeImageUploading.bind(this)}>Add a photo</button>
             </div>
           </div>
           <div className='session-item order'>
-            <div className='session-title'><span/>Order Methods</div>
+            <div className='session-title'><span />Order Methods</div>
             {this.renderOrderMethods(item.details.order)}
           </div>
         </div>
       </div> || <div className='item-empty'>
         <img src='../../assets/svgs/no-data.svg' />
         <div>This location has no information yet, can you help to map it out.</div>
-        <button className='btn btn-block btn-lg try-it-out' onClick={this.activateEditting.bind(this)}>Map It Out</button>
+        <button className='btn btn-block btn-lg map-it-out' onClick={this.activateEditting.bind(this)}>Map It Out</button>
       </div>}
     </div>)
   }
   onFormSubmit(e) {
     e.preventDefault()
     const item_id = this.props.focusport._id;
-    if(!item_id) {
+    if (!item_id) {
       this.props.createItem(this.state.form)
       this.setState({ ...this.state, editting: false })
-    }else{
+    } else {
       const item = this.state.form;
       delete item.location; // location: long and lat should be changed
       delete item.address; // address should be changed
@@ -331,35 +352,35 @@ class Item extends React.Component {
       <option key='11.30' value={11.30}>11:30 (11:30 am)</option>,
       <option key='12.00' value={12.00}>12:00 (noon)</option>,
       <option key='12.30' value={12.30}>12:30 (12:30 pm)</option>,
-      <option key='13.00' value={13.00}>{`13:00 (${13-12}:00 pm)`}</option>,
-      <option key='13.30' value={13.30}>{`13:30 (${13-12}:30 pm)`}</option>,
-      <option key='14.00' value={14.00}>{`14:00 (${14-12}:00 pm)`}</option>,
-      <option key='14.30' value={14.30}>{`14:30 (${14-12}:30 pm)`}</option>,
-      <option key='15.00' value={15.00}>{`15:00 (${15-12}:00 pm)`}</option>,
-      <option key='15.30' value={15.30}>{`15:30 (${15-12}:30 pm)`}</option>,
-      <option key='16.00' value={16.00}>{`16:00 (${16-12}:00 pm)`}</option>,
-      <option key='16.30' value={16.30}>{`16:30 (${16-12}:30 pm)`}</option>,
-      <option key='17.00' value={17.00}>{`17:00 (${17-12}:00 pm)`}</option>,
-      <option key='17.30' value={17.30}>{`17:30 (${17-12}:30 pm)`}</option>,
-      <option key='18.00' value={18.00}>{`18:00 (${18-12}:00 pm)`}</option>,
-      <option key='18.30' value={18.30}>{`18:30 (${18-12}:30 pm)`}</option>,
-      <option key='19.00' value={19.00}>{`19:00 (${19-12}:00 pm)`}</option>,
-      <option key='19.30' value={19.30}>{`19:30 (${19-12}:30 pm)`}</option>,
-      <option key='20.00' value={20.00}>{`20:00 (${20-12}:00 pm)`}</option>,
-      <option key='20.30' value={20.30}>{`20:30 (${20-12}:30 pm)`}</option>,
-      <option key='21.00' value={21.00}>{`21:00 (${21-12}:00 pm)`}</option>,
-      <option key='21.30' value={21.30}>{`21:30 (${21-12}:30 pm)`}</option>,
-      <option key='22.00' value={22.00}>{`22:00 (${22-12}:00 pm)`}</option>,
-      <option key='22.30' value={22.30}>{`22:30 (${22-12}:30 pm)`}</option>,
-      <option key='23.00' value={23.00}>{`23:00 (${23-12}:00 pm)`}</option>,
-      <option key='23.30' value={23.30}>{`23:30 (${23-12}:30 pm)`}</option>,
+      <option key='13.00' value={13.00}>{`13:00 (${13 - 12}:00 pm)`}</option>,
+      <option key='13.30' value={13.30}>{`13:30 (${13 - 12}:30 pm)`}</option>,
+      <option key='14.00' value={14.00}>{`14:00 (${14 - 12}:00 pm)`}</option>,
+      <option key='14.30' value={14.30}>{`14:30 (${14 - 12}:30 pm)`}</option>,
+      <option key='15.00' value={15.00}>{`15:00 (${15 - 12}:00 pm)`}</option>,
+      <option key='15.30' value={15.30}>{`15:30 (${15 - 12}:30 pm)`}</option>,
+      <option key='16.00' value={16.00}>{`16:00 (${16 - 12}:00 pm)`}</option>,
+      <option key='16.30' value={16.30}>{`16:30 (${16 - 12}:30 pm)`}</option>,
+      <option key='17.00' value={17.00}>{`17:00 (${17 - 12}:00 pm)`}</option>,
+      <option key='17.30' value={17.30}>{`17:30 (${17 - 12}:30 pm)`}</option>,
+      <option key='18.00' value={18.00}>{`18:00 (${18 - 12}:00 pm)`}</option>,
+      <option key='18.30' value={18.30}>{`18:30 (${18 - 12}:30 pm)`}</option>,
+      <option key='19.00' value={19.00}>{`19:00 (${19 - 12}:00 pm)`}</option>,
+      <option key='19.30' value={19.30}>{`19:30 (${19 - 12}:30 pm)`}</option>,
+      <option key='20.00' value={20.00}>{`20:00 (${20 - 12}:00 pm)`}</option>,
+      <option key='20.30' value={20.30}>{`20:30 (${20 - 12}:30 pm)`}</option>,
+      <option key='21.00' value={21.00}>{`21:00 (${21 - 12}:00 pm)`}</option>,
+      <option key='21.30' value={21.30}>{`21:30 (${21 - 12}:30 pm)`}</option>,
+      <option key='22.00' value={22.00}>{`22:00 (${22 - 12}:00 pm)`}</option>,
+      <option key='22.30' value={22.30}>{`22:30 (${22 - 12}:30 pm)`}</option>,
+      <option key='23.00' value={23.00}>{`23:00 (${23 - 12}:00 pm)`}</option>,
+      <option key='23.30' value={23.30}>{`23:30 (${23 - 12}:30 pm)`}</option>,
       <option key='24.00' value={24.00}>24:00 (midnight)</option>
     ];
     return [<option key='none' value={0}>closed</option>, list]
   }
   onOpenHourAddOneMoreInput(day) {
     const current = [...this.state.form.open_hour[day]];
-    const newData = [...current, {...initDayOpenHour}];
+    const newData = [...current, { ...initDayOpenHour }];
     this.updateOpenHourOfDay(day, newData)
   }
   onOpenHourRemoveCurrentInput(day, index) {
@@ -369,15 +390,15 @@ class Item extends React.Component {
     this.updateOpenHourOfDay(day, newData);
   }
   renderOpenHourActions(length, index, day) {
-    if(length===1){
+    if (length === 1) {
       return (<div className='day-block plus' onClick={this.onOpenHourAddOneMoreInput.bind(this, day)}>
         <i className="fas fa-plus"></i>
       </div>)
-    }else if(index+1===length){
+    } else if (index + 1 === length) {
       return (<div className='day-block plus' onClick={this.onOpenHourAddOneMoreInput.bind(this, day)}>
         <i className="fas fa-plus"></i>
       </div>)
-    }else{
+    } else {
       return (<div className='day-block cancel' onClick={this.onOpenHourRemoveCurrentInput.bind(this, day, index)}>
         <i className="fas fa-times"></i>
       </div>)
@@ -387,9 +408,9 @@ class Item extends React.Component {
     const title = d;
     const day = d.toLowerCase();
     const dayData = form.open_hour[day];
-    return dayData.map((oneDayData, index)=>{
+    return dayData.map((oneDayData, index) => {
       return (<tr key={`${day}.${index}`}>
-        <td>{index==0 && <div className='day-block day'>{title}</div>}</td>
+        <td>{index == 0 && <div className='day-block day'>{title}</div>}</td>
         <td>
           <div className='day-block-input'>
             <select className="form-control" value={oneDayData.from} name={`${d}.${index}.from`} onChange={this.onOpenHourFormChange.bind(this)} placeholder="start">
@@ -439,9 +460,9 @@ class Item extends React.Component {
             {<div className="form-group">
               <div className='session-title'>Open Hours</div>
               <div className='open-hour'>
-                {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((d, i)=>{
+                {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((d, i) => {
                   return (<div key={i} className='day-row'>
-                    <table style={{"width":"100%"}}>
+                    <table style={{ "width": "100%" }}>
                       <tbody>
                         {this.renderOpenHourWeek(d, form)}
                       </tbody>
@@ -452,13 +473,13 @@ class Item extends React.Component {
             </div>}
             {<div className="form-group">
               <div className='session-title'>Order methods</div>
-              <input type='phone'className="form-control" value={form.order.phone} name="phone" onChange={this.onOrderFormChange.bind(this)} placeholder='Phone Number(Call to order)' />
-              <input type='url'className="form-control" value={form.order.doordash} name="doordash" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['doordash']} />
-              <input type='url'className="form-control" value={form.order.postmates} name="postmates" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['postmates']} />
-              <input type='url'className="form-control" value={form.order.grubhub} name="grubhub" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['grubhub']} />
-              <input type='url'className="form-control" value={form.order.UberEat} name="UberEat" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['ubereats']} />
-              <input type='url'className="form-control" value={form.order.yelp} name="yelp" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['yelp']} />
-              <input type='string'className="form-control" value={form.order.others} name="others" onChange={this.onOrderFormChange.bind(this)} placeholder={`${ORDER_MTHODS_COPY['others']} links`} />
+              <input type='phone' className="form-control" value={form.order.phone} name="phone" onChange={this.onOrderFormChange.bind(this)} placeholder='Phone Number(Call to order)' />
+              <input type='url' className="form-control" value={form.order.doordash} name="doordash" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['doordash']} />
+              <input type='url' className="form-control" value={form.order.postmates} name="postmates" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['postmates']} />
+              <input type='url' className="form-control" value={form.order.grubhub} name="grubhub" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['grubhub']} />
+              <input type='url' className="form-control" value={form.order.UberEat} name="UberEat" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['ubereats']} />
+              <input type='url' className="form-control" value={form.order.yelp} name="yelp" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['yelp']} />
+              <input type='string' className="form-control" value={form.order.others} name="others" onChange={this.onOrderFormChange.bind(this)} placeholder={`${ORDER_MTHODS_COPY['others']} links`} />
             </div>}
             <div className="modal-btn-group">
               <span className="cancel" onClick={this.cancelEditting.bind(this)}>Cancel</span>
@@ -476,14 +497,14 @@ class Item extends React.Component {
     // });
   }
   onDragEnter(type) {
-    this.setState({imageDraggingClass: type})
+    this.setState({ imageDraggingClass: type })
   }
   onDragLeave(type) {
-    this.setState({imageDraggingClass: type})
+    this.setState({ imageDraggingClass: type })
   }
   getAllImages(imgs) {
     console.log('hi')
-    for(let img of imgs) {
+    for (let img of imgs) {
       console.log(img);
     }
   }
@@ -493,7 +514,7 @@ class Item extends React.Component {
   }
   renderImageUploadingModal(show) {
     return (
-      <Modal className='image-uploading-modal' show={show} onHide={()=>this.setState({ ...this.state, edittingImages: false })}>
+      <Modal className='image-uploading-modal' show={show} onHide={() => this.setState({ ...this.state, edittingImages: false })}>
         <Modal.Header closeButton>
           <Modal.Title>Upload public photos of {this.state.form.title}</Modal.Title>
         </Modal.Header>
@@ -519,15 +540,33 @@ class Item extends React.Component {
     )
   }
   render() {
-    return (<div className='item-view-component'>
-      {this.renderItemView(this.props.focusport)}
-      {this.renderModal(this.state.editting)}
-      {this.renderImageUploadingModal(this.state.edittingImages)}
-    </div>)
+    return (
+      <div className='item-view-component'>
+        {this.renderItemView(this.props.focusport)}
+        {this.renderModal(this.state.editting)}
+        {this.renderImageUploadingModal(this.state.edittingImages)}
+        <div aria-live="polite"
+          aria-atomic="true" className="toast-container">
+          <Toast className="toast" onClose={() => this.setState({ show: false })} show={this.state.show} delay={3000} autohide>
+            <Toast.Header>
+              <img
+                src="holder.js/20x20?text=%20"
+                className="rounded mr-2"
+                alt=""
+              />
+              <span className="toast-title">Copied!</span>
+            </Toast.Header>
+            <Toast.Body>
+              <div className="toast-content">URL is copied to your clipboard!</div>
+            </Toast.Body>
+          </Toast>
+        </div>
+      </div>
+    )
   }
 }
 
-function mapStateToProps({item}) {
+function mapStateToProps({ item }) {
   const { focusport } = item;
   return { focusport }
 }
