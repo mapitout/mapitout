@@ -21,6 +21,31 @@ $red: rgb(213, 32, 32);
       transform: scale(0.8);
     }
   }
+  .toast-container{
+    position: fixed;
+    top: 55px;
+    right: 20px;
+    min-height: 100px;
+    @media (max-width:672px) {
+      top: 100px;
+    }
+    text-align: left;
+    .toast-title{
+      font-weight: 700;
+      font-size: 1.3rem;
+    }
+    .toast-content{
+      padding:.5rem;
+    }
+    .toast {
+      border-radius: 8px;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      background:white;
+      padding: 1rem;
+      z-index: 90;
+      
+    }
+  }
 }
 .item-view-container {
   height: 100%;
