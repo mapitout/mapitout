@@ -494,7 +494,7 @@ class Item extends React.Component {
             return (<div onClick={this.activateImageSlider.bind(this, img._id, group)} className='img-frame' key={img.lastUpdatedAt}>
               <img className='img' src={img.src} />
             </div>)
-          })||<div onClick={this.activateImageSlider.bind(this, null, group)} className='img-frame holder'>
+          })||<div onClick={this.activateImageSlider.bind(this, '', group)} className='img-frame holder'>
             <i className="fas fa-cloud-upload-alt"></i>
             Upload {group} Photos
           </div>}
