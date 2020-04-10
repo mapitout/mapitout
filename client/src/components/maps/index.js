@@ -61,6 +61,8 @@ class Index extends React.Component {
         longitude: lon,
         latitude: lat
       })
+    }else{
+      navigator.geolocation.getCurrentPosition(this.getLocation.bind(this), console.error, { enableHighAccuracy: true })
     }
     request.get('/publicApi/item')
       .then(({data})=>{
@@ -69,9 +71,14 @@ class Index extends React.Component {
           allPins: data.items
         })
       })
-      .catch(e=>console.error(e))
-
+      .catch(e=>console.error(e));
     window.addEventListener('resize', _.debounce(this.handleResize.bind(this), 200));
+  }
+  getLocation({ coords: { latitude, longitude } }) {
+    this.setState({ ...this.state,
+      focused: true,
+      viewport: { ...this.state.viewport, latitude, longitude, zoom: FOCUS_ZOOM-4 }
+    })
   }
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize.bind(this));
@@ -127,7 +134,7 @@ class Index extends React.Component {
   }
   renderAllPins(pins) {
     const { focusport } = this.props;
-    return (<div>{pins.length > 0 && pins
+    return (<div>{pins && pins.length > 0 && pins
       .filter(pin=>(pin.latitude !== focusport.latitude))
       .map(pin=>(
         <Marker key={pin._id}

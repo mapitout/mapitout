@@ -160,7 +160,7 @@ export function itemReducer(state=INITIAL_STATE, action) {
         ...state.focusport,
         details: {
           ...state.focusport.details,
-          images: [...state.forcusport.images, action.payload]
+          images: [...state.focusport.details.images, action.payload]
         }
       }
     }

@@ -32,7 +32,8 @@ class Item extends React.Component {
       edittingImages: false,
       imageDraggingClass: '',
       modal: {
-        event: 'menu'
+        group: '',
+        imageActiveIndex: ''
       },
       form: {
         title: '',
@@ -60,12 +61,9 @@ class Item extends React.Component {
       },
       initialCategory: []
     }
-    // if(props.data.details) {
-    //   const initialCategory = props.data.details.category.map(c=>({ value: c, label: c }))
-    //   props.data.details.category.length>0 && setCategory([...initialCategory]);
-    // }
   }
   componentDidMount() {
+    
     request.get('/publicApi/category/all')
       .then(r=>{
         this.setState({
@@ -169,9 +167,9 @@ class Item extends React.Component {
       </tbody>
     })
   }
-  activateImageUploading() {
+  activateImageSlider(id, group, t) {
     const form = this.passingPropsToFormState();
-    this.setState({ ...this.state, edittingImages: true, form });
+    this.setState({ ...this.state, edittingImages: true, modal: { ...this.state.modal, group, imageActiveIndex:id }, form });
   }
   renderItemView(item) {
     return (<div>
@@ -440,7 +438,8 @@ class Item extends React.Component {
     )
   }
   onImageUploadingDrop(acceptedFiles, rejectedFiles) {
-    this.props.uploadImagesToItem(acceptedFiles, this.props.focusport._id, 'menu');
+    const group = this.state.modal.group;
+    this.props.uploadImagesToItem(acceptedFiles, this.props.focusport._id, group);
   }
   onDragEnter(type) {
     this.setState({imageDraggingClass: type})
@@ -472,10 +471,10 @@ class Item extends React.Component {
         <div className='session-title'><span/>{group} Photos</div>
         <div className='img-container'>
           {groupImages.length > 0 && groupImages.map(img=>{
-            return (<div onClick={this.activateImageUploading.bind(this)} className='img-frame' key={img.lastUpdatedAt}>
+            return (<div onClick={this.activateImageSlider.bind(this, img._id, group)} className='img-frame' key={img.lastUpdatedAt}>
               <img className='img' src={img.src} />
             </div>)
-          })||<div onClick={this.activateImageUploading.bind(this)} className='img-frame holder'>
+          })||<div onClick={this.activateImageSlider.bind(this)} className='img-frame holder'>
             <i className="fas fa-cloud-upload-alt"></i>
             Upload {group} Photos
           </div>}
@@ -487,11 +486,11 @@ class Item extends React.Component {
     return (
       <Modal className='image-uploading-modal' show={show} onHide={()=>this.setState({ ...this.state, edittingImages: false })}>
         <Modal.Header closeButton>
-          <Modal.Title>Upload public photos of {this.props.focusport.details.title}</Modal.Title>
+          {/* <Modal.Title>Upload public photos of {this.props.focusport.details.title}</Modal.Title> */}
         </Modal.Header>
         <Modal.Body>
           <div>
-            <ImageSlider data={this.props.focusport.details.images} />
+            <ImageSlider group={this.state.modal.group} data={this.getAllImages(this.props.focusport.details.images)} activeIndex={this.state.modal.imageActiveIndex}/>
           </div>
           <div className='image-dropping-container'>
             <Dropzone
@@ -501,7 +500,7 @@ class Item extends React.Component {
               accept="image/jpeg, image/png"
               onDrop={this.onImageUploadingDrop.bind(this)}
             >
-              <div className='drag-title'>Drag photos here</div>
+              <div className='drag-title'>Add photos</div>
               <div className='drag-subtitle'>Or, if you prefer...</div>
               <div className='upload-btn'>Choose photos to upload</div>
             </Dropzone>
