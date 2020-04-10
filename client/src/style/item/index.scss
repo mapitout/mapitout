@@ -46,6 +46,15 @@ $red: rgb(213, 32, 32);
       
     }
   }
+  .map-it-out{
+    border-color:$brand-color; 
+    background-color:$brand-color;
+    color: #fff;
+    &:hover{
+      background-color:#2BDBA6;
+      border-color: #2BDBA6;
+    }
+  }
 }
 .item-view-container {
   height: 100%;
