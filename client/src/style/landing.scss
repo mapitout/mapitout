@@ -207,8 +207,9 @@
           margin-left: .3rem;
         }
         a {
+          color: $brand-color;
           &:hover,&:visited,&:active {
-            color:$brand-color;
+            color: $brand-color;
           }
         }
         i {

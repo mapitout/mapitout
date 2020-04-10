@@ -16,6 +16,7 @@ class Author extends React.Component {
                 name="Andy Chen"
                 github="https://github.com/amazingandyyy"
                 linkedIn="https://www.linkedin.com/in/amazingandyyy/"
+                bio="dfadf"
               />
             </Col>
             <Col sm md lg="6">
@@ -23,7 +24,9 @@ class Author extends React.Component {
                 src="https://media-exp1.licdn.com/dms/image/C5603AQGuAltfA-sTjA/profile-displayphoto-shrink_200_200/0?e=1591833600&v=beta&t=pzeocypBXvNOulVepqs_x_YYHObAa0Tw9PVGa7scfoE"
                 name="Shelly Cheng"
                 github="https://github.com/amazingshellyyy"
-                linkedIn="https://www.linkedin.com/in/amazingshellyyy/" />
+                linkedIn="https://www.linkedin.com/in/amazingshellyyy/"
+                bio="dfadf"
+              />
             </Col>
           </Row>
         </Container>
@@ -54,7 +57,7 @@ const AuthorCard = (props) => {
             </span>
           </div>
           <div className="author-textbox">
-            <p className="author-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of</p>
+            <p className="author-text">{props.bio}</p>
           </div>
         </Col>
       </Row>

@@ -39,6 +39,9 @@
       background-color: rgb(247, 247, 247);
     }
   }
+  .mapboxgl-ctrl-icon.mapboxgl-ctrl-geolocate.mapboxgl-ctrl-geolocate-active {
+    margin-bottom: 10px;
+  }
   .mapboxgl-ctrl-icon.mapboxgl-ctrl-geolocate.mapboxgl-ctrl-geolocate-waiting.mapboxgl-ctrl-geolocate-active {
     span.mapboxgl-ctrl-icon {
       background-color:rgba(0, 0, 0, 0);
