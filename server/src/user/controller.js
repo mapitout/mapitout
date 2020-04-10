@@ -139,7 +139,6 @@ export default {
       ACL: 'public-read'
     }, (err, result) => {
       const avatarURL = `https://mapitout.s3.amazonaws.com/${uuidKey}`
-      console.log(err, avatarURL, AWS_KEY_ID, AWS_SECRET)
       if (err) return next('500:Uploading Photo Failed');
       User.findByIdAndUpdate(userId, { $set:{avatar: avatarURL} }, { new: true })
         .then(res=> res.sendStatus(200))
