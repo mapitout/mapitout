@@ -1,6 +1,7 @@
 import Item from './model';
-// import OpenHour from './openHour.model';
-// import Category from '../category/model';
+import AWS from 'aws-sdk';
+import config from '../config';
+import uuid from '../user/uuid'
 
 export default {
   show: async (req, res, next) => {
@@ -186,14 +187,42 @@ export default {
     }
   },
   uploadImage: (req, res, next) => {
-    // const file = req.file;
-    // const itemId = req.body.item_id;
-    // if(!file) return next('500:image bad');
-    // const fieldname = file.fieldname;
     const file = req.file;
-    const body = req.body;
-    console.log(file);
-    console.log(body);
-    return res.status(200).json({'message':'you hit the image upload'})
+    const {itemId, group, lastUpdatedAt} = req.query;
+    console.log('file', file);
+    if(!file) return next('500:image bad');
+    let filenameParts = file.originalname.split('.');
+    let ext;
+    if (filenameParts.length > 1) {
+      ext = "." + filenameParts[1]
+    } else {
+      ext = " ";
+    }
+    const AWS_KEY_ID = config.aws.s3.accessKeyId;
+    const AWS_SECRET = config.aws.s3.secretKey;
+    console.log('AWS_KEY_ID',AWS_KEY_ID);
+    console.log('AWS_SECRET', AWS_SECRET);
+    AWS.config.update({
+      accessKeyId: AWS_KEY_ID,
+      secretAccessKey: AWS_SECRET,
+      subregion: 'us-west-2'
+    })
+    const uuidKey = `${config.environment}/item/${itemId}/${group}/${uuid()}${ext}`;
+    const s3 = new AWS.S3();
+    s3.putObject({
+      Bucket: 'mapitout-image',
+      Key: uuidKey,
+      Body: file.buffer,
+      ACL: 'public-read'
+    }, (err, result) => {
+      const imageURL = `https://mapitout-image.s3-us-west-2.amazonaws.com/${uuidKey}`
+      console.log('imageURL',imageURL);
+      if (err) return next('500: Uploading Photo Failed');
+      return res.status(200).json({'url':imageURL})
+    })
+
+
+    
+    // return res.status(200).json({'message':'you hit the image upload'})
   }
 }
