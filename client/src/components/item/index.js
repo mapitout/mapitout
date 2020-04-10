@@ -483,7 +483,10 @@ class Item extends React.Component {
     )
   }
   onImageUploadingDrop(acceptedFiles, rejectedFiles) {
-    this.props.uploadImagesToItem(this.state.form._id, 'menu', acceptedFiles);
+    this.props.uploadImagesToItem(acceptedFiles, this.state.form._id, 'menu');
+    // acceptedFiles.forEach(file => {
+    //   this.props.uploadImagesToItem(file, this.state.form._id, 'menu');
+    // });
   }
   onDragEnter(type) {
     this.setState({imageDraggingClass: type})

@@ -1,6 +1,7 @@
 import Item from './model';
-// import OpenHour from './openHour.model';
-import Category from '../category/model';
+import AWS from 'aws-sdk';
+import config from '../config';
+import uuid from '../user/uuid';
 
 export default {
   show: async (req, res, next) => {
@@ -184,5 +185,53 @@ export default {
         res.status(500).json({ "message": err })
       }
     }
+  },
+  uploadImage: (req, res, next) => {
+    const file = req.file;
+    const {itemId, group, lastUpdatedAt} = req.query;
+    console.log('file', file);
+    if(!file) return next('500:image bad');
+    let filenameParts = file.originalname.split('.');
+    let ext;
+    if (filenameParts.length > 1) {
+      ext = "." + filenameParts[1]
+    } else {
+      ext = " ";
+    }
+    const AWS_KEY_ID = config.aws.s3.accessKeyId;
+    const AWS_SECRET = config.aws.s3.secretKey;
+    console.log('AWS_KEY_ID',AWS_KEY_ID);
+    console.log('AWS_SECRET', AWS_SECRET);
+    AWS.config.update({
+      accessKeyId: AWS_KEY_ID,
+      secretAccessKey: AWS_SECRET,
+      subregion: 'us-west-2'
+    })
+    const uuidKey = `${config.environment}/item/${itemId}/${group}/${uuid()}${ext}`;
+    const s3 = new AWS.S3();
+    s3.putObject({
+      Bucket: 'mapitout-image',
+      Key: uuidKey,
+      Body: file.buffer,
+      ACL: 'public-read'
+    }, async(err, result) => {
+      if (err) return next('500: Uploading Photo Failed');
+      
+      const imageURL = `https://mapitout-image.s3-us-west-2.amazonaws.com/${uuidKey}`
+      console.log('imageURL',imageURL);
+      const imgToSave = {
+        group,
+        lastUpdatedAt,
+        src: imageURL
+      }
+      try {
+        const findItem = await Item.findById(itemId);
+        findItem.images.push(imgToSave);
+        findItem.save();
+        return res.status(200).json({"url":imageURL});
+      } catch(err) {
+        return console.log(err)
+      }
+    })
   }
 }

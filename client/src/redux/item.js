@@ -86,24 +86,24 @@ export function editItem(item_id, details) {
   }
 }
 
-export function uploadImagesToItem(itemId, group, files) {
+export function uploadImagesToItem(file, itemId, group) {
   const body = {
     itemId,
     group,
     lastUpdatedAt: Date.now()
   }
-  console.log('body', {...body, files});
+  console.log('body', {...body, file});
   return function (dispatch) {
     superagent
-      .post(`${baseURL}/publicApi/item/image`)
-      .attach('mapitout_item_images', files[0])
-      .send({
-        ...body
-      })
+      .post(`${baseURL}/publicApi/item/image?${qs.stringify(body)}`)
+      .attach('mapitout_item_image', file[0])
       .end((err, res) => {
         if (err) return console.log(err);
-        const images = res.body.images;
-        console.log(images)
+        const imageURL = res.body.url;
+        console.log(res.body)
+        console.log(imageURL);
+        
+        // console.log(images)
         // dispatch({ type: UPLOAD_IMAGES_TO_ITEM, payload: images })
       })
   }
