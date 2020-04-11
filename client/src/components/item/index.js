@@ -552,7 +552,7 @@ class Item extends React.Component {
               </div>}
             </Dropzone>
             {this.props.imageUploadingStatus == 'done' && 
-              <div onClick={() => this.setState({ ...this.state, edittingImages: false })} className='upload-btn finish-btn'>Finish</div>
+              <div onClick={() => this.setState({ ...this.state, edittingImages: false })} className='upload-btn finish-btn'>Finish and close</div>
             }
           </div>
         </Modal.Body>
