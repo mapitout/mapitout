@@ -13,26 +13,6 @@ export default {
       return next('500:Cannot find the pin you are looking for')
     }
   },
-  showAll: async (req, res, next) => {
-    try {
-      const allItem = await Item.find({});
-      const items = []
-      for (let i = 0; i < allItem.length; i++) {
-        const item = allItem[i];
-        let newItem = {
-          _id: item._id,
-          title: item.title,
-          address: item.address,
-          longitude: item.location.coordinates[0],
-          latitude: item.location.coordinates[1]
-        }
-        items.push(newItem);
-      }
-      res.status(200).json({ "message": "successfully find all pins.", items })
-    } catch (err) {
-      res.status(500).json({ "message": err })
-    }
-  },
   create: async (req, res, next) => {
     // const open_hour = req.body.details.open_hour;
     // delete req.body.details.open_hour;
@@ -77,6 +57,8 @@ export default {
   search: async (req, res, next) => {
     if (req.query.lon && req.query.lat) {
       try {
+        const radius = req.query.r ? req.query.r : 1;
+        const limit = radius == 1 ? 1 : 10;
         const findItem = await Item.find({
           location: {
             $near: {
@@ -84,16 +66,31 @@ export default {
                 type: "Point",
                 coordinates: [req.query.lon, req.query.lat]
               },
-              $maxDistance: 1
+              $maxDistance: radius
             }
           }
-        }).limit(1).populate('category');
+        }).limit(limit);
         if (findItem.length === 0) {
           return next('404:nothing is here')
         }
-        return res.status(200).json({ "message": "Here is the Pin.", findItem })
+        const items = []
+        for (let i = 0; i < findItem.length; i++) {
+          const item = findItem[i];
+          let newItem = {
+            _id: item._id,
+            title: item.title,
+            address: item.address,
+            longitude: item.location.coordinates[0],
+            latitude: item.location.coordinates[1]
+          }
+          items.push(newItem);
+        }
+
+
+        return res.status(200).json({ "message": "Here is the Pin.", items })
       } catch (err) {
-        return next('500:Something went wrong.')
+        // return next('500:Something went wrong.')
+        return console.log(err);
       }
     } else if (req.query.category) {
       const Ids = req.query.category.split(',');
