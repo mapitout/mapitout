@@ -69,25 +69,29 @@ export default {
               $maxDistance: radius
             }
           }
-        }).limit(limit);
+        }).limit(limit).populate('category');
         if (findItem.length === 0) {
           return next('404:nothing is here')
         }
-        const items = []
-        for (let i = 0; i < findItem.length; i++) {
-          const item = findItem[i];
-          let newItem = {
-            _id: item._id,
-            title: item.title,
-            address: item.address,
-            longitude: item.location.coordinates[0],
-            latitude: item.location.coordinates[1]
+        if(radius==1){
+          return res.status(200).json({ "message": "Here is the Pin.", findItem })
+        }else{
+          const items = []
+          for (let i = 0; i < findItem.length; i++) {
+            const item = findItem[i];
+            let newItem = {
+              _id: item._id,
+              title: item.title,
+              address: item.address,
+              longitude: item.location.coordinates[0],
+              latitude: item.location.coordinates[1]
+            }
+            items.push(newItem);
           }
-          items.push(newItem);
+
+
+          return res.status(200).json({ "message": "Here is the Pin.", items })
         }
-
-
-        return res.status(200).json({ "message": "Here is the Pin.", items })
       } catch (err) {
         // return next('500:Something went wrong.')
         return console.log(err);

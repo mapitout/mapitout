@@ -25,6 +25,7 @@
       }
       &:hover{
         opacity: 1;
+        border-radius: 8px;
       }
       &.holder {
         background: rgb(240, 240, 240);
@@ -60,6 +61,7 @@
       }
       .img {
         height: 100%;
+        border-radius: 8px;
       }
     }
     &:hover::-webkit-scrollbar {
@@ -72,6 +74,7 @@
     }
   }
   .img-big-image {
+    border-radius: 8px;
     .img {
       width: 100%;
       border-radius: 8px;
