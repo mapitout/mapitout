@@ -114,7 +114,7 @@ export function uploadImagesToItem(file, itemId, group) {
       .end((err, res) => {
         if (err) return console.log(err);
         const image = res.body;
-        dispatch({ type: UPLOAD_IMAGES_TO_ITEM_STATUS, payload: '' })
+        dispatch({ type: UPLOAD_IMAGES_TO_ITEM_STATUS, payload: 'done' })
         dispatch({ type: UPLOAD_IMAGES_TO_ITEM_DONE, payload: image })
       })
   }

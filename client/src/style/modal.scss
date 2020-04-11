@@ -23,6 +23,7 @@
   .image-dropping-container {
     // border-radius: 8px;
     // border: 2px dashed rgba(black, 0.6);
+    text-align: center;
     .image-uploader{
       text-align: center;
       padding: 50px;
@@ -49,20 +50,24 @@
         font-size: 0.8rem;
         color: rgb(220, 220, 220);
       }
-      .upload-btn {
-        cursor: pointer;
-        color: white;
-        font-size: 0.8rem;
-        display: inline-block;
-        padding: 10px 30px;
-        margin: 10px;
-        background-color: $brand-color;
-        &:hover{
-          background-color: darken($brand-color, 5%);
-        }
-        &:active{
-          transform: scale(0.95);
-        }
+    }
+    .upload-btn {
+      cursor: pointer;
+      color: white;
+      font-size: 0.8rem;
+      display: inline-block;
+      padding: 10px 30px;
+      margin: 10px;
+      background-color: $brand-color;
+      &.finish-btn {
+        margin: 20px auto;
+        font-weight: 700;
+      }
+      &:hover{
+        background-color: darken($brand-color, 5%);
+      }
+      &:active{
+        transform: scale(0.95);
       }
     }
     .image-uploading-status {

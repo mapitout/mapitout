@@ -532,7 +532,13 @@ class Item extends React.Component {
                 <div className='drag-title'>Add photos</div>
                 <div className='drag-subtitle'>Or, if you prefer...</div>
                 <div className='upload-btn'>Choose photos to upload</div>
-              </div> || <div className='image-uploading-status'>
+              </div>}
+              {this.props.imageUploadingStatus == 'done' && <div>
+                <div className='drag-title'>Add photos</div>
+                <div className='drag-subtitle'>Or, if you prefer...</div>
+                <div className='upload-btn'>Choose photos to upload</div>
+              </div>}
+              {this.props.imageUploadingStatus.length > 5 && <div className='image-uploading-status'>
                 <div className='blurr'>
                   <div className='loader-component'>
                     <div className='circle-spinner'>
@@ -545,6 +551,9 @@ class Item extends React.Component {
                 <img className='img' src={`${this.props.imageUploadingStatus}`} />  
               </div>}
             </Dropzone>
+            {this.props.imageUploadingStatus == 'done' && 
+              <div onClick={() => this.setState({ ...this.state, edittingImages: false })} className='upload-btn finish-btn'>Finish</div>
+            }
           </div>
         </Modal.Body>
       </Modal>
