@@ -74,7 +74,7 @@ export default {
     }
   },
   search: async (req, res, next) => {
-    if (req.query.lon && req.query.lat) {
+    if (req.query.lon && req.query.lat && req.query.r) {
       try {
         const findItem = await Item.find({
           location: {
@@ -83,7 +83,7 @@ export default {
                 type: "Point",
                 coordinates: [req.query.lon, req.query.lat]
               },
-              $maxDistance: 1
+              $maxDistance: req.query.r
             }
           }
         }).limit(1).populate('category');
