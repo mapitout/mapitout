@@ -87,9 +87,9 @@ class Item extends React.Component {
     }
     if (this.props.focusport._id) {
       form = {
-        ...this.props.focusport.details,
         order: { ...this.state.form.order },
         images: { ...this.state.form.images },
+        ...this.props.focusport.details,
       }
       form.category = this.props.focusport.details.category.map(c => ({ value: c._id, label: c.title }))
     }
@@ -403,6 +403,7 @@ class Item extends React.Component {
   }
   renderModal(show) {
     const { form } = this.state;
+    console.log(form);
     return (
       <Modal className='create-editting-item-modal' show={show} onHide={this.cancelEditting.bind(this)}>
         <Modal.Header closeButton>

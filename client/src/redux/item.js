@@ -20,7 +20,6 @@ export function changeFocusport(focusport) {
       .then(d=>{
         // if it's found, use the response as focusport
         const item = d.data.findItem[0];
-        console.log(item.images);
         item.images = item.images.sort((a, b)=>b.lastUpdatedAt-a.lastUpdatedAt)
         const payload = {
           input: item.title,
@@ -73,6 +72,7 @@ export function createItem(details) {
         const item = r.data.createdItem;
         const payload = buildFocusport(item);
         dispatch({ type: UPDATE_FOCUSPORT, payload })
+        window.location.reload(true);
       })
       .catch(e=>console.error(e))
   }
@@ -87,7 +87,6 @@ export function editItem(item_id, details) {
         const item = r.data.editItem;
         const payload = buildFocusport(item);
         dispatch({ type: UPDATE_FOCUSPORT, payload })
-        window.location.reload(true);
       })
       .catch(e=>console.error(e))
   }
