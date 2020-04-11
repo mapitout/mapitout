@@ -4,11 +4,11 @@ import MultipleSelect from 'react-select';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
+import ImageSlider from './imageSlider';
 import { Toast } from 'react-bootstrap';
 
 import { createItem, editItem, uploadImagesToItem } from '../../actions';
 import request from '../../redux/request';
-import { getFormInitialValues } from 'redux-form';
 
 const ORDER_MTHODS_COPY = {
   phone: 'Call to order',
@@ -24,6 +24,32 @@ const initDayOpenHour = {
   from: 0,
   to: 0
 }
+
+const INITIAL_FORM = {
+  title: '',
+  category: [],
+  order: {
+    phone: '',
+    doordash: '',
+    postmates: '',
+    grubhub: '',
+    ubereats: '',
+    yelp: '',
+    others: '',
+  },
+  open_hour: {
+    monday: [{ ...initDayOpenHour }],
+    tuesday: [{ ...initDayOpenHour }],
+    wednesday: [{ ...initDayOpenHour }],
+    thursday: [{ ...initDayOpenHour }],
+    friday: [{ ...initDayOpenHour }],
+    saturday: [{ ...initDayOpenHour }],
+    sunday: [{ ...initDayOpenHour }],
+  },
+  images: [],
+  activeInput: ''
+}
+
 class Item extends React.Component {
   constructor(props) {
     super(props);
@@ -32,66 +58,13 @@ class Item extends React.Component {
       editting: false,
       edittingImages: false,
       imageDraggingClass: '',
-      form: {
-        title: '',
-        category: [],
-        order: {
-          phone: '',
-          doordash: '',
-          postmates: '',
-          grubhub: '',
-          ubereats: '',
-          yelp: '',
-          others: '',
-        },
-        open_hour: {
-          monday: [{ ...initDayOpenHour }],
-          tuesday: [{ ...initDayOpenHour }],
-          wednesday: [{ ...initDayOpenHour }],
-          thursday: [{ ...initDayOpenHour }],
-          friday: [{ ...initDayOpenHour }],
-          saturday: [{ ...initDayOpenHour }],
-          sunday: [{ ...initDayOpenHour }],
-        },
-        images: [{
-          group: 'menu',
-          src: 'https://i.imgur.com/TtWH0Ij.png',
-          lastUpdatedAt: 1586472072895
-        },
-        {
-          group: 'food',
-          src: 'https://i.imgur.com/sxP36mb.jpg',
-          lastUpdatedAt: 1586472052895
-        },
-        {
-          group: 'menu',
-          src: 'https://i.imgur.com/TtWH0Ij.png',
-          lastUpdatedAt: 1586472032895
-        },
-        {
-          group: 'food',
-          src: 'https://i.imgur.com/toS1LUm.jpg',
-          lastUpdatedAt: 1586472012895
-        },
-        {
-          group: 'food',
-          src: 'https://i.imgur.com/xA2SP0c.jpg',
-          lastUpdatedAt: 1586472002895
-        },
-        {
-          group: 'menu',
-          src: 'https://i.imgur.com/nxuFFjK.png',
-          lastUpdatedAt: 1586472072895
-        },
-        ],
-        activeInput: ''
+      modal: {
+        group: '',
+        imageActiveIndex: ''
       },
+      form: { ...INITIAL_FORM },
       initialCategory: []
     }
-    // if(props.data.details) {
-    //   const initialCategory = props.data.details.category.map(c=>({ value: c, label: c }))
-    //   props.data.details.category.length>0 && setCategory([...initialCategory]);
-    // }
   }
   componentDidMount() {
     request.get('/publicApi/category/all')
@@ -105,9 +78,8 @@ class Item extends React.Component {
   }
   passingPropsToFormState() {
     let form = {
-      ...this.state.form,
+      ...INITIAL_FORM,
       order: { ...this.state.form.order },
-      images: { ...this.state.form.images },
       address: this.props.focusport.details.address,
       location: {
         ...this.props.focusport.details.location
@@ -115,16 +87,15 @@ class Item extends React.Component {
     }
     if (this.props.focusport._id) {
       form = {
+        ...this.props.focusport.details,
         order: { ...this.state.form.order },
         images: { ...this.state.form.images },
-        ...this.props.focusport.details
       }
       form.category = this.props.focusport.details.category.map(c => ({ value: c._id, label: c.title }))
     }
-    console.log('passingPropsToFormState', form)
     return form;
   }
-  activateEditting(activeInput) {
+  activateEditting() {
     const form = this.passingPropsToFormState();
     this.setState({ ...this.state, editting: true, form })
   }
@@ -180,10 +151,10 @@ class Item extends React.Component {
         <div className='icon'>E</div>
         <div className='title'>Edit</div>
       </div>
-      <div className='action'>
+      {/* <div className='action'>
         <div className='icon'>M</div>
         <div className='title'>Menus</div>
-      </div>
+      </div> */}
       <div className='action' id="holder" onClick={this.copyURL.bind(this)}>
         <div className='icon'>S</div>
         <div className='title'>Share</div>
@@ -207,7 +178,7 @@ class Item extends React.Component {
         {open_hour[k].map(({ from, to }, i) => {
           const isNone = (from === 0 && to === 0);
           return (<tr className={`${isToday}`} key={`${k}-${i}-${from}-${to}`}>
-            <td className='hour-title'>{i == 0 && <span>{k}</span>}{isToday && <span> (Today)</span>}</td>
+            <td className='hour-title'>{i == 0 && <span>{k}<span>{isToday && <span> (Today)</span>}</span></span>}</td>
             {!isNone && <td>
               <div className={`hour-td-finish-${length - 1 === i}`}>{`${this.convertDecimalToTime(from)} - ${this.convertDecimalToTime(to)}`}</div>
             </td>}
@@ -217,11 +188,12 @@ class Item extends React.Component {
       </tbody>
     })
   }
-  activeImageUploading() {
+  activateImageSlider(imageActiveIndex, group, t) {
     const form = this.passingPropsToFormState();
-    this.setState({ ...this.state, edittingImages: true, form });
+    this.setState({ ...this.state, edittingImages: true, modal: { group, imageActiveIndex }, form });
   }
   renderItemView(item) {
+    if(item.input=='')return <div></div>;
     return (<div>
       {item._id && <div className='item-info-container'>
         {this.renderActionsContainer()}
@@ -243,10 +215,7 @@ class Item extends React.Component {
             </table>
           </div>
           <div className='session-item images'>
-            <div className='session-title'><span />Images</div>
-            <div className='bottom-action'>
-              <button className='upload-btn' onClick={this.activeImageUploading.bind(this)}>Add a photo</button>
-            </div>
+            {this.renderCurrentImages(item.details.images)}
           </div>
           <div className='session-item order'>
             <div className='session-title'><span />Order Methods</div>
@@ -431,7 +400,7 @@ class Item extends React.Component {
     return (
       <Modal className='create-editting-item-modal' show={show} onHide={this.cancelEditting.bind(this)}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit details of {this.state.form.title}</Modal.Title>
+          <Modal.Title>Edit details</Modal.Title>
         </Modal.Header>
         <form onSubmit={this.onFormSubmit.bind(this)}>
           <Modal.Body>
@@ -491,10 +460,8 @@ class Item extends React.Component {
     )
   }
   onImageUploadingDrop(acceptedFiles, rejectedFiles) {
-    this.props.uploadImagesToItem(acceptedFiles, this.state.form._id, 'menu');
-    // acceptedFiles.forEach(file => {
-    //   this.props.uploadImagesToItem(file, this.state.form._id, 'menu');
-    // });
+    const group = this.state.modal.group;
+    this.props.uploadImagesToItem(acceptedFiles, this.props.focusport._id, group);
   }
   onDragEnter(type) {
     this.setState({ imageDraggingClass: type })
@@ -503,24 +470,49 @@ class Item extends React.Component {
     this.setState({ imageDraggingClass: type })
   }
   getAllImages(imgs) {
-    console.log('hi')
-    for (let img of imgs) {
-      console.log(img);
+    const dict = {
+      menu: [],
+      food: []
     }
+    for(let img in imgs) {
+      img = imgs[img]
+      const g = img.group;
+      if(!dict[g]){
+        dict[g] = []
+      }
+      dict[g].push(img)
+    }
+    return dict;
   }
   renderCurrentImages(imgs) {
-    console.log('hi 2')
     const images = this.getAllImages(imgs);
+    const keys = Object.keys(images);
+    return keys.map(group => {
+      const groupImages = images[group];
+      return (<div key={group}>
+        <div className='session-title'><span/>{group} Photos</div>
+        <div className='img-container'>
+          {groupImages.length > 0 && groupImages.map(img=>{
+            return (<div onClick={this.activateImageSlider.bind(this, img._id, group)} className='img-frame' key={img.lastUpdatedAt}>
+              <img className='img' src={img.src} />
+            </div>)
+          })||<div onClick={this.activateImageSlider.bind(this, '', group)} className='img-frame holder'>
+            <i className="fas fa-cloud-upload-alt"></i>
+            Upload {group} Photos
+          </div>}
+        </div>
+      </div>)
+    })
   }
   renderImageUploadingModal(show) {
     return (
       <Modal className='image-uploading-modal' show={show} onHide={() => this.setState({ ...this.state, edittingImages: false })}>
         <Modal.Header closeButton>
-          <Modal.Title>Upload public photos of {this.state.form.title}</Modal.Title>
+          {/* <Modal.Title>Upload public photos of {this.props.focusport.details.title}</Modal.Title> */}
         </Modal.Header>
         <Modal.Body>
           <div>
-            {this.renderCurrentImages.bind(this.state.form.images)}
+            <ImageSlider group={this.state.modal.group} data={this.getAllImages(this.props.focusport.details.images)} activeIndex={this.state.modal.imageActiveIndex}/>
           </div>
           <div className='image-dropping-container'>
             <Dropzone
@@ -530,7 +522,7 @@ class Item extends React.Component {
               accept="image/jpeg, image/png"
               onDrop={this.onImageUploadingDrop.bind(this)}
             >
-              <div className='drag-title'>Drag photos here</div>
+              <div className='drag-title'>Add photos</div>
               <div className='drag-subtitle'>Or, if you prefer...</div>
               <div className='upload-btn'>Choose photos to upload</div>
             </Dropzone>
@@ -545,7 +537,7 @@ class Item extends React.Component {
         {this.renderItemView(this.props.focusport)}
         {this.renderModal(this.state.editting)}
         {this.renderImageUploadingModal(this.state.edittingImages)}
-        <div aria-live="polite"
+        {this.state.show && <div aria-live="polite"
           aria-atomic="true" className="toast-container">
           <Toast className="toast" onClose={() => this.setState({ show: false })} show={this.state.show} delay={3000} autohide>
             <Toast.Header>
@@ -560,7 +552,7 @@ class Item extends React.Component {
               <div className="toast-content">URL is copied to your clipboard!</div>
             </Toast.Body>
           </Toast>
-        </div>
+        </div>}
       </div>
     )
   }

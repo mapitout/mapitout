@@ -43,7 +43,6 @@ $red: rgb(213, 32, 32);
       background:white;
       padding: 1rem;
       z-index: 90;
-      
     }
   }
   .map-it-out{
@@ -69,7 +68,7 @@ $red: rgb(213, 32, 32);
         justify-content: space-around;
         .action {
           cursor: pointer;
-          width: 33.3333%;
+          width: 50%;
           text-align: center;
           padding: 5px;
           border-radius: 8px;
@@ -187,6 +186,75 @@ $red: rgb(213, 32, 32);
             }
           }
           &.images {
+            .title {
+              text-transform: uppercase;
+              font-size: 1.1rem;
+              letter-spacing: 1px;
+            }
+            .img-container {
+              width: 100%;
+              display: flex;
+              overflow-x: scroll;
+              overflow-y: hidden;
+              flex-direction: row;
+              justify-content: flex-start;
+              -webkit-overflow-scrolling: touch;
+              padding: 10px 50px 10px 0px;
+              .img-frame {
+                cursor: pointer;
+                margin: 5px;
+                display: inline-block;
+                min-width: 100px;
+                max-width: 100px;
+                height: 140px;
+                border-radius: 8px;
+                overflow: hidden;
+                background: rgba(245, 245, 245,1);
+                &.holder {
+                  background: rgb(240, 240, 240);
+                  padding: 10px;
+                  text-transform: uppercase;
+                  text-align: center;
+                  padding-top: 25px;
+                  font-weight: 600;
+                  font-size: 0.8rem;
+                  color: rgb(181, 181, 181);
+                  user-select: none;
+                  &:hover{
+                    color: rgba($brand-color, 1);
+                    box-shadow: inset 0px 0px 5px 1px rgba(black, 0.1);
+                  }
+                  i {
+                    display: block;
+                    padding-bottom: 5px;
+                    font-size: 2rem;
+                  }
+                  &:active{
+                    transform: scale(0.95);
+                  }
+                }
+                &:hover{
+                  transform: scale(0.99);
+                }
+                &:active{
+                  opacity: 0.9;
+                }
+                &:first-child {
+                  margin-left: 0px;
+                }
+                .img {
+                  height: 100%;
+                }
+              }
+              &:hover::-webkit-scrollbar {
+                display: block;
+              }
+              &::-webkit-scrollbar {
+                display: none;
+                height: 0px;
+                width: 0px;
+              }
+            }
             .bottom-action {
               text-align: center;
             }
@@ -302,6 +370,11 @@ $red: rgb(213, 32, 32);
             width: 130px;
             border-bottom-left-radius: 8px;
             border-top-left-radius: 8px;
+            @media (max-width: 672px) {
+              width: 70px;
+              font-size: 0.8rem;
+              padding: 11px 2px;
+            }
           }
         }
       }

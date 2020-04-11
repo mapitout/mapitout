@@ -4,6 +4,8 @@ import superagent from 'superagent';
 
 const UPDATE_FOCUSPORT = 'UPDATE_FOCUSPORT';
 const UPLOAD_IMAGES_TO_ITEM = 'UPLOAD_IMAGES_TO_ITEM';
+const NOT_FOUND_404_FOCUSPORT = 'NOT_FOUND_404_FOCUSPORT';
+const RESET_FOCUSPORT = 'RESET_FOCUSPORT';
 const baseURL = process.env.SERVERURI || 'http://localhost:8000';
 
 export function changeFocusport(focusport) {
@@ -30,17 +32,18 @@ export function changeFocusport(focusport) {
       .catch((e)=>{
         if(e.response && e.response.status===404){
           // if it's 404 not found, use input as item.details.address
-          console.log('404 focusport', focusport);
           const payload = {
-            details: focusport.details,
+            input: focusport.input,
             longitude: focusport.longitude,
             latitude: focusport.latitude,
-            input: focusport.input
+            details: {
+              ...INITIAL_ITEM_STATE
+            },
           };
           payload.details.address = focusport.input;
           payload.details.location.coordinates[0] = focusport.longitude;
           payload.details.location.coordinates[1] = focusport.latitude;
-          dispatch({ type: UPDATE_FOCUSPORT, payload })
+          dispatch({ type: NOT_FOUND_404_FOCUSPORT, payload })
         }else{
           console.error(e);
         }
@@ -92,20 +95,20 @@ export function uploadImagesToItem(file, itemId, group) {
     group,
     lastUpdatedAt: Date.now()
   }
-  console.log('body', {...body, file});
   return function (dispatch) {
     superagent
       .post(`${baseURL}/publicApi/item/image?${qs.stringify(body)}`)
       .attach('mapitout_item_image', file[0])
       .end((err, res) => {
         if (err) return console.log(err);
-        const imageURL = res.body.url;
-        console.log(res.body)
-        console.log(imageURL);
-        
-        // console.log(images)
-        // dispatch({ type: UPLOAD_IMAGES_TO_ITEM, payload: images })
+        const image = res.body;
+        dispatch({ type: UPLOAD_IMAGES_TO_ITEM, payload: image })
       })
+  }
+}
+export function resetFocusport() {
+  return function (dispatch) {
+    dispatch({ type: RESET_FOCUSPORT })
   }
 }
 const initDayOpenHour = {
@@ -141,36 +144,7 @@ const INITIAL_ITEM_STATE = {
     saturday: [{...initDayOpenHour}],
     sunday: [{...initDayOpenHour}],
   },
-  images: [{
-    group: 'menu',
-    src: 'https://i.imgur.com/TtWH0Ij.png',
-    lastUpdatedAt: 1586472072895
-  },
-  {
-    group: 'food',
-    src: 'https://i.imgur.com/sxP36mb.jpg',
-    lastUpdatedAt: 1586472052895
-  },
-  {
-    group: 'menu',
-    src: 'https://i.imgur.com/TtWH0Ij.png',
-    lastUpdatedAt: 1586472032895
-  },
-  {
-    group: 'food',
-    src: 'https://i.imgur.com/toS1LUm.jpg',
-    lastUpdatedAt: 1586472012895
-  },
-  {
-    group: 'food',
-    src: 'https://i.imgur.com/xA2SP0c.jpg',
-    lastUpdatedAt: 1586472002895
-  },
-  {
-    group: 'menu',
-    src: 'https://i.imgur.com/nxuFFjK.png',
-    lastUpdatedAt: 1586472072895
-  }],
+  images: [],
 }
 
 let INITIAL_STATE = {
@@ -186,15 +160,19 @@ let INITIAL_STATE = {
 
 export function itemReducer(state=INITIAL_STATE, action) {
   switch (action.type) {
+  case RESET_FOCUSPORT:
+    return { ...INITIAL_STATE }
   case UPDATE_FOCUSPORT:
     return { ...state, focusport: action.payload }
+  case NOT_FOUND_404_FOCUSPORT:
+    return { focusport: action.payload }
   case UPLOAD_IMAGES_TO_ITEM:
     return { ...state,
       focusport: {
         ...state.focusport,
         details: {
           ...state.focusport.details,
-          images: action.payload
+          images: [...state.focusport.details.images, action.payload]
         }
       }
     }
