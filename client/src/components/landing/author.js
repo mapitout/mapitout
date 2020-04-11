@@ -13,10 +13,10 @@ class Author extends React.Component {
             <Col sm md lg="6">
               <AuthorCard
                 src="https://media-exp1.licdn.com/dms/image/C5603AQEd8wi3HLsN6w/profile-displayphoto-shrink_200_200/0?e=1591833600&v=beta&t=Ljij_omqlBIMp47POHI27eYr_tcnTcIEm0qDZjksmvU"
-                name="Andy Chen"
+                name="Andy"
                 github="https://github.com/amazingandyyy"
                 linkedIn="https://www.linkedin.com/in/amazingandyyy/"
-                bio="dfadf"
+                bio="Andy is a builder with passion who spent most of his time learning or building, currently live in SF and enjoy life with his families while exploring the new chapter of his life."
               />
             </Col>
             <Col sm md lg="6">
@@ -42,7 +42,7 @@ const AuthorCard = (props) => {
     <Container className="author-card">
       <Row>
         <Col sm={12} md={12} lg={4} className="card-left">
-          <Image src={props.src} roundedCircle className="author-img" />
+          <Image src={props.src} className="author-img" />
           <div className="text-center">
           </div>
         </Col>

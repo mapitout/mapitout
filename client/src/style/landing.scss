@@ -68,13 +68,25 @@
         } 
       }
       .btn-landing{
-        border-color:$brand-color; 
+        border: none; 
         background-color:$brand-color;
         color: #fff;
+        margin: 10px;
+        &.covid19 {
+          background-color: darken($color: ($brand-color), $amount: 10%);
+          &:hover{
+            background-color: darken($color: ($brand-color), $amount: 5%);
+          }
+        }
+        &:focus{
+          box-shadow: none;
+        }
         &:hover{
-          background-color:#fff;
-          color: #000;
-          border-color: #00BF79;
+          background-color: lighten($color: ($brand-color), $amount: 10%);
+        }
+        &:active{
+          transform: scale(0.95);
+          box-shadow: none;
         }
       }
     }
@@ -174,19 +186,25 @@
   }
   
   .author-name{
+    border-left: 8px solid $brand-color;
+    line-height: 0px;
+    border-radius: 0px;
     font-size: 1.5rem;
     font-weight: 750;
-    padding-bottom: .8rem;
+    padding-left: 10px;
     @media (max-width: 790px) {
-      font-size: 1.2rem;
-
+      border-left: none;
+      font-size: 1.6rem;
     }
   }
   .card-left{
     text-align: center;
     .author-img{
-      width:100%;
-      // border: 5px solid $brand-color;
+      width: 80%;
+      max-width: 150px;
+      border-radius: 8px;
+      margin-top: 10px;
+
       @media (max-width: 790px) {
         width:60%;
       }
@@ -198,6 +216,7 @@
   .card-right{
     padding-left: .8rem;
     .author-info{
+      margin: 0.75rem 0px;
       @media (max-width:672px) {
         text-align: center;
       }
@@ -207,17 +226,23 @@
           margin-left: .3rem;
         }
         a {
-          color: $brand-color;
-          &:hover,&:visited,&:active {
+          color: black;
+          display: inline-block;
+          &:visited,&:active {
+            color: black;
+          }
+          &:hover {
             color: $brand-color;
+            transform: scale(1.1);
           }
         }
         i {
+          font-size: 1.4rem;
           @media (max-width: 790px) {
-            font-size: 1.4em;
+            font-size: 1.6em;
           }
           @media (max-width: 672px) {
-            font-size: 1.3em;
+            font-size: 1.5em;
           }
         }
         
@@ -225,6 +250,7 @@
     }
     .author-textbox{
       text-align: center;
+      opacity: 0.8;
       .author-text{
         text-align: left;
         @media (max-width: 790px) {
