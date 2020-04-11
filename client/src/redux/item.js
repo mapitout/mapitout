@@ -3,7 +3,8 @@ import request from './request';
 import superagent from 'superagent';
 
 const UPDATE_FOCUSPORT = 'UPDATE_FOCUSPORT';
-const UPLOAD_IMAGES_TO_ITEM = 'UPLOAD_IMAGES_TO_ITEM';
+const UPLOAD_IMAGES_TO_ITEM_DONE = 'UPLOAD_IMAGES_TO_ITEM_DONE';
+const UPLOAD_IMAGES_TO_ITEM_STATUS = 'UPLOAD_IMAGES_TO_ITEM_STATUS';
 const NOT_FOUND_404_FOCUSPORT = 'NOT_FOUND_404_FOCUSPORT';
 const RESET_FOCUSPORT = 'RESET_FOCUSPORT';
 const baseURL = process.env.SERVERURI || 'http://localhost:8000';
@@ -19,6 +20,8 @@ export function changeFocusport(focusport) {
       .then(d=>{
         // if it's found, use the response as focusport
         const item = d.data.findItem[0];
+        console.log(item.images);
+        item.images = item.images.sort((a, b)=>b.lastUpdatedAt-a.lastUpdatedAt)
         const payload = {
           input: item.title,
           _id: item._id,
@@ -84,8 +87,15 @@ export function editItem(item_id, details) {
         const item = r.data.editItem;
         const payload = buildFocusport(item);
         dispatch({ type: UPDATE_FOCUSPORT, payload })
+        window.location.reload(true);
       })
       .catch(e=>console.error(e))
+  }
+}
+
+export function uploadImagesStatusReset() {
+  return function (dispatch) {
+    dispatch({ type: UPLOAD_IMAGES_TO_ITEM_STATUS, payload: '' })
   }
 }
 
@@ -96,13 +106,16 @@ export function uploadImagesToItem(file, itemId, group) {
     lastUpdatedAt: Date.now()
   }
   return function (dispatch) {
+    const imageToUpload = file[0]
+    dispatch({ type: UPLOAD_IMAGES_TO_ITEM_STATUS, payload: file[0].preview })
     superagent
       .post(`${baseURL}/publicApi/item/image?${qs.stringify(body)}`)
-      .attach('mapitout_item_image', file[0])
+      .attach('mapitout_item_image', imageToUpload)
       .end((err, res) => {
         if (err) return console.log(err);
         const image = res.body;
-        dispatch({ type: UPLOAD_IMAGES_TO_ITEM, payload: image })
+        dispatch({ type: UPLOAD_IMAGES_TO_ITEM_STATUS, payload: '' })
+        dispatch({ type: UPLOAD_IMAGES_TO_ITEM_DONE, payload: image })
       })
   }
 }
@@ -155,7 +168,8 @@ let INITIAL_STATE = {
     details: {
       ...INITIAL_ITEM_STATE
     }
-  }
+  },
+  imageUploadingStatus: '' // 0 reset, 1 start uploading, 100 done
 }
 
 export function itemReducer(state=INITIAL_STATE, action) {
@@ -166,13 +180,15 @@ export function itemReducer(state=INITIAL_STATE, action) {
     return { ...state, focusport: action.payload }
   case NOT_FOUND_404_FOCUSPORT:
     return { focusport: action.payload }
-  case UPLOAD_IMAGES_TO_ITEM:
+  case UPLOAD_IMAGES_TO_ITEM_STATUS:
+    return { ...state, imageUploadingStatus: action.payload }
+  case UPLOAD_IMAGES_TO_ITEM_DONE:
     return { ...state,
       focusport: {
         ...state.focusport,
         details: {
           ...state.focusport.details,
-          images: [...state.focusport.details.images, action.payload]
+          images: [action.payload, ...state.focusport.details.images]
         }
       }
     }

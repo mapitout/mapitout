@@ -141,15 +141,11 @@ $red: rgb(213, 32, 32);
               display: inline-block;
               padding: 2px 15px;
               border-radius: 100px;
-              font-weight: 900;
               font-size: 1.05rem;
               margin-right: 5px;
               margin-left: 10px;
               letter-spacing: 1px;
               cursor: pointer;
-            }
-            .action {
-              display: inline-block;
               font-weight: 600;
             }
             &.active {
@@ -163,6 +159,21 @@ $red: rgb(213, 32, 32);
               }
               .action:active{
                 transform: scale(0.95);
+              }
+              .action.others {
+                background: rgba(33, 206, 153, 0.1);
+                border-radius: 8px;
+                padding: 10px 20px;
+                margin: 10px;
+                color: $brand-color;
+                cursor: default;
+                latter-space: 0px;
+                &:active{
+                  transform: scale(1);
+                }
+                &:hover{
+                  font-weight: 600;
+                }
               }
               div, a{
                 color: $brand-color;
@@ -383,7 +394,7 @@ $red: rgb(213, 32, 32);
   .basic-multi-select .css-yk16xz-control {
     padding: 6px;
   }
-  input.form-control, .basic-multi-select .css-yk16xz-control {
+  input.form-control, .basic-multi-select .css-yk16xz-control, textarea.form-control {
     font-size: 1.2rem;
     padding: 10px;
     border: none;
@@ -400,6 +411,9 @@ $red: rgb(213, 32, 32);
       background-color: rgb(250, 250, 250);
       border: 2px solid rgba($brand-color, 1);
     }
+  }
+  textarea.form-control {
+    text-align: left;
   }
   .css-1rhbuit-multiValue {
     background: lighten($brand-color, 5%);

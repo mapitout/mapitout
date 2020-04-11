@@ -7,7 +7,7 @@ import Dropzone from 'react-dropzone';
 import ImageSlider from './imageSlider';
 import { Toast } from 'react-bootstrap';
 
-import { createItem, editItem, uploadImagesToItem } from '../../actions';
+import { createItem, editItem, uploadImagesToItem, uploadImagesStatusReset } from '../../actions';
 import request from '../../redux/request';
 
 const ORDER_MTHODS_COPY = {
@@ -120,15 +120,20 @@ class Item extends React.Component {
   cancelEditting() {
     this.setState({ ...this.state, editting: false })
   }
-  renderOrderActions(k, o, isActive) {
+  renderOrderAction(k, o) {
     if (k == 'phone') {
       return <a href={`tel:${o}`}>{o}</a>
-    } else {
-      return (<div key={k}>
-        {isActive && <a href={o} target='_blank' rel="noopener noreferrer" >available</a>}
-        {!isActive && <span>not available yet</span>}
-      </div>)
+    }else if(k == 'others'){
+      return <div> {o} </div>;
+    }else{
+      return <a href={o} target='_blank' rel="noopener noreferrer" >available</a>
     }
+  }
+  renderOrderActions(k, o, isActive) {
+    return (<div key={k}>
+      {isActive && this.renderOrderAction(k, o)}
+      {!isActive && <span>not available yet</span>}
+    </div>)
   }
   renderOrderMethods(order) {
     const keys = Object.keys(order);
@@ -189,6 +194,7 @@ class Item extends React.Component {
     })
   }
   activateImageSlider(imageActiveIndex, group, t) {
+    this.props.uploadImagesStatusReset();
     const form = this.passingPropsToFormState();
     this.setState({ ...this.state, edittingImages: true, modal: { group, imageActiveIndex }, form });
   }
@@ -448,7 +454,7 @@ class Item extends React.Component {
               <input type='url' className="form-control" value={form.order.grubhub} name="grubhub" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['grubhub']} />
               <input type='url' className="form-control" value={form.order.UberEat} name="UberEat" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['ubereats']} />
               <input type='url' className="form-control" value={form.order.yelp} name="yelp" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['yelp']} />
-              <input type='string' className="form-control" value={form.order.others} name="others" onChange={this.onOrderFormChange.bind(this)} placeholder={`${ORDER_MTHODS_COPY['others']} links`} />
+              <textarea rows={5} type='string' className="form-control" value={form.order.others} name="others" onChange={this.onOrderFormChange.bind(this)} placeholder={`other notes`} />
             </div>}
             <div className="modal-btn-group">
               <span className="cancel" onClick={this.cancelEditting.bind(this)}>Cancel</span>
@@ -522,9 +528,22 @@ class Item extends React.Component {
               accept="image/jpeg, image/png"
               onDrop={this.onImageUploadingDrop.bind(this)}
             >
-              <div className='drag-title'>Add photos</div>
-              <div className='drag-subtitle'>Or, if you prefer...</div>
-              <div className='upload-btn'>Choose photos to upload</div>
+              {!this.props.imageUploadingStatus && <div>
+                <div className='drag-title'>Add photos</div>
+                <div className='drag-subtitle'>Or, if you prefer...</div>
+                <div className='upload-btn'>Choose photos to upload</div>
+              </div> || <div className='image-uploading-status'>
+                <div className='blurr'>
+                  <div className='loader-component'>
+                    <div className='circle-spinner'>
+                      <div className='double-bounce1' />
+                      <div className='double-bounce2'/>
+                    </div>
+                  </div>
+                  <div className='uploading'>uploading</div>
+                </div>
+                <img className='img' src={`${this.props.imageUploadingStatus}`} />  
+              </div>}
             </Dropzone>
           </div>
         </Modal.Body>
@@ -559,8 +578,8 @@ class Item extends React.Component {
 }
 
 function mapStateToProps({ item }) {
-  const { focusport } = item;
-  return { focusport }
+  const { focusport, imageUploadingStatus } = item;
+  return { focusport, imageUploadingStatus }
 }
 
-export default connect(mapStateToProps, { createItem, editItem, uploadImagesToItem })(Item);
+export default connect(mapStateToProps, { createItem, editItem, uploadImagesToItem, uploadImagesStatusReset })(Item);
