@@ -168,6 +168,7 @@ $red: rgb(213, 32, 32);
                 color: $brand-color;
                 cursor: default;
                 latter-space: 0px;
+                display: block;
                 &:active{
                   transform: scale(1);
                 }
