@@ -9,6 +9,7 @@ import { Toast } from 'react-bootstrap';
 
 import { createItem, editItem, uploadImagesToItem, uploadImagesStatusReset } from '../../actions';
 import request from '../../redux/request';
+const CATE_LOCAL_NAME = `${process.env.NODE_ENV||'dev'}-initialCategory`;
 const MULTI_LINE_SEPERATOR = '*|*';
 const ORDER_MTHODS_COPY = {
   phone: 'Call to order',
@@ -67,14 +68,19 @@ class Item extends React.Component {
     }
   }
   componentDidMount() {
-    request.get('/publicApi/category/all')
-      .then(r => {
-        this.setState({
-          ...this.state,
-          initialCategory: r.data.allCate.map(c => ({ value: c._id, label: c.title }))
+    const local_cat = localStorage.getItem(CATE_LOCAL_NAME);
+    if(local_cat) {
+      const initialCategory = JSON.parse(local_cat)
+      this.setState({ initialCategory })
+    }else{
+      request.get('/publicApi/category/all')
+        .then(r => {
+          const initialCategory = r.data.allCate.map(c => ({ value: c._id, label: c.title }));
+          localStorage.setItem(CATE_LOCAL_NAME, JSON.stringify(initialCategory))
+          this.setState({ initialCategory })
         })
-      })
-      .catch(e => console.error(e.message))
+        .catch(e => console.error(e.message))
+    }
   }
   passingPropsToFormState() {
     let form = {
