@@ -307,12 +307,8 @@ class Item extends React.Component {
     })
     console.log('this.form.open_hour', this.state.form.open_hour)
   }
-  renderOpenHourTimeSelector(mode) {
+  renderOpenHourTimeSelector() {
     const list = [
-      <option key='4.00' value={4.00}>4:00 (4:00 am)</option>,
-      <option key='4.30' value={4.30}>4:30 (4:30 am)</option>,
-      <option key='5.00' value={5.00}>5:00 (5:00 am)</option>,
-      <option key='5.30' value={5.30}>5:30 (5:30 am)</option>,
       <option key='6.00' value={6.00}>6:00 (6:00 am)</option>,
       <option key='6.30' value={6.30}>6:30 (6:30 am)</option>,
       <option key='7.00' value={7.00}>7:00 (7:00 am)</option>,
@@ -389,11 +385,11 @@ class Item extends React.Component {
         <td>
           <div className='day-block-input'>
             <select className="form-control" value={oneDayData.from} name={`${d}.${index}.from`} onChange={this.onOpenHourFormChange.bind(this)} placeholder="start">
-              {this.renderOpenHourTimeSelector('from')}
+              {this.renderOpenHourTimeSelector()}
             </select>
             <div className='day-block'>to</div>
             <select className="form-control" value={oneDayData.to} name={`${d}.${index}.to`} onChange={this.onOpenHourFormChange.bind(this)} placeholder="to">
-              {this.renderOpenHourTimeSelector('to')}
+              {this.renderOpenHourTimeSelector()}
             </select>
             {this.renderOpenHourActions(dayData.length, index, day)}
           </div>
@@ -539,7 +535,7 @@ class Item extends React.Component {
                 <div className='drag-subtitle'>Or, if you prefer...</div>
                 <div className='upload-btn'>Choose photos to upload</div>
               </div>}
-              {this.props.imageUploadingStatus.length > 5 && <div className='image-uploading-status'>
+              {this.props.imageUploadingStatus && this.props.imageUploadingStatus.length > 5 && <div className='image-uploading-status'>
                 <div className='blurr'>
                   <div className='loader-component'>
                     <div className='circle-spinner'>
