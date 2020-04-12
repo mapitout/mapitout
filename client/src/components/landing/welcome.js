@@ -13,18 +13,19 @@ class Welcome extends React.Component {
           <div className='subtitle'>
             Help mapping out local restaurants and support their business
           </div>
-          <div  className='button-container'>
-            {this.renderButton()}
+          <div className='button-container'>
+            {this.renderButton('Map It Out', 'maps')}
+            {this.renderButton('Check COVID19 Info', 'covid19')}
           </div>
         </div>
       </div>)
   }
-  renderButton(){
+  renderButton(copy, link){
     return (!this.props.isLoggedin)?(
       <div>
-        <Link to='maps'>
-          <button className='btn btn-block btn-lg btn-landing'>
-            Map It Now
+        <Link to={link}>
+          <button className={`btn btn-block btn-lg btn-landing ${link}`}>
+            {copy}
           </button>
         </Link>
       </div>)

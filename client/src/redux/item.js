@@ -20,6 +20,7 @@ export function changeFocusport(focusport) {
       .then(d=>{
         // if it's found, use the response as focusport
         const item = d.data.findItem[0];
+        if(!item) return;
         item.images = item.images.sort((a, b)=>b.lastUpdatedAt-a.lastUpdatedAt)
         const payload = {
           input: item.title,
