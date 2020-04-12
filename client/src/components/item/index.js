@@ -124,7 +124,7 @@ class Item extends React.Component {
     if (k == 'phone') {
       return <a href={`tel:${o}`}>{o}</a>
     }else if(k == 'others'){
-      return <div> {o.split(MULTI_LINE_SEPERATOR).map((t, i)=><div k={i}>{t}</div>)} </div>;
+      return <div> {o.split(MULTI_LINE_SEPERATOR).map((t, i)=><div key={i}>{t}</div>)} </div>;
     }else{
       return <a href={o} target='_blank' rel="noopener noreferrer" >available</a>
     }
