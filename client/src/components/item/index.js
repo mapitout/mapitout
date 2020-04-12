@@ -9,7 +9,7 @@ import { Toast } from 'react-bootstrap';
 
 import { createItem, editItem, uploadImagesToItem, uploadImagesStatusReset } from '../../actions';
 import request from '../../redux/request';
-
+const MULTI_LINE_SEPERATOR = '*|*';
 const ORDER_MTHODS_COPY = {
   phone: 'Call to order',
   doordash: 'Doordash',
@@ -124,7 +124,7 @@ class Item extends React.Component {
     if (k == 'phone') {
       return <a href={`tel:${o}`}>{o}</a>
     }else if(k == 'others'){
-      return <div> {o} </div>;
+    return <div> {o.split(MULTI_LINE_SEPERATOR).map(t=><div>{t}</div>)} </div>;
     }else{
       return <a href={o} target='_blank' rel="noopener noreferrer" >available</a>
     }
@@ -260,16 +260,31 @@ class Item extends React.Component {
     })
   }
   onOrderFormChange(e) {
-    this.setState({
-      ...this.state,
-      form: {
-        ...this.state.form,
-        order: {
-          ...this.state.form.order,
-          [e.target.name]: e.target.value
+    if(e.target.name=='others') {
+      const multiStr = e.target.value.split('\n').join(MULTI_LINE_SEPERATOR)
+      this.setState({
+        ...this.state,
+        form: {
+          ...this.state.form,
+          order: {
+            ...this.state.form.order,
+            others: multiStr
+          }
         }
-      }
-    })
+      })
+    }else{
+      this.setState({
+        ...this.state,
+        form: {
+          ...this.state.form,
+          order: {
+            ...this.state.form.order,
+            [e.target.name]: e.target.value
+          }
+        }
+      })
+    }
+    
   }
   onCategoryChange(c) {
     this.setState({
@@ -451,7 +466,7 @@ class Item extends React.Component {
               <input type='url' className="form-control" value={form.order.grubhub} name="grubhub" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['grubhub']} />
               <input type='url' className="form-control" value={form.order.UberEat} name="UberEat" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['ubereats']} />
               <input type='url' className="form-control" value={form.order.yelp} name="yelp" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['yelp']} />
-              <textarea rows={5} type='string' className="form-control" value={form.order.others} name="others" onChange={this.onOrderFormChange.bind(this)} placeholder={`other notes`} />
+              <textarea rows={5} type='string' className="form-control" value={form.order.others.split(MULTI_LINE_SEPERATOR).join('\n')} name="others" onChange={this.onOrderFormChange.bind(this)} placeholder={`other notes`} />
             </div>}
             <div className="modal-btn-group">
               <span className="cancel" onClick={this.cancelEditting.bind(this)}>Cancel</span>
