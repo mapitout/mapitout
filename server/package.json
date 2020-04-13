@@ -1,11 +1,10 @@
 {
   "name": "mapitout-server",
-  "version": "0.0.1",
-  "description": "",
-  "main": "build/server.js",
+  "version": "1.0.0",
+  "description": "https://mapitout-server.herokuapp.com",
   "scripts": {
     "dev": "babel-watch src/server.js",
-    "start": "NODE_ENV=production node build/server.js",
+    "start": "pm2 start build/server.js",
     "build": "rm -rf ./build && NPM_CONFIG_PRODUCTION=false babel src --out-dir build"
   },
   "dependencies": {
