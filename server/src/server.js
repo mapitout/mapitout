@@ -28,7 +28,7 @@ app.use('/', routers);
 app.use(errorHandler);
 
 function errorHandler (err, req, res, next) {
-  console.log('errrrr', err)
+  console.log('errrrrr', err)
   const error = ((typeof err) == 'string' && err.search(':')>0)?err.split(':'):err;
   let [statusCode, msg] = (error.length > 1)?error:[500, err];
   (res.headersSent)?next(msg):res.status(statusCode).send(msg);

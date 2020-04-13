@@ -40,26 +40,3 @@ const Email = {
 }
 
 export default Email;
-
-
-// const mailObj = {
-//   to: 'amazingandyyy@gmail.com',
-//   subject: '[mapitout]Welcome and Account Activation.',
-//   message: `<b>Welcome to join mapitout,</b> <br/><br/><br/>
-//   Please click <a href='${'deepLink'}' target='_blank'>here</a> to your activate your account.
-//   <br/>
-//   Enjoy of being a mapitout:
-//   <br/>
-//   <ul>
-//     <li>Explore: explore new products to try.</li>
-//     <li>Review: amazing review with photo to help business grow</li>
-//     <li>Earn: we pay you up to 100% cashback + cash rewards</li>
-//   </ul>
-//   <br/>
-//   The best, mapitout Team.`
-// };
-// SES.send(mailObj).then(email=>{
-//   console.log(email)
-// }).catch(err=>{
-//   console.log(err);
-// });

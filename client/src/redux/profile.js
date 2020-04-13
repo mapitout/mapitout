@@ -52,7 +52,7 @@ export function updateProfileAvatar(avatar) {
       .set('Authorization', localStorage.getItem('mapitout_auth_jwt_token') || 'Unauthorized')
       .attach('avatar', avatar)
       .end((err, res) => {
-        if (err) return console.log(err);
+        if (err) return;
         dispatch({ type: UPDATE_USER_PROFILE_PHOTO_GOOD })
         window.location.reload(true);
       })

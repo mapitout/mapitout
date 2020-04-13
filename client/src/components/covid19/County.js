@@ -15,10 +15,10 @@ class CACounty extends React.Component {
   componentDidMount() {
     axios.get(`https://amazingshellyyy.com/covid19-api/US-CA/countyTimeseries.json`)
       .then(res => {
-        // console.log('covid CA County data', res.data)
+        console.log('covid CA County data', res.data)
         let curData = res.data;
         let updatedData = curData[curData.length - 1];
-        // console.log(updatedData)
+        console.log(updatedData)
         let Top10 = updatedData.data.sort((a, b) => (a.case > b.case) ? -1 : 1).slice(0, 10)
         this.setState({
           time: updatedData.timeStamp,
@@ -45,7 +45,7 @@ class CACounty extends React.Component {
   changeData(code) {
     axios.get(`https://amazingshellyyy.com/covid19-api/US-${code}/countyTimeseries.json`)
       .then(res => {
-        // console.log('covid CA County data', res.data)
+        console.log('covid CA County data', res.data)
         let curData = res.data;
         let updatedData = curData[curData.length - 1];
         console.log(updatedData)

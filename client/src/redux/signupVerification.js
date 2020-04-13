@@ -38,8 +38,7 @@ export function verifyEmailToken(token, address) {
           dispatch({type: CHECK_EMAIL_TOKEN_BAD})
         }
       })
-      .catch(error => {
-        console.log(error.response.data)
+      .catch(() => {
         dispatch({type: CHECK_EMAIL_TOKEN_BAD})
       });
   }

@@ -13,10 +13,11 @@ module.exports = merge(common, {
       }
     }),
     new NoConsolePlugin({
-      ignores:[
+      ignores: [
         'log',
         'info',
-        'warn'
+        'warn',
+        'error'
       ]
     })
   ]

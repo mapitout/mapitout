@@ -60,18 +60,17 @@ class Navbar extends Component {
         <LoadingBar className='mapitout-loading-bar' />
         <a className="navbar-brand" href="/">
           <div className="logo-big">
-                        MapItOut
+            MapItOut
           </div>
           {/* <img src="../assets/svgs/mapitout-logo.svg" height="30" className='main-navbar-logo'/> */}
           {/* <img src="../assets/svgs/logo-long.svg" height="30" className='d-none d-sm-block'/> */}
         </a>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav mr-auto">
-                        
           </ul>
           <ul className="navbar-nav">
             <li className="nav-item">
-              <NavLink className={this.renderClass('nav-link', 'map')} to="/maps">Maps</NavLink>
+              <NavLink className={this.renderClass('nav-link', 'maps')} to="/maps">Maps</NavLink>
             </li>
             <li className="nav-item">
               <NavLink className={this.renderClass('nav-link', 'covid19')} to="/covid19">Covid19</NavLink>

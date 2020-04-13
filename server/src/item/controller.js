@@ -93,8 +93,7 @@ export default {
           return res.status(200).json({ "message": "Here is the Pin.", items })
         }
       } catch (err) {
-        // return next('500:Something went wrong.')
-        return console.log(err);
+        return next('500:Something went wrong.')
       }
     } else if (req.query.category) {
       const Ids = req.query.category.split(',');
@@ -193,7 +192,6 @@ export default {
     const S3_ROOT_BUCKET = 'mapitout-image-2';
     const file = req.file;
     const {itemId, group, lastUpdatedAt} = req.query;
-    console.log('file', file);
     if(!file) return next('500:image bad');
     let filenameParts = file.originalname.split('.');
     let ext;

@@ -58,7 +58,6 @@ export default USData;
 
 
 function CustomTooltip({ payload, label, active }) {
-  console.log('payload',payload)
   if (active) {
     return (
       <div className="custom-tooltip" style={{background:"#fff",padding:".8rem",border:".2px solid #D3D3D3"}}>
