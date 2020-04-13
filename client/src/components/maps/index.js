@@ -159,6 +159,22 @@ class Index extends React.Component {
     })
     this.updateURL('')
   }
+  onGeocoderOnResults(e) {
+    console.log('onGeocoderOnResults')
+    console.log(e)
+    const query = e.query[0];
+    const list = e.features;
+    // step 1
+    // write code to render the list
+
+    // step 2
+    // this.onGeocoderSelected({
+    //   result: {
+    //     center: [long, lat],
+    //     place_name: ''
+    //   }
+    // })
+  }
   render() {
     const { focused, viewport } = this.state;
     const { focusport } = this.props;
@@ -182,7 +198,8 @@ class Index extends React.Component {
               onClear={this.onGeocoderClear.bind(this)}
               onLoading={this.onGeocoderLoading.bind(this)}
               onViewportChange={this.onGeocoderViewpointChange.bind(this)}
-              onResult={this.onGeocoderSelected.bind(this)}
+              // onResult={this.onGeocoderSelected.bind(this)}
+              onResults={this.onGeocoderOnResults.bind(this)}
               inputValue={focusport.input}
               containerRef={this.geocoderContainerRef}
               mapRef={this.mapRef}
