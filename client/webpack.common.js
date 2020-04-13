@@ -75,6 +75,13 @@ module.exports = {
       chunks: ['vendor', 'vendor.js'],
       minChunks: Infinity
     }),
+    new webpack.optimize.UglifyJsPlugin({
+      comments: false,
+      compress: {
+        warnings: false,
+        drop_console: true
+      },
+    }),
     new ExtractTextPlugin({
       filename: 'styles/style.[hash].css'
     }),
