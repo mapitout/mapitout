@@ -18,6 +18,13 @@ module.exports = merge(common, {
         'info',
         'warn'
       ]
-    })
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      comments: false,
+      compress: {
+        warnings: false,
+        drop_console: true
+      },
+    }),
   ]
 })
