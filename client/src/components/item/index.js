@@ -399,7 +399,7 @@ class Item extends React.Component {
     const dayData = form.open_hour[day];
     return dayData.map((oneDayData, index) => {
       return (<tr key={`${day}.${index}`}>
-        <td>{index == 0 && <div className='day-block day'>{title}</div>}</td>
+        <td>{index == 0 && <div className='day-block day'>{title.slice(0, 3)}</div>}</td>
         <td>
           <div className='day-block-input'>
             <select className="form-control" value={oneDayData.from} name={`${d}.${index}.from`} onChange={this.onOpenHourFormChange.bind(this)} placeholder="start">
@@ -466,7 +466,7 @@ class Item extends React.Component {
               <input type='url' className="form-control" value={form.order.doordash} name="doordash" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['doordash']} />
               <input type='url' className="form-control" value={form.order.postmates} name="postmates" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['postmates']} />
               <input type='url' className="form-control" value={form.order.grubhub} name="grubhub" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['grubhub']} />
-              <input type='url' className="form-control" value={form.order.UberEat} name="UberEat" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['ubereats']} />
+              <input type='url' className="form-control" value={form.order.ubereats} name="ubereats" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['ubereats']} />
               <input type='url' className="form-control" value={form.order.yelp} name="yelp" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['yelp']} />
               <textarea rows={5} type='string' className="form-control" value={form.order.others.split(MULTI_LINE_SEPERATOR).join('\n')} name="others" onChange={this.onOrderFormChange.bind(this)} placeholder={`other notes`} />
             </div>}

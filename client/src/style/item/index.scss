@@ -377,15 +377,21 @@ $red: rgb(213, 32, 32);
               background-color: darken($red, 5%);
             }
           }
+          .day-block {
+            @media (max-width: 672px) {}
+            font-size: 0.8rem;
+            padding: 11px 2px;
+          }
           &.day {
             text-align: left;
-            width: 130px;
+            width: 60px;
             border-bottom-left-radius: 8px;
             border-top-left-radius: 8px;
             @media (max-width: 672px) {
-              width: 70px;
+              width: 40px;
+              text-align: right;
               font-size: 0.8rem;
-              padding: 11px 2px;
+              padding: 12px 2px;
             }
           }
         }
