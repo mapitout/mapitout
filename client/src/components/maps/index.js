@@ -70,6 +70,7 @@ class Index extends React.Component {
           ...this.state,
           allPins: data.items
         })
+        localStorage.setItem('mapitout-last-update-time', Date.now())
       })
       .catch(e=>console.error(e));
     window.addEventListener('resize', _.debounce(this.handleResize.bind(this), 200));
