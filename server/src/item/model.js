@@ -54,6 +54,14 @@ const orderSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
+  googlemap: {
+    type: String,
+    default: ''
+  },
+  website: {
+    type: String,
+    default: ''
+  },
   others: {
     type: String,
     default: ''

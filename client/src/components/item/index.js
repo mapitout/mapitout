@@ -18,6 +18,8 @@ const ORDER_MTHODS_COPY = {
   grubhub: 'Grubhub',
   ubereats: 'UberEats',
   yelp: 'Yelp',
+  googlemap: 'Google Maps',
+  website: 'Website',
   others: 'Others'
 }
 
@@ -36,6 +38,8 @@ const INITIAL_FORM = {
     grubhub: '',
     ubereats: '',
     yelp: '',
+    googlemap: '',
+    website: '',
     others: '',
   },
   open_hour: {
@@ -468,6 +472,8 @@ class Item extends React.Component {
               <input type='url' className="form-control" value={form.order.grubhub} name="grubhub" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['grubhub']} />
               <input type='url' className="form-control" value={form.order.ubereats} name="ubereats" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['ubereats']} />
               <input type='url' className="form-control" value={form.order.yelp} name="yelp" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['yelp']} />
+              <input type='url' className="form-control" value={form.order.googlemap} name="googlemap" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['googlemap']} />
+              <input type='url' className="form-control" value={form.order.website} name="website" onChange={this.onOrderFormChange.bind(this)} placeholder={ORDER_MTHODS_COPY['website']} />
               <textarea rows={5} type='string' className="form-control" value={form.order.others.split(MULTI_LINE_SEPERATOR).join('\n')} name="others" onChange={this.onOrderFormChange.bind(this)} placeholder={`other notes`} />
             </div>}
             <div className="modal-btn-group">
