@@ -86,15 +86,7 @@ module.exports = {
       'process.env': {
         'MAPBOX_API_KEY': JSON.stringify('pk.eyJ1IjoiYW1hemluZ2FuZHl5eSIsImEiOiJjamZqM25pZGYwamRvMnFvM3RsMTFyZDFzIn0.1YaQZ-Y0SXLmwfs0vQtO7w')
       }
-    }),
-    // new NoConsolePlugin({
-    //   ignores: [
-    //     'log',
-    //     'info',
-    //     'warn',
-    //     'error'
-    //   ]
-    // })
+    })
   ],
   node: {
     console: true,
