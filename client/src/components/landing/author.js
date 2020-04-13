@@ -7,7 +7,7 @@ class Author extends React.Component {
       <div className="author-component">
         <Container >
           <Row>
-            <Col className="text-center author-title">MapitOut is build with &#10084; by Andy and Shelly</Col>
+            <Col className="text-center author-title">MapitOut is built with &#10084; by Andy and Shelly</Col>
           </Row>
           <Row>
             <Col sm md lg="6">
@@ -25,7 +25,7 @@ class Author extends React.Component {
                 name="Shelly Cheng"
                 github="https://github.com/amazingshellyyy"
                 linkedIn="https://www.linkedin.com/in/amazingshellyyy/"
-                bio="dfadf"
+                bio="Shelly is a dreamer who believes imagination is one's power to exceed their best, currently living in her favorite city in the world and exploring her new passion as an engineer."
               />
             </Col>
           </Row>
