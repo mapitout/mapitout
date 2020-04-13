@@ -55,7 +55,7 @@ class Item extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: false,
+      showToast: false,
       editting: false,
       edittingImages: false,
       imageDraggingClass: '',
@@ -116,7 +116,7 @@ class Item extends React.Component {
     document.execCommand('copy');
     this.setState({
       ...this.state,
-      show: true,
+      showToast: true,
     })
     holder.removeChild(selectholder);
 
@@ -579,9 +579,9 @@ class Item extends React.Component {
         {this.renderItemView(this.props.focusport)}
         {this.renderModal(this.state.editting)}
         {this.renderImageUploadingModal(this.state.edittingImages)}
-        {this.state.show && <div aria-live="polite"
+        {this.state.showToast && <div aria-live="polite"
           aria-atomic="true" className="toast-container">
-          <Toast className="toast" onClose={() => this.setState({ show: false })} show={this.state.show} delay={3000} autohide>
+          <Toast className="toast" onClose={() => this.setState({ showToast: false })} showToast={this.state.showToast} delay={3000} autohide>
             <Toast.Header>
               <img
                 src="holder.js/20x20?text=%20"
