@@ -4,7 +4,7 @@
   "description": "https://mapitout-server.herokuapp.com",
   "scripts": {
     "dev": "babel-watch src/server.js",
-    "start": "npm i && pm2 start build/server.js",
+    "start": "pm2 start build/server.js",
     "build": "rm -rf ./build && NPM_CONFIG_PRODUCTION=false babel src --out-dir build"
   },
   "dependencies": {
@@ -26,6 +26,7 @@
     "multer": "^1.3.0",
     "node-ses": "^2.1.0",
     "plaid": "^4.7.0",
+    "pm2": "^4.2.3",
     "qs": "^6.5.1",
     "raven": "^2.4.1",
     "request": "^2.88.2"
