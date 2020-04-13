@@ -236,7 +236,7 @@ class Item extends React.Component {
       </div> || <div className='item-empty'>
         <img src='../../assets/svgs/no-data.svg' />
         <div>This location has no information yet, can you help to map it out.</div>
-        <button className='btn btn-block btn-lg map-it-out' onClick={this.activateEditting.bind(this)}>Map It Out</button>
+        <button className='btn btn-block btn-lg map-it-out' onClick={this.activateEditting.bind(this)}>Create</button>
       </div>}
     </div>)
   }
