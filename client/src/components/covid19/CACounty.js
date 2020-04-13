@@ -68,7 +68,7 @@ class CACounty extends React.Component {
         <div className="container text-center">
           <div className="row text-center">
             <div className="col-sm-8">
-              <h5 className="chart-title">Top 10 most confrimed cases county in Californea</h5>
+              <h5 className="chart-title">Top 10 most confrimed cases county in {this.state.curState}</h5>
             </div>
             <div className="col-sm-4">
               <Dropdown className="ml-auto">
@@ -79,6 +79,16 @@ class CACounty extends React.Component {
                   <Dropdown.Item id="CA">California</Dropdown.Item>
                   <Dropdown.Item id="WA">Washington</Dropdown.Item>
                   <Dropdown.Item id="NY">New York</Dropdown.Item>
+                  <Dropdown.Item id="NJ">New Jersey</Dropdown.Item>
+                  <Dropdown.Item id="MI">Michigan</Dropdown.Item>
+                  <Dropdown.Item id="PA">Pennsylvania</Dropdown.Item>
+                  <Dropdown.Item id="IL">Illiois</Dropdown.Item>
+                  <Dropdown.Item id="LA">Louisiana</Dropdown.Item>
+                  <Dropdown.Item id="FL">Florida</Dropdown.Item>
+                  <Dropdown.Item id="TX">Texus</Dropdown.Item>
+                  <Dropdown.Item id="GA">Georgia</Dropdown.Item>
+                  <Dropdown.Item id="CT">Connecticut</Dropdown.Item>
+                  <Dropdown.Item id="IN">Indiana</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </div>

@@ -40,7 +40,6 @@ class States extends React.Component {
                 <Legend />
                 <Bar dataKey="case" fill="#75D6B1" />
                 <Bar dataKey="death" fill="#757272" />
-                {/* <Bar dataKey="recovered" fill="#82ca9d" /> */}
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -51,3 +50,4 @@ class States extends React.Component {
 }
 
 export default States;
+

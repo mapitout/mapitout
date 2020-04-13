@@ -37,7 +37,7 @@ class USData extends React.Component {
                 <CartesianGrid stroke='#f5f5f5' />
                 <XAxis dataKey="date" />
                 <YAxis />
-                <Tooltip />
+                <Tooltip content={<CustomTooltip/>}/>
                 <Legend />
                 <Bar dataKey='confirmed' barSize={20} fill='#75D6B1' />
                 <Line type='monotone' dataKey='confirmed' stroke='#75D6B1' />
@@ -55,3 +55,19 @@ class USData extends React.Component {
 }
 
 export default USData;
+
+
+function CustomTooltip({ payload, label, active }) {
+  console.log('payload',payload)
+  if (active) {
+    return (
+      <div className="custom-tooltip" style={{background:"#fff",padding:".8rem",border:".2px solid #D3D3D3"}}>
+        <p>United State</p>
+        <p className="label" style={{color:`${payload[0].fill}`}}>{`${payload[0].name} : ${payload[0].value}`}</p>
+        <p className="label" style={{color:`${payload[2].fill}`}}>{`${payload[2].name} : ${payload[2].value}`}</p>
+      </div>
+    );
+  }
+
+  return null;
+}
