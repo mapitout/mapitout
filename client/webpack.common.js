@@ -1,9 +1,10 @@
 const webpack = require('webpack');
 const path = require('path');
-// var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const NoConsolePlugin = require('no-console-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -66,7 +67,7 @@ module.exports = {
   },
   plugins: [
     // new BundleAnalyzerPlugin({
-    //     analyzerMode: 'static'
+    //   analyzerMode: 'static'
     // }),
     new HtmlWebpackPlugin({template: path.resolve(__dirname, 'src/index.html')}),
     new webpack.optimize.CommonsChunkPlugin({
@@ -85,7 +86,15 @@ module.exports = {
       'process.env': {
         'MAPBOX_API_KEY': JSON.stringify('pk.eyJ1IjoiYW1hemluZ2FuZHl5eSIsImEiOiJjamZqM25pZGYwamRvMnFvM3RsMTFyZDFzIn0.1YaQZ-Y0SXLmwfs0vQtO7w')
       }
-    })
+    }),
+    // new NoConsolePlugin({
+    //   ignores: [
+    //     'log',
+    //     'info',
+    //     'warn',
+    //     'error'
+    //   ]
+    // })
   ],
   node: {
     console: true,

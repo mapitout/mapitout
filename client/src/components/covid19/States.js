@@ -21,9 +21,7 @@ class States extends React.Component {
           data: Top10
         })
       })
-      .catch(err => {
-        console.log(err)
-      })
+      .catch(err => console.log(err))
   }
   render(){
     return(

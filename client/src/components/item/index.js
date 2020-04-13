@@ -114,7 +114,6 @@ class Item extends React.Component {
     selectholder.value = url;
     selectholder.select();
     document.execCommand('copy');
-    console.log('COPY')
     this.setState({
       ...this.state,
       show: true,
@@ -306,7 +305,6 @@ class Item extends React.Component {
     const day = e.target.name.split('.')[0].toLowerCase();
     const index = e.target.name.split('.')[1];
     const time = e.target.value;
-    console.log(type, day, index, time);
     const current = [...this.state.form.open_hour[day]];
     current[index] = {
       ...current[index],
@@ -326,7 +324,6 @@ class Item extends React.Component {
         }
       }
     })
-    console.log('this.form.open_hour', this.state.form.open_hour)
   }
   renderOpenHourTimeSelector() {
     const list = [
@@ -420,7 +417,6 @@ class Item extends React.Component {
   }
   renderModal(show) {
     const { form } = this.state;
-    console.log(form);
     return (
       <Modal className='create-editting-item-modal' show={show} onHide={this.cancelEditting.bind(this)}>
         <Modal.Header closeButton>

@@ -29,7 +29,6 @@ export function changeFocusport(focusport) {
           latitude: item.location.coordinates[1],
           details: { ...item }
         };
-        console.log('200 focusport', payload)
         dispatch({ type: UPDATE_FOCUSPORT, payload })
       })
       .catch((e)=>{
@@ -112,7 +111,7 @@ export function uploadImagesToItem(file, itemId, group) {
       .post(`${baseURL}/publicApi/item/image?${qs.stringify(body)}`)
       .attach('mapitout_item_image', imageToUpload)
       .end((err, res) => {
-        if (err) return console.log(err);
+        if (err) return;
         const image = res.body;
         dispatch({ type: UPLOAD_IMAGES_TO_ITEM_STATUS, payload: 'done' })
         dispatch({ type: UPLOAD_IMAGES_TO_ITEM_DONE, payload: image })
