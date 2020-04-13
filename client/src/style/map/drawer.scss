@@ -33,9 +33,7 @@
   }
   &.true {
     box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 20px, rgba(0, 0, 0, 0.01) 0px 0px 0px 1px;
-    @media (min-width: 672px) {
-      height: 100vh;
-    }
+    height: 100vh;
   }
   &.info {
     background: white;
