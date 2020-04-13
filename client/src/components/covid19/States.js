@@ -16,14 +16,12 @@ class States extends React.Component {
         // console.log('us state',res.data)
         let curData = res.data;
         let latest = curData[curData.length - 1];
-        let Top10 = latest.data.sort((a,b) => (a.case > b.case) ? -1 : 1).slice(0,10)
+        let Top10 = latest.data.sort((a,b) => (a.case > b.case) ? -1 : 1).slice(20,40)
         this.setState({
           data: Top10
         })
       })
-      .catch(err => {
-        console.log(err)
-      })
+      .catch(err => console.log(err))
   }
   render(){
     return(
@@ -40,7 +38,6 @@ class States extends React.Component {
                 <Legend />
                 <Bar dataKey="case" fill="#75D6B1" />
                 <Bar dataKey="death" fill="#757272" />
-                {/* <Bar dataKey="recovered" fill="#82ca9d" /> */}
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -51,3 +48,4 @@ class States extends React.Component {
 }
 
 export default States;
+

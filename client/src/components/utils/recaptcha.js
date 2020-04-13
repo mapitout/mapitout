@@ -6,12 +6,10 @@ const resetRecaptcha = () => {
 };
 export class RecaptchaComponent extends Component {
   componentDidMount(){
-    // console.log('Recaptcha componentDidMount')
     resetRecaptcha();
     window.onloadCallback = () => console.log('Recaptcha loaded')
   }
   componentWillUnmount(){
-    // console.log('Recaptcha componentWillUnmount')
     resetRecaptcha();
   }
   render() {

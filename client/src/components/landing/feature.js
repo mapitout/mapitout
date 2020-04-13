@@ -33,7 +33,7 @@ class Feature extends React.Component {
 const featuresList = [{
   icon: 'customer-1.svg',
   title: 'Help Small Bussiness',
-  description: 'Order with anyway, help local small bussiness owner.'
+  description: 'Order and help local small bussiness owners.'
 },{
   icon: 'customer-2.svg',
   title: 'Explore New Things Near You',
@@ -45,7 +45,7 @@ const featuresList = [{
 },{
   icon: 'customer-4.svg',
   title: 'Thrive Together',
-  description: 'Thrive with the community during difficult times.'
+  description: 'Thrive with the community during pandemic.'
 },]
 
 export default Feature;

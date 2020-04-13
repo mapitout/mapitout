@@ -27,7 +27,6 @@ export default {
           Email.send(mailObj).then(email=>{
             res.send({email});
           }).catch((err)=>{
-            console.log(err);
             next('500:Email is bad.')
           });
         }else{

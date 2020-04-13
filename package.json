@@ -23,7 +23,7 @@
     "dev:server": "npm run dev --prefix server",
     "dev:client": "cd ./server && npm run dev",
     "clean": "rm -rf ./server/build && rm -rf ./docs",
-    "deploy:server": "git subtree push --prefix server heroku master",
+    "deploy:server": "git push heroku `git subtree split --prefix server master`:master --force",
     "logs:server": "heroku logs --tail"
   },
   "repository": {

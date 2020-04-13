@@ -51,8 +51,7 @@ nav.navbar {
       padding: 0.3rem 0.65rem;
     }
     &:hover,
-    &.hightlight,
-    &.mapitout-active {
+    &.hightlight {
       transition: 0.2s ease;
       color: black;
       border-color: $brand-color;

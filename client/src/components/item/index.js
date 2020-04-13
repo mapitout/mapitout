@@ -9,6 +9,7 @@ import { Toast } from 'react-bootstrap';
 
 import { createItem, editItem, uploadImagesToItem, uploadImagesStatusReset } from '../../actions';
 import request from '../../redux/request';
+const CATE_LOCAL_NAME = `${process.env.NODE_ENV||'dev'}-initialCategory`;
 const MULTI_LINE_SEPERATOR = '*|*';
 const ORDER_MTHODS_COPY = {
   phone: 'Call to order',
@@ -67,14 +68,19 @@ class Item extends React.Component {
     }
   }
   componentDidMount() {
-    request.get('/publicApi/category/all')
-      .then(r => {
-        this.setState({
-          ...this.state,
-          initialCategory: r.data.allCate.map(c => ({ value: c._id, label: c.title }))
+    const local_cat = localStorage.getItem(CATE_LOCAL_NAME);
+    if(local_cat) {
+      const initialCategory = JSON.parse(local_cat)
+      this.setState({ initialCategory })
+    }else{
+      request.get('/publicApi/category/all')
+        .then(r => {
+          const initialCategory = r.data.allCate.map(c => ({ value: c._id, label: c.title }));
+          localStorage.setItem(CATE_LOCAL_NAME, JSON.stringify(initialCategory))
+          this.setState({ initialCategory })
         })
-      })
-      .catch(e => console.error(e.message))
+        .catch(e => console.error(e.message))
+    }
   }
   passingPropsToFormState() {
     let form = {
@@ -108,7 +114,6 @@ class Item extends React.Component {
     selectholder.value = url;
     selectholder.select();
     document.execCommand('copy');
-    console.log('COPY')
     this.setState({
       ...this.state,
       show: true,
@@ -300,7 +305,6 @@ class Item extends React.Component {
     const day = e.target.name.split('.')[0].toLowerCase();
     const index = e.target.name.split('.')[1];
     const time = e.target.value;
-    console.log(type, day, index, time);
     const current = [...this.state.form.open_hour[day]];
     current[index] = {
       ...current[index],
@@ -320,7 +324,6 @@ class Item extends React.Component {
         }
       }
     })
-    console.log('this.form.open_hour', this.state.form.open_hour)
   }
   renderOpenHourTimeSelector() {
     const list = [
@@ -414,7 +417,6 @@ class Item extends React.Component {
   }
   renderModal(show) {
     const { form } = this.state;
-    console.log(form);
     return (
       <Modal className='create-editting-item-modal' show={show} onHide={this.cancelEditting.bind(this)}>
         <Modal.Header closeButton>
