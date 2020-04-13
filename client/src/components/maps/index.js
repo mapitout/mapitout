@@ -10,8 +10,9 @@ import { changeFocusport, resetFocusport } from '../../actions';
 import Item from '../item';
 import request from '../../redux/request';
 
-const FOCUS_ZOOM = 16;
-const MAX_ZOOM = 9.7;
+var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+const FOCUS_ZOOM = isMobile ? 15 : 16;
+const MAX_ZOOM = isMobile ? 8 : 9.5;
 const MAPBOX_API_KEY = process.env.MAPBOX_API_KEY;
 const BOUNDARY_OF_CA = [-124.409591, 32.534156, -114.131211, 42.009518];  // boundary of California
 class Index extends React.Component {
