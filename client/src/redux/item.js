@@ -145,6 +145,8 @@ const INITIAL_ITEM_STATE = {
     grubhub: '',
     ubereats: '',
     yelp: '',
+    googlemap: '',
+    website: '',
     others: '',
   },
   open_hour: {
