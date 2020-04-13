@@ -1,6 +1,6 @@
 import React from 'react';
 import USData from './USData';
-import CACounty from './CACounty';
+import County from './County';
 import States from './States';
 // import WorldMap from './WorldMap/WorldMap';
 
@@ -10,7 +10,7 @@ const Index = () => {
     <div>
       <USData/>
       <States/>
-      <CACounty/>
+      <County/>
       {/* <WorldMap/> */}
     </div>
   )

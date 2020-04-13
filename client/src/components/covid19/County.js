@@ -89,6 +89,11 @@ class CACounty extends React.Component {
                   <Dropdown.Item id="GA">Georgia</Dropdown.Item>
                   <Dropdown.Item id="CT">Connecticut</Dropdown.Item>
                   <Dropdown.Item id="IN">Indiana</Dropdown.Item>
+                  <Dropdown.Item id="OH">Ohio</Dropdown.Item>
+                  <Dropdown.Item id="VA">Virginia</Dropdown.Item>
+                  <Dropdown.Item id="MO">Missouri</Dropdown.Item>
+                  <Dropdown.Item id="NC">North Carolina</Dropdown.Item>
+                  <Dropdown.Item id="SC">South Carolina</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </div>
