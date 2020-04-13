@@ -4,11 +4,17 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
 import cors from 'cors';
+import rateLimit from 'express-rate-limit';
 
 import routers from './routers';
 import config from './config';
 
 const app = express();
+
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minutes
+  max: 30 // limit each IP to 100 requests per windowMs
+});
 
 // DB Setup
 mongoose.connect(config.mongoose.uri, { 
@@ -26,6 +32,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}));
 app.use('/', routers);
 app.use(errorHandler);
+app.use(limiter);
 
 function errorHandler (err, req, res, next) {
   console.log('errrrrr', err)
