@@ -28,11 +28,11 @@ mongoose.Promise = global.Promise;
 // App Setup
 app.use(cors());
 app.use(morgan('dev'));
+app.use(limiter);
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}));
 app.use('/', routers);
 app.use(errorHandler);
-app.use(limiter);
 
 function errorHandler (err, req, res, next) {
   console.log('errrrrr', err)
