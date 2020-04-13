@@ -37,6 +37,7 @@ export default {
   edit: async (req, res, next) => {
     const itemId = req.params.id;
     const updateditem = req.body.details;
+    console.log('updateditem', updateditem)
     try {
       const editItem = await Item.findByIdAndUpdate(itemId, updateditem, { new: true }).populate('category');
       return res.status(200).json({ "message": "Updated pin is saved successfully.", editItem })
