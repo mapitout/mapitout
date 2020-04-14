@@ -17,11 +17,12 @@ class Welcome extends React.Component {
             {this.renderButton('Map It Out', 'maps')}
             {this.renderButton('Check COVID19 Info', 'covid19')}
           </div>
+          
         </div>
       </div>)
   }
-  renderButton(copy, link){
-    return (!this.props.isLoggedin)?(
+  renderButton(copy, link) {
+    return (!this.props.isLoggedin) ? (
       <div>
         <Link to={link}>
           <button className={`btn btn-block btn-lg btn-landing ${link}`}>
@@ -29,7 +30,7 @@ class Welcome extends React.Component {
           </button>
         </Link>
       </div>)
-      :(<div>
+      : (<div>
         <Link to='maps'>
           <button className='btn btn-block btn-lg btn-landing'>
             Explore now
