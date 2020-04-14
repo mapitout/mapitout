@@ -5,7 +5,6 @@ import Feature from './feature';
 import Author from './author';
 import Discuss from './discuss';
 import Footer from './footer';
-import USData from '../covid19/USData';
 
 const Landing= ()=> {
   return (
