@@ -37,20 +37,17 @@ nav.navbar {
       }
     }
   }
-  .fb-like {
-    padding: 0.45rem 1rem;
-    @media (max-width: 672px) {
-      padding: 0.2rem;
-    }
-  }
   &.navbar-expand .navbar-nav .nav-link {
     user-select: none;
     white-space: nowrap;
     padding: 0.5rem 1rem;
     border-radius: 0;
     color: #797979;
-    border-bottom: 3px solid rgba($brand-color, 0);
-
+    // border-bottom: 3px solid rgba($brand-color, 0);
+    &.fb-like {
+      display: inline-block;
+      margin: -3px;
+    }
     @media (max-width: 672px) {
       margin-right: 0.08rem;
       margin-left: 0.08rem;
