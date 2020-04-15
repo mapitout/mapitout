@@ -70,7 +70,7 @@ class Navbar extends Component {
           </ul>
           <ul className="navbar-nav">
             <li className="nav-item">
-              <div className="fb-like nav-link" data-href="https://www.facebook.com/mapitoutapp" data-width="200" data-layout="button_count" data-action="like" data-size="large" data-share="false"></div>
+              <div className="fb-like" data-href="https://www.facebook.com/mapitoutapp" data-width="200" data-layout="button_count" data-action="like" data-size="large" data-share="false"></div>
             </li>
             <li className="nav-item">
               <NavLink className={this.renderClass('nav-link', 'maps')} to="/maps">Maps</NavLink>
