@@ -229,12 +229,12 @@ class Item extends React.Component {
               {this.renderOpenHourForView(item.details.open_hour)}
             </table>
           </div>
-          <div className='session-item images'>
-            {this.renderCurrentImages(item.details.images)}
-          </div>
           <div className='session-item order'>
             <div className='session-title'><span />Order Methods</div>
             {this.renderOrderMethods(item.details.order)}
+          </div>
+          <div className='session-item images'>
+            {this.renderCurrentImages(item.details.images)}
           </div>
         </div>
       </div> || <div className='item-empty'>
