@@ -23,6 +23,12 @@ class USData extends React.Component {
         })
       })
       .catch(err => console.log(err))
+    
+    axios.get('https://startkicker-server.herokuapp.com/api/v1/project/all')
+      .then(res => {
+        console.log(res.data)
+      })
+      .catch(err => console.log(err))
   }
 
   render() {
