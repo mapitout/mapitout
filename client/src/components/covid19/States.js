@@ -11,7 +11,7 @@ class States extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('https://www.amazingshellyyy.com/covid19-api/US/current.json')
+    axios.get('https://amazingshellyyy.com/covid19-api/US/current.json')
       .then(res => {
         console.log('us state',res.data)
         let curData = res.data;
