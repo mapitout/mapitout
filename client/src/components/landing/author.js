@@ -12,7 +12,7 @@ class Author extends React.Component {
           <Row>
             <Col sm md lg="6">
               <AuthorCard
-                src="https://media-exp1.licdn.com/dms/image/C5603AQEd8wi3HLsN6w/profile-displayphoto-shrink_200_200/0?e=1591833600&v=beta&t=Ljij_omqlBIMp47POHI27eYr_tcnTcIEm0qDZjksmvU"
+                src="https://i.imgur.com/uD1KOlY.jpg"
                 name="Andy"
                 github="https://github.com/amazingandyyy"
                 linkedIn="https://www.linkedin.com/in/amazingandyyy/"
