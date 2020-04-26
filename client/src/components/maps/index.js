@@ -53,7 +53,7 @@ class Index extends React.Component {
     this.init()
   }
   init() {
-    const query = qs.parse(window.location.href.split('?')[1]);
+    const query = qs.parse(window.location.href.split('maps?')[1]);
     const lat = Number(query.lat);
     const lon = Number(query.lon);
     if(query.lat && query.lon) {
