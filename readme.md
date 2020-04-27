@@ -56,7 +56,7 @@ $ npm run test
 
 MIT
 
-## Help
+## Help (!important)
 
 - spread the words
 - help adding your FAVORITES restaurants
