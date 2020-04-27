@@ -39,18 +39,30 @@ $ npm run test
 ## Deploy
 
 1. Deploy frontend: push/merge to master, will trigger this Travis Worker [![Build Status](https://travis-ci.org/mapitout/mapitout.svg?branch=master)](https://travis-ci.org/mapitout/mapitout) to build and push files to [this repo](https://github.com/mapitout/mapitout.github.io)
-2. Deploy backend: run NPM scripts and it will push server subfoler to this [heroku app](https://dashboard.heroku.com/apps/mapitout-server)
+2. Deploy backend: run NPM scripts and it will push server subfoler to this [heroku app], (https://dashboard.heroku.com/apps/mapitout-server) only admin can perform such deployment, we suggest you send a PR and let the admin do it for you.
   ```
   $ npm run deploy:server
   ```
 
 ## Useful Links
 
-- Github: https://github.com/mapitout
-- Application: https://mapitout.github.io/
-- Server: https://mapitout-server.herokuapp.com/
+- Github Repo: https://github.com/mapitout
+- Issues: https://github.com/mapitout/mapitout/issues
+- Application: https://mapitout.github.io
+- Server: https://mapitout-server.herokuapp.com
 - Google Analysis: https://analytics.google.com/analytics/web/?authuser=0#/report-home/a161563089w226557909p214189300
 
 ## License
 
 MIT
+
+## Help
+
+- spread the words
+- help adding your FAVORITES restaurants
+- share this map with any restaurant owners
+- share this map to other regions
+- if you are a passionated developer who want to help this codebase and community
+  - testing, either for nodejs backend or react frontend (using JEST)
+  - adding new features:
+    - check https://github.com/mapitout/mapitout/issues
