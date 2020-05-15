@@ -3,6 +3,8 @@ import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Dropdown } from 'react-bootstrap';
 
+let cool;
+
 class CACounty extends React.Component {
   constructor(props) {
     super(props);

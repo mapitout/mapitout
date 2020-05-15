@@ -38,7 +38,9 @@
     "url": "https://github.com/mapitout/mapitout/issues"
   },
   "homepage": "https://github.com/mapitout/mapitout#readme",
-  "devDependencies": {},
+  "devDependencies": {
+    "@amazingandyyy/git-hooks": "^0.1.0"
+  },
   "dependencies": {
     "eslint": "^4.14.0",
     "eslint-config-logux": "^17.0.0",
@@ -51,7 +53,6 @@
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-standard": "^3.0.1",
-    "husky": "^0.14.3",
     "lodash": "^4.17.15",
     "webpack": "^3.11.0",
     "webpack-bundle-analyzer": "^2.10.0"
