@@ -4,6 +4,9 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 import { Dropdown } from 'react-bootstrap';
 
 let name = 'andy';
+let name = 'andy';
+let name = 'andy';
+let name = 'andy';
 
 class CACounty extends React.Component {
   constructor(props) {
