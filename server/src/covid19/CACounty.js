@@ -32,6 +32,7 @@ const getdata = (req, res) => {
 }
 
 
+
 module.exports = {
   getdata
 }
