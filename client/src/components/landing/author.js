@@ -22,7 +22,7 @@ class Author extends React.Component {
             <Col sm md lg="6">
               <AuthorCard
                 src="https://i.imgur.com/6WUcB60.jpg"
-                name="Shelly Cheng"
+                name="Shelly"
                 github="https://github.com/amazingshellyyy"
                 linkedIn="https://www.linkedin.com/in/amazingshellyyy/"
                 bio="Shelly is a dreamer who believes imagination is one's power to exceed their best, currently living in her favorite city in the world and exploring her new passion as an engineer."
