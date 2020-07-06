@@ -21,7 +21,7 @@ class Author extends React.Component {
             </Col>
             <Col sm md lg="6">
               <AuthorCard
-                src="https://media-exp1.licdn.com/dms/image/C5603AQGuAltfA-sTjA/profile-displayphoto-shrink_200_200/0?e=1591833600&v=beta&t=pzeocypBXvNOulVepqs_x_YYHObAa0Tw9PVGa7scfoE"
+                src="https://i.imgur.com/6WUcB60.jpg"
                 name="Shelly Cheng"
                 github="https://github.com/amazingshellyyy"
                 linkedIn="https://www.linkedin.com/in/amazingshellyyy/"
