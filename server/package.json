@@ -4,7 +4,9 @@
   "description": "https://mapitout-server.herokuapp.com",
   "scripts": {
     "dev": "babel-watch src/server.js",
-    "start": "pm2-runtime start ecosystem.config.js --env production",
+    "start": "npm run start:pm2",
+    "start:node": "NODE_ENV=production node ./server/build/server.js",
+    "start:pm2": "pm2-runtime start ecosystem.config.js --env production",
     "build": "rm -rf ./build && NPM_CONFIG_PRODUCTION=false babel src --out-dir build"
   },
   "dependencies": {

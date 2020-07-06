@@ -1,6 +1,6 @@
 {
   "name": "mapitout",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "www.mapitout.com and server.mapitout.com",
   "main": "server/build/server.js",
   "engines": {
