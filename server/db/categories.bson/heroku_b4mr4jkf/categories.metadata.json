@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"heroku_b4mr4jkf.categories"}],"uuid":"90d3b6de57d64f689ad03c7f57ff7ff0","collectionName":"categories"}
