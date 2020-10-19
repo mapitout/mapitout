@@ -218,7 +218,7 @@ export default {
       if (err) return next('500: Uploading Photo Failed');
       if(!group) return next('500: Uploading Photo Failed: group is not validate.');
       
-      const imageURL = `https://${S3_ROOT_BUCKET}.s3-${S3_REGION}.amazonaws.com/${uuidKey}`
+      const imageURL = `https://${S3_ROOT_BUCKET}.s3.amazonaws.com/${uuidKey}`
       const imgToSave = {
         group,
         lastUpdatedAt,
