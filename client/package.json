@@ -31,7 +31,7 @@
     "image-webpack-loader": "^4.4.0",
     "json-loader": "^0.5.7",
     "no-console-webpack-plugin": "0.0.5",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "sass-loader": "^6.0.6",
     "serve": "^10.1.2",
     "style-loader": "^0.20.1",
